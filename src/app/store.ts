@@ -1,10 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
+import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 
-export const store = configureStore({
-  reducer: {},
+import { reducer } from './reducers'
+
+const rootReducer = combineReducers({
+  reducer: reducer,
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
+
+export type AppRootStateType = ReturnType<typeof rootReducer>
+
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+
+// @ts-ignore
+window.store = store
