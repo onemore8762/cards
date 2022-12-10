@@ -10,7 +10,7 @@ import { PasswordRecovery } from '../features/Password/Password_recovery'
 import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
-function App() {
+export const App = () => {
   return (
     <div className="App">
       <div></div>
@@ -32,5 +32,3 @@ function App() {
     </div>
   )
 }
-
-export default App
