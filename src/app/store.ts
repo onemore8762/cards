@@ -1,4 +1,3 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 
@@ -13,6 +12,8 @@ export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddle
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+
+// export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,AppRootStateType,unknown,AppActionType>
 
 // @ts-ignore
 window.store = store
