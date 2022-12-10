@@ -4,7 +4,7 @@ import './App.css'
 import { NavLink, Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../features/Error404/Error404'
-import Login from '../features/Login/Login'
+import { Login } from '../features/Login/Login'
 import { PasswordNew } from '../features/Password/Password_new'
 import { PasswordRecovery } from '../features/Password/Password_recovery'
 import { Profile } from '../features/Profile/Profile'
