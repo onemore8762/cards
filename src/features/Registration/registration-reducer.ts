@@ -1,50 +1,58 @@
+import { AppThunkType } from '../../app/store'
+
 import { registrationApi } from './registration-api'
 
 const LOGIN = 'LOGIN'
+const ERRORS = 'ERRORS'
+
 const initialState: stateType = {
   isLoggedIn: false,
   errors: {
     error: '',
-    isEmailValid: false,
-    isPassValid: false,
+    isEmailValid: true,
+    isPassValid: true,
     passwordRegExp: '',
   },
 }
 
 export const registrationReducer = (
   state: stateType = initialState,
-  action: setIsLoggedInType
+  action: AllActionsType
 ): stateType => {
   switch (action.type) {
     case LOGIN:
       return { ...state, isLoggedIn: action.isLoggedIn }
+    case ERRORS:
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          ...action.payload,
+        },
+      }
     default:
       return state
   }
 }
 // actions
 const setIsLoggedIn = (isLoggedIn: boolean) => ({ type: LOGIN, isLoggedIn } as const)
-const setErrors = (errors: TypeError) =>
-  ({
-    type: LOGIN,
-    error: errors.error,
-    isEmailValid: errors.isEmailValid,
-    isPassValid: errors.isPassValid,
-    passwordRegExp: errors.passwordRegExp,
-  } as const)
+
+export const setErrors = (errors: TypeError) => ({ type: ERRORS, payload: errors } as const)
 
 // thunk
-export const registrationUser = (data: userData) => (dispatch: any) => {
-  registrationApi
-    .registration(data)
-    .then(response => {
-      console.log(response)
-      dispatch(setIsLoggedIn(true))
-    })
-    .catch(error => {
-      dispatch(setErrors(error.response.data))
-    })
-}
+export const registrationUser =
+  (data: userData): AppThunkType =>
+  dispatch => {
+    registrationApi
+      .registration(data)
+      .then(response => {
+        console.log(response)
+        dispatch(setIsLoggedIn(true))
+      })
+      .catch(error => {
+        dispatch(setErrors(error.response.data))
+      })
+  }
 
 // type
 type stateType = {
@@ -53,10 +61,12 @@ type stateType = {
     error: string
     isEmailValid: boolean
     isPassValid: boolean
-    passwordRegExp: ''
+    passwordRegExp: string
   }
 }
+type AllActionsType = setIsLoggedInType | setErrorsType
 type setIsLoggedInType = ReturnType<typeof setIsLoggedIn>
+type setErrorsType = ReturnType<typeof setErrors>
 export type userData = {
   email: string
   password: string

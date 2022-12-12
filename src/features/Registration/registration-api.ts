@@ -22,26 +22,3 @@ export type ResponseTypeSuccess = {
   __v: number
   _id: string
 }
-/*type ResponseTypeError = {
-  emailRegExp: {}
-  error: string
-  in: string
-  isEmailValid: boolean
-  isPassValid: boolean
-  passwordRegExp: string
-}*/
-//data -> addedUser -> {}
-/*
-addedUser = {
-  "created": "2022-12-12T21:07:05.681Z",
-  "email": "simiserg@mail.ru",
-  "isAdmin": false,
-  "name": "simiserg@mail.ru",
-  "publicCardPacksCount": 0,
-  "rememberMe": false,
-  "updated": "2022-12-12T21:07:05.681Z",
-  "verified": false,
-  "__v": 0,
-  "_id": "639797f91546a94180ebcd2b",
-}
-*/

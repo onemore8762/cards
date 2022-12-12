@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEventHandler, useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -16,7 +16,7 @@ import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
-import { registrationUser } from './registration-reducer'
+import { registrationUser, setErrors } from './registration-reducer'
 
 export const Registration = () => {
   const [showPassword, setShowPassword] = useState<any>({
@@ -59,7 +59,6 @@ export const Registration = () => {
       }
     },
   })
-
   const handleClickShowPassword = (value: string) => {
     if (value === 'password') {
       setShowPassword({ ...showPassword, password: !showPassword.password })
@@ -69,6 +68,18 @@ export const Registration = () => {
   }
 
   if (isLoggedIn) return <Navigate to={'/profile'}></Navigate>
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    formik.handleChange(e)
+    dispatch(
+      setErrors({
+        error: '',
+        isEmailValid: true,
+        isPassValid: true,
+        passwordRegExp: '',
+      })
+    )
+  }
 
   return (
     <Grid container justifyContent="center">
@@ -85,8 +96,12 @@ export const Registration = () => {
                 name="email"
                 label={'Email'}
                 value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
+                onChange={onChangeHandler}
+                error={
+                  !errors.isEmailValid ||
+                  (formik.touched.email && !!formik.errors.email) ||
+                  !!errors.error
+                }
                 variant="standard"
                 margin={'normal'}
                 helperText={formik.touched.email && formik.errors.email}
@@ -98,8 +113,11 @@ export const Registration = () => {
                 label="Password"
                 type={showPassword.password ? 'text' : 'password'}
                 value={formik.values.password}
-                onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                onChange={onChangeHandler}
+                error={
+                  (formik.touched.password && Boolean(formik.errors.password)) ||
+                  ((!errors.isEmailValid || !errors.isPassValid) && !!errors.error)
+                }
                 variant="standard"
                 margin={'normal'}
                 helperText={formik.touched.password && formik.errors.password}
@@ -127,8 +145,11 @@ export const Registration = () => {
                 label="Confirm password"
                 type={showPassword.confirmPassword ? 'text' : 'password'}
                 value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                onChange={onChangeHandler}
+                error={
+                  (formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)) ||
+                  ((!errors.isEmailValid || !errors.isPassValid) && !!errors.error)
+                }
                 variant="standard"
                 margin={'normal'}
                 helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
@@ -149,6 +170,7 @@ export const Registration = () => {
                   ),
                 }}
               />
+              <span style={{ color: 'red' }}>{errors.error}</span>
             </FormGroup>
             <Button variant="contained" sx={{ borderRadius: '30px', width: '347px' }} type="submit">
               Sign Up
