@@ -17,7 +17,11 @@ import {
 } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+
+import { loginTC } from './login-reducer'
 
 interface State {
   showPassword: boolean
@@ -33,6 +37,8 @@ export const Login = () => {
   const [values, setValues] = React.useState<State>({
     showPassword: false,
   })
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
@@ -57,10 +63,11 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      formik.resetForm()
+      //alert(JSON.stringify(values))
+      dispatch(loginTC(values))
     },
   })
+
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -70,6 +77,10 @@ export const Login = () => {
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to={'/profile'} />
   }
 
   return (
