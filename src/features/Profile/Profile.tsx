@@ -4,6 +4,7 @@ import React, { useCallback } from 'react'
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
+import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
 import Button from '@mui/material/Button'
 // import Button from '@mui/material-next/Button'
 import Card from '@mui/material/Card'
@@ -40,7 +41,11 @@ export const Profile = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'}>
+    <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
+      <div className={style.backButton}>
+        <KeyboardBackspace />
+        <div className={style.backButton_title}>Back to Packs List</div>
+      </div>
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>

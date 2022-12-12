@@ -64,3 +64,15 @@
 .logoutButton {
 
 }
+.backButton {
+  position: absolute;
+  top: -50px;
+  left: 120px;
+
+  display: flex;
+
+  border: 1px solid black;
+}
+.backButton_title {
+  margin-left: 10px;
+}
