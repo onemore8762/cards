@@ -1,4 +1,25 @@
+.cardMain {
+  width: 413px;
+  height: 360px;
+}
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*minHeight: 90%;*/
+  /*justifyContent: space-evenly;*/
+}
+.cardTitle {
+  margin-bottom: 20px;
+
+  font-size: 22px;
+}
+
 .avatar {
+  height: 120px;
+}
+.avatarImage {
+
 }
 .avatar img {
   width: 96px;
@@ -6,3 +27,45 @@
 
   border-radius: 50%;
 }
+.loadAvatar {
+  position: relative;
+  bottom: 40px;
+  left: 70px;
+
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+
+  background-color: #808080;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+.loadAvatar_icon {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+
+  color: white;
+}
+
+.userName {
+  height: 35px;
+  margin-bottom: 25px;
+}
+.userEmail {
+  height: 24px;
+  margin-bottom: 20px;
+
+  font-size: 14px;
+
+  opacity: 0.5;
+}
+
+/*.logoutButton {*/
+/*  width: 127px;*/
+
+/*  color: black;*/
+
+/*  background-color: white;*/
+/*  border-radius: 30px;*/
+/*}*/

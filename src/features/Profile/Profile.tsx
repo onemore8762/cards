@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 
 // import Box from '@mui/material/Box'
+import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
 import Button from '@mui/material/Button'
@@ -33,36 +34,33 @@ export const Profile = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: 413, height: 360 }}>
-          <CardContent
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              minHeight: '90%',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <Typography style={{ fontSize: '22px' }} component="div">
+        <Card className={style.cardMain}>
+          <CardContent className={style.cardContent}>
+            <Typography className={style.cardTitle} component="div">
               Personal Information
             </Typography>
             <div className={style.avatar}>
-              <img
-                src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                alt="avatar"
-              />
+              <div className={style.avatarImage}>
+                <img
+                  src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
+                  alt="avatar"
+                />
+              </div>
+              <div
+                className={style.loadAvatar}
+                onClick={() => {
+                  alert('edit mode ON')
+                }}
+              >
+                <AddAPhoto className={style.loadAvatar_icon} />
+              </div>
             </div>
-            {/*<Typography style={{ fontSize: '20px' }} component="div">*/}
-            {/*  Name*/}
-            {/*  <BorderColorOutlined sx={{ paddingLeft: '10px' }} fontSize={'small'} />*/}
-            {/*</Typography>*/}
 
-            <div style={{ height: '40px' }}>
+            <div className={style.userName}>
               <EditableSpan title={'Name'} onChangeInput={changeTaskTitleHandler} />
-              {/*<BorderColorOutlined sx={{ paddingLeft: '10px' }} fontSize={'small'} />*/}
             </div>
 
-            <Typography style={{ fontSize: '14px', opacity: '0.5' }} component="div">
+            <Typography className={style.userEmail} component="div">
               myEmail.@gmail.com
             </Typography>
             <Button
@@ -70,11 +68,15 @@ export const Profile = () => {
               type={'submit'}
               variant={'contained'}
               color={'error'}
+              // className={style.logoutButton}
               sx={{
                 width: '127px',
                 borderRadius: '30px',
                 color: 'black',
                 backgroundColor: 'white',
+              }}
+              onClick={() => {
+                alert('you logged out')
               }}
             >
               Log Out
