@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import { NavLink, Route, Routes } from 'react-router-dom'
 
+import { NavBar } from '../common/components/NavBar/NavBar'
 import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
 import { PasswordNew } from '../features/Password/Password_new'
@@ -13,6 +14,7 @@ import { Registration } from '../features/Registration/Registration'
 export const App = () => {
   return (
     <div className="App">
+      <NavBar />
       <div></div>
       <NavLink to={'/login'}>Login</NavLink>
       <NavLink to={'/profile'}>Profile</NavLink>
