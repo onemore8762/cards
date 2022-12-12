@@ -1,7 +1,9 @@
 import * as React from 'react'
+import { useState } from 'react'
 
 import AdbIcon from '@mui/icons-material/Adb'
 // import MenuIcon from '@mui/icons-material/Menu'
+import { Button } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -21,6 +23,7 @@ import style from './NavBar.module.css'
 const settings = ['Profile', 'Logout']
 
 export const NavBar = () => {
+  const [login, setLogin] = useState<boolean>(false)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,44 +59,55 @@ export const NavBar = () => {
             </Typography>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/*Имя пользователя*/}
-            <div className={style.navbarUsername}>UserName</div>
+          {login ? (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {/*Имя пользователя*/}
+              <div className={style.navbarUsername}>UserName</div>
 
-            {/*Аватарка с меню*/}
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="User Avatar"
-                    src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(setting => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </div>
+              {/*Аватарка с меню*/}
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="User Avatar"
+                      src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map(setting => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </div>
+          ) : (
+            <Button
+              type={'submit'}
+              variant={'contained'}
+              color={'primary'}
+              sx={{ borderRadius: '30px' }}
+            >
+              Sign In
+            </Button>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
