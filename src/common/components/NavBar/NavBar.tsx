@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import AdbIcon from '@mui/icons-material/Adb'
 // import MenuIcon from '@mui/icons-material/Menu'
@@ -17,14 +16,38 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 // import Grid from '@mui/material/Unstable_Grid2'
+import { useNavigate } from 'react-router-dom'
 
 import style from './NavBar.module.css'
 
-const settings = ['Profile', 'Logout']
+// const settings = ['Profile', 'Logout']
 
 export const NavBar = () => {
-  const [login, setLogin] = useState<boolean>(false)
+  const navigate = useNavigate()
+  const [login, setLogin] = useState<boolean>(true)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const [settings, setSettings] = useState([
+    {
+      title: 'Profile',
+      func: () => {
+        navigate('/profile')
+        setAnchorElUser(null)
+      },
+    },
+    {
+      title: 'Logout',
+      func: () => {
+        // dispatch(logoutTC())
+        alert('logout')
+        setAnchorElUser(null)
+      },
+    },
+  ])
+
+  const loginHandler = () => {
+    alert('login')
+    // dispatch(loginTC())
+  }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -38,7 +61,7 @@ export const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {/*Логотип*/}
-          <div style={{ display: 'flex' }}>
+          <div className={style.navbarLogo}>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
               variant="h6"
@@ -60,7 +83,7 @@ export const NavBar = () => {
           </div>
 
           {login ? (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className={style.navbarUser}>
               {/*Имя пользователя*/}
               <div className={style.navbarUsername}>UserName</div>
 
@@ -91,8 +114,11 @@ export const NavBar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map(setting => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                    <MenuItem
+                      key={setting.title}
+                      /*onClick={handleCloseUserMenu}*/ onClick={setting.func}
+                    >
+                      <Typography textAlign="center">{setting.title}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -104,6 +130,7 @@ export const NavBar = () => {
               variant={'contained'}
               color={'primary'}
               sx={{ borderRadius: '30px' }}
+              onClick={loginHandler}
             >
               Sign In
             </Button>

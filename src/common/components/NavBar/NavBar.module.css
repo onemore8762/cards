@@ -1,11 +1,17 @@
+.appBar {
+
+}
+.navbarLogo {
+    display: flex;
+}
+
+.navbarUser {
+    display: flex;
+    align-items: center;
+}
+
 .navbarUsername {
     margin-right: 10px;
 
     text-decoration: underline;
-}
-
-.appBar {
-    /*color: black;*/
-
-    /*background-color: white;*/
 }
