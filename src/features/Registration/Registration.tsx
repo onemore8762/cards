@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -44,6 +44,11 @@ export const Registration = () => {
           password: 'Password is required',
         }
       }
+      if (!values.confirmPassword) {
+        return {
+          confirmPassword: 'confirmPassword is required',
+        }
+      }
     },
     onSubmit: (values, { setErrors }) => {
       if (values.password !== values.confirmPassword) {
@@ -59,6 +64,7 @@ export const Registration = () => {
       }
     },
   })
+
   const handleClickShowPassword = (value: string) => {
     if (value === 'password') {
       setShowPassword({ ...showPassword, password: !showPassword.password })
@@ -99,12 +105,16 @@ export const Registration = () => {
                 onChange={onChangeHandler}
                 error={
                   !errors.isEmailValid ||
-                  (formik.touched.email && !!formik.errors.email) ||
-                  !!errors.error
+                  (formik.touched.email && Boolean(formik.errors.email)) ||
+                  (errors.isEmailValid && errors.isPassValid && Boolean(errors.error))
                 }
                 variant="standard"
                 margin={'normal'}
-                helperText={formik.touched.email && formik.errors.email}
+                helperText={
+                  (formik.touched.email && formik.errors.email) ||
+                  (!errors.isEmailValid && 'Email is not valid') ||
+                  (errors.isEmailValid && errors.isPassValid && errors.error)
+                }
               />
               <TextField
                 fullWidth
@@ -116,11 +126,14 @@ export const Registration = () => {
                 onChange={onChangeHandler}
                 error={
                   (formik.touched.password && Boolean(formik.errors.password)) ||
-                  ((!errors.isEmailValid || !errors.isPassValid) && !!errors.error)
+                  !errors.isPassValid
                 }
                 variant="standard"
                 margin={'normal'}
-                helperText={formik.touched.password && formik.errors.password}
+                helperText={
+                  (formik.touched.password && formik.errors.password) ||
+                  (!errors.isPassValid && errors.passwordRegExp)
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -148,7 +161,7 @@ export const Registration = () => {
                 onChange={onChangeHandler}
                 error={
                   (formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)) ||
-                  ((!errors.isEmailValid || !errors.isPassValid) && !!errors.error)
+                  !errors.isPassValid
                 }
                 variant="standard"
                 margin={'normal'}
@@ -170,7 +183,6 @@ export const Registration = () => {
                   ),
                 }}
               />
-              <span style={{ color: 'red' }}>{errors.error}</span>
             </FormGroup>
             <Button variant="contained" sx={{ borderRadius: '30px', width: '347px' }} type="submit">
               Sign Up

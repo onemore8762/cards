@@ -11,14 +11,16 @@ export const registrationApi = {
 //type
 
 export type ResponseTypeSuccess = {
-  created: Date
-  email: string
-  isAdmin: boolean
-  name: string
-  publicCardPacksCount: number
-  rememberMe: boolean
-  updated: Date
-  verified: boolean
-  __v: number
-  _id: string
+  addedUser: {
+    created: Date
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    updated: Date
+    verified: boolean
+    __v: number
+    _id: string
+  }
 }
