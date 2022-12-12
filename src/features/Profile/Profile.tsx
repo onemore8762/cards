@@ -30,15 +30,22 @@ export const Profile = () => {
       /*props.todolistId, props.task.id*/
     ]
   )
+  const logoutHandler = () => {
+    alert('you logged out')
+    // dispatch(logoutTC())
+  }
+  const loadPhotoHandler = () => {
+    alert('load photo')
+    // dispatch(loadPhotoAC())
+  }
 
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>
-            <Typography className={style.cardTitle} component="div">
-              Personal Information
-            </Typography>
+            <div className={style.cardTitle}>Personal Information</div>
+
             <div className={style.avatar}>
               <div className={style.avatarImage}>
                 <img
@@ -46,12 +53,7 @@ export const Profile = () => {
                   alt="avatar"
                 />
               </div>
-              <div
-                className={style.loadAvatar}
-                onClick={() => {
-                  alert('edit mode ON')
-                }}
-              >
+              <div className={style.loadAvatar} onClick={loadPhotoHandler}>
                 <AddAPhoto className={style.loadAvatar_icon} />
               </div>
             </div>
@@ -60,27 +62,25 @@ export const Profile = () => {
               <EditableSpan title={'Name'} onChangeInput={changeTaskTitleHandler} />
             </div>
 
-            <Typography className={style.userEmail} component="div">
-              myEmail.@gmail.com
-            </Typography>
-            <Button
-              startIcon={<ExitToAppOutlined sx={{ color: 'black' }} />}
-              type={'submit'}
-              variant={'contained'}
-              color={'error'}
-              // className={style.logoutButton}
-              sx={{
-                width: '127px',
-                borderRadius: '30px',
-                color: 'black',
-                backgroundColor: 'white',
-              }}
-              onClick={() => {
-                alert('you logged out')
-              }}
-            >
-              Log Out
-            </Button>
+            <div className={style.userEmail}>myEmail@gmail.com</div>
+            <div className={style.logoutButton}>
+              <Button
+                startIcon={<ExitToAppOutlined sx={{ color: 'black' }} />}
+                type={'submit'}
+                variant={'contained'}
+                color={'error'}
+                // className={style.logoutButton}
+                sx={{
+                  width: '127px',
+                  borderRadius: '30px',
+                  color: 'black',
+                  backgroundColor: 'white',
+                }}
+                onClick={logoutHandler}
+              >
+                Log Out
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </Grid>
