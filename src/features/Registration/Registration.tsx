@@ -100,7 +100,12 @@ export const Registration = () => {
                 fullWidth
                 id="email"
                 name="email"
-                label={'Email'}
+                label={
+                  (formik.touched.email && formik.errors.email) ||
+                  (!errors.isEmailValid && 'Email is not valid') ||
+                  (errors.isEmailValid && errors.isPassValid && errors.error) ||
+                  'Email'
+                }
                 value={formik.values.email}
                 onChange={onChangeHandler}
                 error={
@@ -110,11 +115,6 @@ export const Registration = () => {
                 }
                 variant="standard"
                 margin={'normal'}
-                helperText={
-                  (formik.touched.email && formik.errors.email) ||
-                  (!errors.isEmailValid && 'Email is not valid') ||
-                  (errors.isEmailValid && errors.isPassValid && errors.error)
-                }
               />
               <TextField
                 fullWidth
@@ -165,7 +165,10 @@ export const Registration = () => {
                 }
                 variant="standard"
                 margin={'normal'}
-                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                helperText={
+                  (formik.touched.confirmPassword && formik.errors.confirmPassword) ||
+                  (!errors.isPassValid && errors.passwordRegExp)
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
