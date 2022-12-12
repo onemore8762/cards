@@ -66,12 +66,15 @@
 }
 .backButton {
   position: absolute;
-  top: -50px;
-  left: 120px;
+  top: -100px;
+  left: 200px;
 
   display: flex;
 
-  border: 1px solid black;
+  /*border: 1px solid black;*/
+}
+.backButton:hover {
+  cursor: pointer;
 }
 .backButton_title {
   margin-left: 10px;
