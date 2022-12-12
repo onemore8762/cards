@@ -12,13 +12,20 @@ import {
   TextField,
 } from '@mui/material'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+
+import { registrationUser } from './registration-reducer'
 
 export const Registration = () => {
   const [showPassword, setShowPassword] = useState<any>({
     password: false,
     confirmPassword: false,
   })
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector(state => state.registration.isLoggedIn)
+  const errors = useAppSelector(state => state.registration.errors)
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +54,7 @@ export const Registration = () => {
       } else {
         let { confirmPassword, ...data } = values
 
+        dispatch(registrationUser(data))
         console.log(data)
       }
     },
@@ -59,6 +67,8 @@ export const Registration = () => {
       setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })
     }
   }
+
+  if (isLoggedIn) return <Navigate to={'/profile'}></Navigate>
 
   return (
     <Grid container justifyContent="center">

@@ -1,10 +1,12 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 
+import { registrationReducer } from '../features/Registration/registration-reducer'
+
 import { reducer } from './reducers'
 
 const rootReducer = combineReducers({
-  reducer: reducer,
+  registration: registrationReducer,
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
