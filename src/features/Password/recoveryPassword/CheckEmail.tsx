@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, Card, FormGroup, FormLabel } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 
-import checkEmail from '../../assets/images/checkEmail.svg'
+import checkEmail from '../../../assets/images/checkEmail.svg'
 
 export const CheckEmail = () => {
   return (
