@@ -70,7 +70,9 @@ export const NavBar = () => {
           <div className={style.navbarLogo}>
             {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
             <div className={style.navbarLogo_icon}>
-              <img src={icon} alt="logo" />
+              <a href="/">
+                <img src={icon} alt="logo" />
+              </a>
             </div>
             <Typography
               className={style.navbarLogo_title}
@@ -86,6 +88,7 @@ export const NavBar = () => {
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
+                marginLeft: '15px',
               }}
             >
               CARDS
