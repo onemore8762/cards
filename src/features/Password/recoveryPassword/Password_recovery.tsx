@@ -3,14 +3,22 @@ import React from 'react'
 import { Button, Card, FormGroup, FormLabel, TextField } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
+
+import { recoveryTC } from './recovery-reducer'
+
+type FormikErrorType = {
+  email?: string
+  password?: string
+  rememberMe?: boolean
+}
 
 export const PasswordRecovery = () => {
-  type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-  }
+  const dispatch = useAppDispatch()
+  const error = useAppSelector<string>(state => state.recovery.error)
+  const success = useAppSelector<boolean>(state => state.recovery.success)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -27,10 +35,14 @@ export const PasswordRecovery = () => {
       return errors
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      //dispatch(loginTC(values))
+      //alert(JSON.stringify(values))
+      dispatch(recoveryTC(values.email))
     },
   })
+
+  if (success) {
+    return <Navigate to={'/checkEmail'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -60,6 +72,7 @@ export const PasswordRecovery = () => {
               {formik.touched.email && formik.errors.email && (
                 <div style={{ color: 'red' }}>{formik.errors.email}</div>
               )}
+              {error && <div style={{ color: 'red' }}>{error}</div>}
               <FormLabel
                 sx={{
                   display: 'flex',

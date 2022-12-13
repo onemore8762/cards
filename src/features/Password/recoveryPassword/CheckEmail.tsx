@@ -2,10 +2,16 @@ import React from 'react'
 
 import { Button, Card, FormGroup, FormLabel } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 
 import checkEmail from '../../../assets/images/checkEmail.svg'
 
 export const CheckEmail = () => {
+  const navigane = useNavigate()
+  const buttonHandler = () => {
+    return navigane('/login')
+  }
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
@@ -54,9 +60,9 @@ export const CheckEmail = () => {
               </p>
             </FormLabel>
             <Button
-              type={'submit'}
               variant={'contained'}
               color={'primary'}
+              onClick={buttonHandler}
               sx={{ borderRadius: '30px', mt: 3 }}
             >
               Login
