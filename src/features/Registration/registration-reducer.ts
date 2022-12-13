@@ -50,6 +50,7 @@ export const registrationUser =
         dispatch(setIsLoggedIn(true))
       })
       .catch(error => {
+        console.log(error)
         dispatch(setErrors(error.response.data))
       })
   }
@@ -57,12 +58,7 @@ export const registrationUser =
 // type
 type stateType = {
   isLoggedIn: boolean
-  errors: {
-    error: string
-    isEmailValid: boolean
-    isPassValid: boolean
-    passwordRegExp: string
-  }
+  errors: TypeError
 }
 type AllActionsType = setIsLoggedInType | setErrorsType
 type setIsLoggedInType = ReturnType<typeof setIsLoggedIn>
