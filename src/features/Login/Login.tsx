@@ -56,7 +56,7 @@ export const Login = () => {
       }
       if (!values.password) {
         values.password = 'Required'
-      } else if (values.password.length < 3) {
+      } else if (values.password.length < 7) {
         errors.password = 'Invalid password'
       }
 
@@ -92,7 +92,7 @@ export const Login = () => {
               <FormLabel
                 sx={{ display: 'flex', justifyContent: 'center', color: '#000', fontSize: '26px' }}
               >
-                <h2>Sign in</h2>
+                <h2 style={{ fontSize: '26px', fontWeight: '600', lineHeight: '32px' }}>Sign in</h2>
               </FormLabel>
               <TextField
                 label="Email"

@@ -13,7 +13,7 @@ import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
 export const App = () => {
-  const [progress, setProgress] = useState<boolean>(true)
+  const [progress, setProgress] = useState<boolean>(false)
 
   return (
     <div className="App">
