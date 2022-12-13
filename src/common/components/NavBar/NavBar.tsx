@@ -64,7 +64,7 @@ export const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
-          sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 100px' }}
+          sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 120px' }}
         >
           {/*Логотип*/}
           <div className={style.navbarLogo}>
