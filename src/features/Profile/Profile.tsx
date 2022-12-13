@@ -12,6 +12,7 @@ import CardContent from '@mui/material/CardContent'
 // import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Unstable_Grid2'
 
+import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 
 import style from './Profile.module.css'
@@ -59,7 +60,8 @@ export const Profile = () => {
             <div className={style.avatar}>
               <div className={style.avatarImage}>
                 <img
-                  src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
+                  // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
+                  src={avatar}
                   alt="avatar"
                 />
               </div>

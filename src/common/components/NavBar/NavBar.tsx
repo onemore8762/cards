@@ -18,6 +18,9 @@ import Typography from '@mui/material/Typography'
 // import Grid from '@mui/material/Unstable_Grid2'
 import { useNavigate } from 'react-router-dom'
 
+import icon from '../../../assets/icons/newspaper.svg'
+import avatar from '../../../assets/images/avatar.jpg'
+
 import style from './NavBar.module.css'
 
 // const settings = ['Profile', 'Logout']
@@ -59,11 +62,20 @@ export const NavBar = () => {
   return (
     <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar
+          disableGutters
+          sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 120px' }}
+        >
           {/*Логотип*/}
           <div className={style.navbarLogo}>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
+            <div className={style.navbarLogo_icon}>
+              <a href="/">
+                <img src={icon} alt="logo" />
+              </a>
+            </div>
             <Typography
+              className={style.navbarLogo_title}
               variant="h6"
               noWrap
               component="a"
@@ -76,6 +88,7 @@ export const NavBar = () => {
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
+                marginLeft: '15px',
               }}
             >
               CARDS
@@ -93,7 +106,8 @@ export const NavBar = () => {
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
                       alt="User Avatar"
-                      src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
+                      src={avatar}
+                      // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
                     />
                   </IconButton>
                 </Tooltip>
