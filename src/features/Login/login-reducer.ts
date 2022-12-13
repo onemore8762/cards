@@ -25,7 +25,6 @@ export const loginTC = (values: LoginParamsType) => {
     loginApi
       .login(values)
       .then(res => {
-        debugger
         dispatch(loginAC(true))
       })
       .catch(e => {
@@ -37,6 +36,7 @@ export const loginTC = (values: LoginParamsType) => {
       })
   }
 }
+
 //type
 type ActionType = ReturnType<typeof loginAC>
 
