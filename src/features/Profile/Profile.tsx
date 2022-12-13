@@ -14,31 +14,23 @@ import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 import { logoutTC } from '../Login/login-reducer'
 
+import { setAuthUserDataTC, updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
-
-// const bull = (
-//   <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
-//     •
-//   </Box>
-// )
 
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const userName = useAppSelector<string>(state => state.auth.nickName)
-  const userEmail = useAppSelector<string | null>(state => state.auth.email)
-  const changeTaskTitleHandler = useCallback(
-    (newInputValue: string) => {
-      //dispatch(updateTaskTC(props.todolistId, props.task.id, { title: newInputValue }))
-    },
-    [
-      /*props.todolistId, props.task.id*/
-    ]
-  )
+  const userName = useAppSelector<string>(state => state.profile.name)
+  const userEmail = useAppSelector<string | null>(state => state.profile.email)
+
+  const changeTaskTitleHandler = useCallback((newInputValue: string) => {
+    dispatch(updateUserDataTC(newInputValue))
+  }, [])
+
   const logoutHandler = () => {
-    // alert('logout')
     dispatch(logoutTC())
+    navigate('/login')
   }
   const loadPhotoHandler = () => {
     alert('load photo')
@@ -51,6 +43,10 @@ export const Profile = () => {
   useEffect(() => {
     !isLoggedIn && navigate('/login')
   }, [isLoggedIn])
+
+  useEffect(() => {
+    dispatch(setAuthUserDataTC())
+  }, [])
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
@@ -65,11 +61,7 @@ export const Profile = () => {
 
             <div className={style.avatar}>
               <div className={style.avatarImage}>
-                <img
-                  // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                  src={avatar}
-                  alt="avatar"
-                />
+                <img src={avatar} alt="avatar" />
               </div>
               <div className={style.loadAvatar} onClick={loadPhotoHandler}>
                 <AddAPhoto className={style.loadAvatar_icon} />

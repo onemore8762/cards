@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-// import AdbIcon from '@mui/icons-material/Adb'
 import { Button } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
@@ -25,6 +24,7 @@ export const NavBar = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const userName = useAppSelector<string | null>(state => state.profile.name)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {
@@ -38,14 +38,13 @@ export const NavBar = () => {
       title: 'Logout',
       func: () => {
         dispatch(logoutTC())
-        console.log('logout')
+        navigate('/login')
         setAnchorElUser(null)
       },
     },
   ])
 
   const loginHandler = () => {
-    console.log('login')
     navigate('/login')
   }
 
@@ -65,7 +64,6 @@ export const NavBar = () => {
         >
           {/*Логотип*/}
           <div className={style.navbarLogo}>
-            {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
             <div className={style.navbarLogo_icon}>
               <a href="/">
                 <img src={icon} alt="logo" />
@@ -95,17 +93,13 @@ export const NavBar = () => {
           {isLoggedIn ? (
             <div className={style.navbarUser}>
               {/*Имя пользователя*/}
-              <div className={style.navbarUsername}>UserName</div>
+              <div className={style.navbarUsername}>{userName}</div>
 
               {/*Аватарка с меню*/}
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="User Avatar"
-                      src={avatar}
-                      // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                    />
+                    <Avatar src={avatar} alt="User Avatar" />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -125,10 +119,7 @@ export const NavBar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map(setting => (
-                    <MenuItem
-                      key={setting.title}
-                      /*onClick={handleCloseUserMenu}*/ onClick={setting.func}
-                    >
+                    <MenuItem key={setting.title} onClick={setting.func}>
                       <Typography textAlign="center">{setting.title}</Typography>
                     </MenuItem>
                   ))}

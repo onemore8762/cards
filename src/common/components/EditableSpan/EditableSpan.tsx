@@ -3,18 +3,12 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import { TextField } from '@mui/material'
 import Button from '@mui/material/Button'
-// import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 
 export type EditableSpanPropsType = {
   title: string
   onChangeInput: (newInputValue: string) => void
 }
-
-// пример компоненты
-// <EditableSpan title={props.task.title}
-//               onChangeInput={changeTaskTitleHandler}
-// />
 
 export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
