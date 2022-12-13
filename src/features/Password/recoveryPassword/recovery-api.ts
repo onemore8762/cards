@@ -1,5 +1,5 @@
 import { instance } from '../../../common/api/cards-api'
-
+//$token$
 export const recoveryApi = {
   recovery(email: string) {
     const values = {
@@ -7,7 +7,7 @@ export const recoveryApi = {
       from: 'test-front-admin',
       message: `<div style="background-color: lime; padding: 15px">
 password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
+<a href='http://localhost:3000/#/CreateNewPassword?token=$token$'>
 link</a>
 </div>`, // хтмп-письмо, вместо $token$ бэк вставит токен
     }
