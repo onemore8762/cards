@@ -7,9 +7,9 @@ import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import checkEmail from '../../../assets/images/checkEmail.svg'
 
 export const CheckEmail = () => {
-  const navigane = useNavigate()
+  const navigate = useNavigate()
   const buttonHandler = () => {
-    return navigane('/login')
+    return navigate('/login')
   }
 
   return (
