@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import './App.css'
+import { LinearProgress } from '@mui/material'
 import { NavLink, Route, Routes } from 'react-router-dom'
 
 import { NavBar } from '../common/components/NavBar/NavBar'
@@ -12,9 +13,12 @@ import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
 export const App = () => {
+  const [progress, setProgress] = useState<boolean>(true)
+
   return (
     <div className="App">
       <NavBar />
+      {progress ? <LinearProgress /> : ''}
       <div></div>
       <NavLink to={'/login'}>Login</NavLink>
       <NavLink to={'/profile'}>Profile</NavLink>
