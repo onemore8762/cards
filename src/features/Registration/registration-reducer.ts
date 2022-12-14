@@ -2,7 +2,7 @@ import { AppThunkType } from '../../app/store'
 
 import { registrationApi } from './registration-api'
 
-const LOGIN = 'LOGIN'
+const LOGIN = 'LOGIN/REGISTRATION'
 const ERRORS = 'ERRORS'
 
 const initialState: stateType = {

@@ -73,7 +73,7 @@ export const Registration = () => {
     }
   }
 
-  if (isLoggedIn) return <Navigate to={'/profile'}></Navigate>
+  if (isLoggedIn) return <Navigate to={'/login'}></Navigate>
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     formik.handleChange(e)
