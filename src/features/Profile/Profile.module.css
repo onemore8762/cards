@@ -18,6 +18,9 @@
 .avatar {
   height: 120px;
 }
+.avatar:hover {
+  cursor: pointer;
+}
 .avatarImage {
 
 }
@@ -66,8 +69,8 @@
 }
 .backButton {
   position: absolute;
-  top: -100px;
-  left: 180px;
+  top: -50px;
+  left: 210px;
 
   display: flex;
 

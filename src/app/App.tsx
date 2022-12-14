@@ -40,7 +40,7 @@ export const App = () => {
         <div>CheckEmail</div>
         <div>PasswordRecovery</div>
       </AdminMenu>
-      <div style={{ marginTop: '50px' }}>
+      <div style={{ marginTop: '100px' }}>
         <Routes>
           <Route path={'/login'} element={<Login />} />
           <Route path={'/profile'} element={<Profile />} />
@@ -51,7 +51,7 @@ export const App = () => {
           <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
         </Routes>
       </div>
-      <ErrorSnackBar />
+      {/*<ErrorSnackBar />*/}
     </div>
   )
 }
