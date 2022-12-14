@@ -1,10 +1,12 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
+import { authReducer } from '../features/Auth/auth-reducer'
 import { loginReducer } from '../features/Login/login-reducer'
 import { profileReducer } from '../features/Profile/profile-reducer'
 import { registrationReducer } from '../features/Registration/registration-reducer'
 
+import { appReducer } from './app-reducer'
 import { reducer } from './reducers'
 
 const rootReducer = combineReducers({
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   auth: loginReducer,
   registration: registrationReducer,
   profile: profileReducer,
+  app: appReducer,
+  authMe: authReducer,
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))

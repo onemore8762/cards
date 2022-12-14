@@ -6,6 +6,7 @@ const initialState: LoginInitialStateType = {
   isLoggedIn: false,
 }
 
+// reducer
 export const loginReducer = (
   state: LoginInitialStateType = initialState,
   action: LoginActionTypes

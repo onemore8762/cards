@@ -12,9 +12,10 @@ import { useNavigate } from 'react-router-dom'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { setAuthUserDataTC } from '../Auth/auth-reducer'
 import { logoutTC } from '../Login/login-reducer'
 
-import { setAuthUserDataTC, updateUserDataTC } from './profile-reducer'
+import { updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
 
 export const Profile = () => {
@@ -22,7 +23,7 @@ export const Profile = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const userName = useAppSelector<string>(state => state.profile.name)
-  const userEmail = useAppSelector<string | null>(state => state.profile.email)
+  const userEmail = useAppSelector<string | null>(state => state.authMe.email)
 
   const changeTaskTitleHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
