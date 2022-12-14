@@ -1,11 +1,12 @@
 import { Dispatch } from 'redux'
 
-import { appSetErrorAC, appSetStatusAC } from '../../app/app-reducer'
+import { appSetStatusAC } from '../../app/app-reducer'
 
 import { loginApi, LoginParamsType } from './login-api'
 
 const initialState: LoginInitialStateType = {
   isLoggedIn: false,
+  error: '',
 }
 
 // reducer
@@ -17,6 +18,9 @@ export const loginReducer = (
     case 'LOGIN': {
       return { ...state, isLoggedIn: action.isLoggedIn }
     }
+    case 'SET-ERROR': {
+      return { ...state, error: action.error }
+    }
     default:
       return state
   }
@@ -24,6 +28,7 @@ export const loginReducer = (
 
 //action
 export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
+export const setErrorAC = (error: string) => ({ type: 'SET-ERROR', error } as const)
 
 //thunk
 export const loginTC = (data: LoginParamsType) => {
@@ -40,10 +45,8 @@ export const loginTC = (data: LoginParamsType) => {
           ? e.response.data.error
           : e.message + ', more details in the console'
 
-        console.log(error)
-        // console.log(e)
-        // dispatch(appSetErrorAC(e.response.data.error))
-        // dispatch(appSetStatusAC('failed'))
+        dispatch(setErrorAC(error))
+        dispatch(appSetStatusAC('failed'))
       })
   }
 }
@@ -61,8 +64,6 @@ export const logoutTC = () => {
         const error = e.response
           ? e.response.data.error
           : e.message + ', more details in the console'
-
-        console.log(error)
       })
   }
 }
@@ -70,6 +71,7 @@ export const logoutTC = () => {
 //type
 export type LoginInitialStateType = {
   isLoggedIn: boolean
+  error: string
 }
 
-export type LoginActionType = ReturnType<typeof loginAC>
+export type LoginActionType = ReturnType<typeof loginAC> | ReturnType<typeof setErrorAC>

@@ -39,6 +39,7 @@ export const Login = () => {
   })
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
+  const authError = useAppSelector<string>(state => state.login.error)
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +56,7 @@ export const Login = () => {
         errors.email = 'Invalid email address'
       }
       if (!values.password) {
-        values.password = 'Required'
+        errors.password = 'Required'
       } else if (values.password.length < 7) {
         errors.password = 'Invalid password'
       }
@@ -88,7 +89,7 @@ export const Login = () => {
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card sx={{ width: 413, height: 552 }}>
           <form onSubmit={formik.handleSubmit}>
-            <FormGroup sx={{ p: 3 }}>
+            <FormGroup sx={{ p: 2 }}>
               <FormLabel
                 sx={{ display: 'flex', justifyContent: 'center', color: '#000', fontSize: '26px' }}
               >
@@ -98,12 +99,11 @@ export const Login = () => {
                 label="Email"
                 margin="normal"
                 variant="standard"
+                helperText={formik.touched.email && formik.errors.email && formik.errors.email}
                 {...formik.getFieldProps('email')}
-                onBlur={formik.handleBlur}
+                // onBlur={formik.handleBlur}
               />
-              {formik.touched.email && formik.errors.email && (
-                <div style={{ color: 'red' }}>{formik.errors.email}</div>
-              )}
+              {formik.touched.email && authError && <div style={{ color: 'red' }}>{authError}</div>}
               <FormControl variant="standard" margin="normal">
                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                 <Input

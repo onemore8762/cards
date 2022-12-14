@@ -1,5 +1,5 @@
 import { instance } from '../../../common/api/cards-api'
-//$token$
+
 export const recoveryApi = {
   recovery(email: string) {
     const values = {
