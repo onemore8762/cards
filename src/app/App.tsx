@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
 import './App.css'
 import { LinearProgress } from '@mui/material'
@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { AdminMenu } from '../common/components/adminMenu/AdminMenu'
 import { NavBar } from '../common/components/NavBar/NavBar'
+import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
@@ -14,13 +15,21 @@ import { PasswordRecovery } from '../features/Password/recoveryPassword/Password
 import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
+import { initializeAppTC } from './app-reducer'
+
 export const App = () => {
-  const [progress, setProgress] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+  const status = useAppSelector<string>(state => state.app.status)
+
+  // // инициализация приложения
+  // useEffect(() => {
+  //   dispatch(initializeAppTC())
+  // }, [])
 
   return (
     <div className="App">
       <NavBar />
-      {progress ? <LinearProgress /> : ''}
+      {status === 'loading' && <LinearProgress />}
       <div></div>
       <AdminMenu>
         <div>Login</div>

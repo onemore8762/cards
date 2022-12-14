@@ -1,33 +1,30 @@
 import React, { useState } from 'react'
 
-import AdbIcon from '@mui/icons-material/Adb'
-// import MenuIcon from '@mui/icons-material/Menu'
 import { Button } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
-// import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-// import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-// import Grid from '@mui/material/Unstable_Grid2'
 import { useNavigate } from 'react-router-dom'
 
 import icon from '../../../assets/icons/newspaper.svg'
 import avatar from '../../../assets/images/avatar.jpg'
+import { logoutTC } from '../../../features/Login/login-reducer'
+import { useAppDispatch, useAppSelector } from '../../hooks/react-redux-hooks'
 
 import style from './NavBar.module.css'
 
-// const settings = ['Profile', 'Logout']
-
 export const NavBar = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [login, setLogin] = useState<boolean>(true)
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const userName = useAppSelector<string>(state => state.authMe.name)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {
@@ -40,16 +37,15 @@ export const NavBar = () => {
     {
       title: 'Logout',
       func: () => {
-        // dispatch(logoutTC())
-        alert('logout')
+        dispatch(logoutTC())
+        navigate('/login')
         setAnchorElUser(null)
       },
     },
   ])
 
   const loginHandler = () => {
-    alert('login')
-    // dispatch(loginTC())
+    navigate('/login')
   }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -68,7 +64,6 @@ export const NavBar = () => {
         >
           {/*Логотип*/}
           <div className={style.navbarLogo}>
-            {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
             <div className={style.navbarLogo_icon}>
               <a href="/">
                 <img src={icon} alt="logo" />
@@ -95,20 +90,16 @@ export const NavBar = () => {
             </Typography>
           </div>
 
-          {login ? (
+          {isLoggedIn ? (
             <div className={style.navbarUser}>
               {/*Имя пользователя*/}
-              <div className={style.navbarUsername}>UserName</div>
+              <div className={style.navbarUsername}>{userName}</div>
 
               {/*Аватарка с меню*/}
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="User Avatar"
-                      src={avatar}
-                      // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                    />
+                    <Avatar src={avatar} alt="User Avatar" />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -128,10 +119,7 @@ export const NavBar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map(setting => (
-                    <MenuItem
-                      key={setting.title}
-                      /*onClick={handleCloseUserMenu}*/ onClick={setting.func}
-                    >
+                    <MenuItem key={setting.title} onClick={setting.func}>
                       <Typography textAlign="center">{setting.title}</Typography>
                     </MenuItem>
                   ))}

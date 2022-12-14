@@ -1,43 +1,39 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
-// import Box from '@mui/material/Box'
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
-// import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
 import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
 import Button from '@mui/material/Button'
-// import Button from '@mui/material-next/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-// import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Unstable_Grid2'
+import { useNavigate } from 'react-router-dom'
 
+import { initializeAppTC } from '../../app/app-reducer'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { setAuthUserDataTC, updateUserDataTC } from '../Auth/auth-reducer'
+import { logoutTC } from '../Login/login-reducer'
 
 import style from './Profile.module.css'
 
-// const bull = (
-//   <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
-//     •
-//   </Box>
-// )
-
 export const Profile = () => {
-  // const userName = useAppSelector<string>(state => state.profile.username)
-  // const userEmail = useAppSelector<string>(state => state.profile.useremail)
-  const changeTaskTitleHandler = useCallback(
-    (/*newInputValue: string*/) => {
-      //dispatch(updateTaskTC(props.todolistId, props.task.id, { title: newInputValue }))
-    },
-    [
-      /*props.todolistId, props.task.id*/
-    ]
-  )
-  const logoutHandler = () => {
-    alert('you logged out')
-    // dispatch(logoutTC())
-  }
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const userName = useAppSelector<string>(state => state.authMe.name)
+  const userEmail = useAppSelector<string>(state => state.authMe.email)
+
+  const changeTaskTitleHandler = useCallback((newInputValue: string) => {
+    dispatch(updateUserDataTC(newInputValue))
+  }, [])
+
+  const logoutHandler = useCallback(() => {
+    dispatch(logoutTC())
+    navigate('/login')
+  }, [])
+
   const loadPhotoHandler = () => {
     alert('load photo')
     // dispatch(loadPhotoAC())
@@ -45,6 +41,15 @@ export const Profile = () => {
   const backHandler = () => {
     alert('back')
   }
+
+  useEffect(() => {
+    !isLoggedIn && navigate('/login')
+  }, [isLoggedIn])
+
+  // чтобы данные в профайле были всегда в актуальном состоянии
+  useEffect(() => {
+    dispatch(setAuthUserDataTC())
+  }, [])
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
@@ -59,11 +64,7 @@ export const Profile = () => {
 
             <div className={style.avatar}>
               <div className={style.avatarImage}>
-                <img
-                  // src="https://ucarecdn.com/7f8adb46-03da-4508-8b63-bc1c2cf949b8/-/sharp/3/-/format/jpeg/-/progressive/yes/-/quality/normal/-/scale_crop/622x622/center/"
-                  src={avatar}
-                  alt="avatar"
-                />
+                <img src={avatar} alt="avatar" />
               </div>
               <div className={style.loadAvatar} onClick={loadPhotoHandler}>
                 <AddAPhoto className={style.loadAvatar_icon} />
@@ -71,10 +72,10 @@ export const Profile = () => {
             </div>
 
             <div className={style.userName}>
-              <EditableSpan title={'Name'} onChangeInput={changeTaskTitleHandler} />
+              <EditableSpan title={userName} onChangeInput={changeTaskTitleHandler} />
             </div>
 
-            <div className={style.userEmail}>myEmail@gmail.com</div>
+            <div className={style.userEmail}>{userEmail}</div>
             <div className={style.logoutButton}>
               <Button
                 startIcon={<ExitToAppOutlined sx={{ color: 'black' }} />}

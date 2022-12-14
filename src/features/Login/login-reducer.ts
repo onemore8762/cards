@@ -1,15 +1,21 @@
 import { Dispatch } from 'redux'
 
+import { appSetStatusAC } from '../../app/app-reducer'
+
 import { loginApi, LoginParamsType } from './login-api'
 
-const initialState: StateType = {
+const initialState: LoginInitialStateType = {
   isLoggedIn: false,
 }
 
-export const loginReducer = (state = initialState, action: ActionType) => {
+// reducer
+export const loginReducer = (
+  state: LoginInitialStateType = initialState,
+  action: LoginActionType
+): LoginInitialStateType => {
   switch (action.type) {
     case 'LOGIN': {
-      return { ...state, isLoggedIn: action.values }
+      return { ...state, isLoggedIn: action.isLoggedIn }
     }
     default:
       return state
@@ -17,15 +23,36 @@ export const loginReducer = (state = initialState, action: ActionType) => {
 }
 
 //action
-const loginAC = (values: boolean) => ({ type: 'LOGIN', values } as const)
+export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
 
 //thunk
-export const loginTC = (values: LoginParamsType) => {
-  return (dispatch: Dispatch<ActionType>) => {
+export const loginTC = (data: LoginParamsType) => {
+  return (dispatch: Dispatch /*<LoginActionTypes>*/) => {
+    dispatch(appSetStatusAC('loading'))
     loginApi
-      .login(values)
+      .login(data)
       .then(res => {
         dispatch(loginAC(true))
+        dispatch(appSetStatusAC('succeeded'))
+      })
+      .catch(e => {
+        const error = e.response
+          ? e.response.data.error
+          : e.message + ', more details in the console'
+
+        console.log(error)
+      })
+  }
+}
+
+export const logoutTC = () => {
+  return (dispatch: Dispatch /*<LoginActionTypes>*/) => {
+    dispatch(appSetStatusAC('loading'))
+    loginApi
+      .logout()
+      .then(res => {
+        dispatch(loginAC(false))
+        dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
         const error = e.response
@@ -38,24 +65,8 @@ export const loginTC = (values: LoginParamsType) => {
 }
 
 //type
-type ActionType = ReturnType<typeof loginAC>
-
-type StateType = {
+export type LoginInitialStateType = {
   isLoggedIn: boolean
 }
-// {
-//   _id: string
-//   email: string
-//   name: string
-//   avatar?: string
-//   publicCardPacksCount: number
-//   // количество колод
-//
-//   created: Date
-//   updated: Date
-//   isAdmin: boolean
-//   verified: boolean // подтвердил ли почту
-//   rememberMe: boolean
-//
-//   error?: string
-// }
+
+export type LoginActionType = ReturnType<typeof loginAC>

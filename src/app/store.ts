@@ -1,19 +1,21 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
+import { authReducer } from '../features/Auth/auth-reducer'
 import { loginReducer } from '../features/Login/login-reducer'
 import { newPasswordReducer } from '../features/Password/CreateNewPassword/new-password-reducer'
 import { recoveryReducer } from '../features/Password/recoveryPassword/recovery-reducer'
 import { registrationReducer } from '../features/Registration/registration-reducer'
 
-import { reducer } from './reducers'
+import { appReducer } from './app-reducer'
 
 const rootReducer = combineReducers({
-  reducer: reducer,
   auth: loginReducer,
   registration: registrationReducer,
   recovery: recoveryReducer,
   newPassword: newPasswordReducer,
+  app: appReducer,
+  authMe: authReducer,
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
@@ -28,6 +30,12 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
   unknown,
   AnyAction
 >
+
+// export type AppActionType =
+//   | LoginActionType
+//   | ProfileActionType
+//   | AuthActionType
+//   | ApplicationActionType
 
 // @ts-ignore
 window.store = store
