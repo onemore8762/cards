@@ -6,13 +6,13 @@ const initialState: ProfileInitialStateType = {
   _id: '',
   email: '',
   name: 'Enter Your Name',
-  avatar: '',
-  //publicCardPacksCount: 0, // количество колод
+  // avatar: null,
+  publicCardPacksCount: 0, // количество колод
 
-  //created: Date,
-  //updated: Date,
-  //isAdmin: boolean,
-  //verified: boolean, // подтвердил ли почту
+  // created: Date,
+  // updated: Date,
+  isAdmin: false,
+  verified: false, // подтвердил ли почту
   rememberMe: false,
 
   error: '',
@@ -29,6 +29,12 @@ export const profileReducer = (
         _id: action._id,
         email: action.email,
         name: action.name,
+        // avatar: action.avatar,
+        publicCardPacksCount: action.publicCardPacksCount,
+        // created: action.created,
+        // updated: action.updated,
+        isAdmin: action.isAdmin,
+        verified: action.verified,
         rememberMe: action.rememberMe,
       }
     }
@@ -44,7 +50,13 @@ export const profileReducer = (
 const setAuthUserDataAC = (
   _id: string,
   email: string,
-  name: string /*avatar?: string*/,
+  name: string,
+  // avatar: string | null,
+  publicCardPacksCount: number,
+  // created: Date,
+  // updated: Date,
+  isAdmin: boolean,
+  verified: boolean,
   rememberMe: boolean
 ) =>
   ({
@@ -53,6 +65,11 @@ const setAuthUserDataAC = (
     email,
     name,
     // avatar,
+    publicCardPacksCount,
+    isAdmin,
+    // created,
+    // updated,
+    verified,
     rememberMe,
   } as const)
 
@@ -64,9 +81,33 @@ export const setAuthUserDataTC = () => {
     profileApi
       .setUserData()
       .then(res => {
-        let { _id, email, name, /*avatar*/ rememberMe } = res.data
+        let {
+          _id,
+          email,
+          name,
+          // avatar,
+          publicCardPacksCount,
+          // created,
+          // updated,
+          isAdmin,
+          verified,
+          rememberMe,
+        } = res.data
 
-        dispatch(setAuthUserDataAC(_id, email, name /*, avatar*/, rememberMe))
+        dispatch(
+          setAuthUserDataAC(
+            _id,
+            email,
+            name,
+            // avatar,
+            publicCardPacksCount,
+            // created,
+            // updated,
+            isAdmin,
+            verified,
+            rememberMe
+          )
+        )
         // console.log(res.data)
       })
       .catch(e => {
@@ -103,13 +144,13 @@ type ProfileInitialStateType = {
   _id: string
   email: string
   name: string
-  avatar?: string
-  //publicCardPacksCount: number // количество колод
+  // avatar?: string | null
+  publicCardPacksCount: number // количество колод
 
-  //created: Date
-  //updated: Date
-  //isAdmin: boolean
-  //verified: boolean // подтвердил ли почту
+  // created: Date
+  // updated: Date
+  isAdmin: boolean
+  verified: boolean // подтвердил ли почту
   rememberMe: boolean
 
   error?: string

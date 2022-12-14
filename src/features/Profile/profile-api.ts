@@ -5,7 +5,7 @@ export const profileApi = {
   setUserData(/*data: LoginResponseType*/) {
     return instance.post<LoginResponseType>('auth/me', {})
   },
-  updateUserData(name: string) {
+  updateUserData(name: string /*, avatar: string*/) {
     return instance.put<UpdateDataResponseType>('auth/me', { name })
   },
 }

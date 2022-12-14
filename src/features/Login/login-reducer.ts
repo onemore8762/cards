@@ -4,9 +4,6 @@ import { loginApi, LoginParamsType } from './login-api'
 
 const initialState: LoginInitialStateType = {
   isLoggedIn: false,
-  // _id: null,
-  // email: null,
-  // name: '',
 }
 
 export const loginReducer = (
@@ -17,9 +14,6 @@ export const loginReducer = (
     case 'LOGIN': {
       return { ...state, isLoggedIn: action.isLoggedIn }
     }
-    // case 'SET_AUTH_USER_DATA': {
-    //   return { ...state, _id: action._id, email: action.email, name: action.name }
-    // }
     default:
       return state
   }
@@ -28,26 +22,13 @@ export const loginReducer = (
 //action
 const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
 
-// const setAuthUserDataAC = (_id: string, email: string, name: string /*avatar?: string*/) =>
-//   ({
-//     type: 'SET_AUTH_USER_DATA',
-//     _id,
-//     email,
-//     name,
-//     // avatar,
-//   } as const)
-
 //thunk
-export const loginTC = (values: LoginParamsType) => {
+export const loginTC = (data: LoginParamsType) => {
   return (dispatch: Dispatch<LoginActionTypes>) => {
     loginApi
-      .login(values)
+      .login(data)
       .then(res => {
         dispatch(loginAC(true))
-        // let { _id, email, name /*avatar*/ } = res.data
-
-        // dispatch(setAuthUserDataAC(_id, email, name /*, avatar*/))
-        // console.log(res.data)
       })
       .catch(e => {
         const error = e.response
@@ -77,11 +58,8 @@ export const logoutTC = () => {
 }
 
 //type
-type LoginActionTypes = ReturnType<typeof loginAC> /*| ReturnType<typeof setAuthUserDataAC>*/
+type LoginActionTypes = ReturnType<typeof loginAC>
 
 type LoginInitialStateType = {
   isLoggedIn: boolean
-  // _id: null | string
-  // email: null | string
-  // name: string
 }
