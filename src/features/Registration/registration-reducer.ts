@@ -2,10 +2,7 @@ import { AppThunkType } from '../../app/store'
 
 import { registrationApi } from './registration-api'
 
-const LOGIN = 'LOGIN/REGISTRATION'
-const ERRORS = 'ERRORS'
-
-const initialState: stateType = {
+const initialState: StateType = {
   isLoggedIn: false,
   errors: {
     error: '',
@@ -16,13 +13,13 @@ const initialState: stateType = {
 }
 
 export const registrationReducer = (
-  state: stateType = initialState,
+  state: StateType = initialState,
   action: AllActionsType
-): stateType => {
+): StateType => {
   switch (action.type) {
-    case LOGIN:
+    case 'REGISTRATION/LOGIN':
       return { ...state, isLoggedIn: action.isLoggedIn }
-    case ERRORS:
+    case 'ERRORS':
       return {
         ...state,
         errors: {
@@ -35,13 +32,13 @@ export const registrationReducer = (
   }
 }
 // actions
-const setIsLoggedIn = (isLoggedIn: boolean) => ({ type: LOGIN, isLoggedIn } as const)
+const setIsLoggedIn = (isLoggedIn: boolean) => ({ type: 'REGISTRATION/LOGIN', isLoggedIn } as const)
 
-export const setErrors = (errors: TypeError) => ({ type: ERRORS, payload: errors } as const)
+export const setErrors = (errors: TypeError) => ({ type: 'ERRORS', payload: errors } as const)
 
 // thunk
 export const registrationUser =
-  (data: userData): AppThunkType =>
+  (data: UserData): AppThunkType =>
   dispatch => {
     registrationApi
       .registration(data)
@@ -56,14 +53,12 @@ export const registrationUser =
   }
 
 // type
-type stateType = {
+type StateType = {
   isLoggedIn: boolean
   errors: TypeError
 }
-type AllActionsType = setIsLoggedInType | setErrorsType
-type setIsLoggedInType = ReturnType<typeof setIsLoggedIn>
-type setErrorsType = ReturnType<typeof setErrors>
-export type userData = {
+type AllActionsType = ReturnType<typeof setIsLoggedIn> | ReturnType<typeof setErrors>
+export type UserData = {
   email: string
   password: string
 }
