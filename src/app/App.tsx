@@ -11,8 +11,8 @@ import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hook
 import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
-import { CheckEmail } from '../features/Password/recoveryPassword/CheckEmail'
-import { PasswordRecovery } from '../features/Password/recoveryPassword/Password_recovery'
+import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
+import { PasswordRecovery } from '../features/Password/RecoveryPassword/Password_recovery'
 import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 

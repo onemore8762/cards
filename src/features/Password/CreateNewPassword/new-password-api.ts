@@ -1,15 +1,14 @@
 import { instance } from '../../../common/api/cards-api'
 
-import { setPasswordType } from './new-password-reducer'
+import { SetPasswordType } from './new-password-reducer'
 
 export const passwordApi = {
-  setNewPassword(data: setPasswordType) {
+  setNewPassword(data: SetPasswordType) {
     return instance.post<ResponseType>('auth/set-new-password', data)
   },
 }
 
 //type
-
 export type ResponseType = {
   info: string
   error: string

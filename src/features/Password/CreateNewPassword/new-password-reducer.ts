@@ -2,34 +2,33 @@ import { AppThunkType } from '../../../app/store'
 
 import { passwordApi } from './new-password-api'
 
-const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD'
-const SET_ERROR = 'SET_ERROR'
-
-const initialState: stateType = {
+const initialState: NewPasswordStateType = {
   onSuccess: false,
   error: '',
 }
 
+// reducer
 export const newPasswordReducer = (
-  state: stateType = initialState,
-  action: AllActionsType
-): stateType => {
+  state: NewPasswordStateType = initialState,
+  action: NewPasswordActionType
+): NewPasswordStateType => {
   switch (action.type) {
-    case SET_NEW_PASSWORD:
+    case 'SET_NEW_PASSWORD':
       return { ...state, onSuccess: action.onSuccess }
-    case SET_ERROR:
+    case 'SET_ERROR':
       return { ...state, error: action.error }
     default:
       return state
   }
 }
 // actions
-const setPasswordSuccess = (onSuccess: boolean) => ({ type: SET_NEW_PASSWORD, onSuccess } as const)
-const setPasswordError = (error: string) => ({ type: SET_ERROR, error } as const)
+export const setPasswordSuccess = (onSuccess: boolean) =>
+  ({ type: 'SET_NEW_PASSWORD', onSuccess } as const)
+export const setPasswordError = (error: string) => ({ type: 'SET_ERROR', error } as const)
 
 // thunk
 export const setNewPassword =
-  (data: setPasswordType): AppThunkType =>
+  (data: SetPasswordType): AppThunkType =>
   dispatch => {
     passwordApi
       .setNewPassword(data)
@@ -41,15 +40,17 @@ export const setNewPassword =
       })
   }
 
-// type
-type stateType = {
+// types
+export type NewPasswordStateType = {
   onSuccess: boolean
   error: string
 }
-type AllActionsType = SetIsLoggedInType | setPasswordErrorType
-type SetIsLoggedInType = ReturnType<typeof setPasswordSuccess>
-type setPasswordErrorType = ReturnType<typeof setPasswordError>
-export type setPasswordType = {
+
+export type SetPasswordType = {
   password: string
   resetPasswordToken: string
 }
+
+export type NewPasswordActionType =
+  | ReturnType<typeof setPasswordSuccess>
+  | ReturnType<typeof setPasswordError>

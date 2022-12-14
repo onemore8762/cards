@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux'
 
+import { AppThunkType } from '../../app/store'
+
 import { authApi } from './auth-api'
 
 const initialState: AuthInitialStateType = {
@@ -15,7 +17,7 @@ const initialState: AuthInitialStateType = {
   verified: false, // подтвердил ли почту
   rememberMe: false,
 
-  error: '',
+  // error: '',
 }
 
 // reducer
@@ -37,6 +39,7 @@ export const authReducer = (
         isAdmin: action.isAdmin,
         verified: action.verified,
         rememberMe: action.rememberMe,
+        // error: action.error,
       }
     }
     case 'UPDATE_USER_DATA': {
@@ -47,8 +50,8 @@ export const authReducer = (
   }
 }
 
-//action
-const setAuthUserDataAC = (
+//actions
+export const setAuthUserDataAC = (
   _id: string,
   email: string,
   name: string,
@@ -59,6 +62,7 @@ const setAuthUserDataAC = (
   isAdmin: boolean,
   verified: boolean,
   rememberMe: boolean
+  // error: string
 ) =>
   ({
     type: 'SET_AUTH_USER_DATA',
@@ -72,13 +76,14 @@ const setAuthUserDataAC = (
     // updated,
     verified,
     rememberMe,
+    // error,
   } as const)
 
 const updateUserDataAC = (name: string) => ({ type: 'UPDATE_USER_DATA', name } as const)
 
 //thunk
-export const setAuthUserDataTC = () => {
-  return (dispatch: Dispatch /*<AuthActionType>*/) => {
+export const setAuthUserDataTC = (): AppThunkType => {
+  return (dispatch: Dispatch) => {
     authApi
       .authMe()
       .then(res => {
@@ -93,6 +98,7 @@ export const setAuthUserDataTC = () => {
           isAdmin,
           verified,
           rememberMe,
+          // error,
         } = res.data
 
         dispatch(
@@ -107,6 +113,7 @@ export const setAuthUserDataTC = () => {
             isAdmin,
             verified,
             rememberMe
+            // error
           )
         )
         // console.log(res.data)
@@ -121,8 +128,8 @@ export const setAuthUserDataTC = () => {
   }
 }
 
-export const updateUserDataTC = (name: string) => {
-  return (dispatch: Dispatch /*<ProfileActionTypes>*/) => {
+export const updateUserDataTC = (name: string): AppThunkType => {
+  return (dispatch: Dispatch) => {
     authApi
       .updateUserData(name)
       .then(res => {
@@ -138,7 +145,7 @@ export const updateUserDataTC = (name: string) => {
   }
 }
 
-//type
+//types
 export type AuthInitialStateType = {
   _id: string
   email: string

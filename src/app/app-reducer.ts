@@ -3,6 +3,8 @@ import { Dispatch } from 'redux'
 import { authApi } from '../features/Auth/auth-api'
 import { loginAC } from '../features/Login/login-reducer'
 
+import { AppThunkType } from './store'
+
 const initialState: AppInitialStateType = {
   status: 'idle', // idle - начальное значение (простаивание)
   error: null,
@@ -29,7 +31,7 @@ export const appReducer = (
   }
 }
 
-// action
+// actions
 export const appSetStatusAC = (status: AppInitialStateStatusType) =>
   ({
     type: 'APP/SET_STATUS',
@@ -49,8 +51,8 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
   } as const)
 
 // thunk
-export const initializeAppTC = () => {
-  return (dispatch: Dispatch /*<AppInitialStateStatusType & LoginActionType>*/) => {
+export const initializeAppTC = (): AppThunkType => {
+  return (dispatch: Dispatch) => {
     dispatch(appSetStatusAC('loading'))
     authApi
       .authMe()
@@ -82,8 +84,8 @@ export const initializeAppTC = () => {
   }
 }
 
-// type
-type AppInitialStateType = {
+// types
+export type AppInitialStateType = {
   // происходит ли сейчас взаимодействие с сервером
   status: AppInitialStateStatusType
   // текст ошибки запишем сюда
@@ -91,7 +93,7 @@ type AppInitialStateType = {
   isInitialized: boolean
 }
 
-type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type ApplicationActionType =
   | ReturnType<typeof appSetStatusAC>
