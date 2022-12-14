@@ -5,7 +5,7 @@ import { authApi } from './auth-api'
 const initialState: AuthInitialStateType = {
   _id: '',
   email: '',
-  name: '',
+  name: 'Enter Your Name',
   // avatar: null,
   publicCardPacksCount: 0, // количество колод
 
@@ -21,7 +21,7 @@ const initialState: AuthInitialStateType = {
 // reducer
 export const authReducer = (
   state: AuthInitialStateType = initialState,
-  action: AuthActionTypes
+  action: AuthActionType
 ): AuthInitialStateType => {
   switch (action.type) {
     case 'SET_AUTH_USER_DATA': {
@@ -39,9 +39,9 @@ export const authReducer = (
         rememberMe: action.rememberMe,
       }
     }
-    // case 'UPDATE_USER_DATA': {
-    //   return { ...state, name: action.name }
-    // }
+    case 'UPDATE_USER_DATA': {
+      return { ...state, name: action.name }
+    }
     default:
       return state
   }
@@ -74,13 +74,13 @@ const setAuthUserDataAC = (
     rememberMe,
   } as const)
 
-// const updateUserDataAC = (name: string) => ({ type: 'UPDATE_USER_DATA', name } as const)
+const updateUserDataAC = (name: string) => ({ type: 'UPDATE_USER_DATA', name } as const)
 
 //thunk
 export const setAuthUserDataTC = () => {
-  return (dispatch: Dispatch<AuthActionTypes>) => {
+  return (dispatch: Dispatch /*<AuthActionType>*/) => {
     authApi
-      .setUserData()
+      .authMe()
       .then(res => {
         let {
           _id,
@@ -121,29 +121,25 @@ export const setAuthUserDataTC = () => {
   }
 }
 
-// export const updateUserDataTC = (name: string) => {
-//   return (dispatch: Dispatch<ProfileActionTypes>) => {
-//     profileApi
-//       .updateUserData(name)
-//       .then(res => {
-//         dispatch(updateUserDataAC(name))
-//       })
-//       .catch(e => {
-//         const error = e.response
-//           ? e.response.data.error
-//           : e.message + ', more details in the console'
-//
-//         console.log(error)
-//       })
-//   }
-// }
+export const updateUserDataTC = (name: string) => {
+  return (dispatch: Dispatch /*<ProfileActionTypes>*/) => {
+    authApi
+      .updateUserData(name)
+      .then(res => {
+        dispatch(updateUserDataAC(name))
+      })
+      .catch(e => {
+        const error = e.response
+          ? e.response.data.error
+          : e.message + ', more details in the console'
+
+        console.log(error)
+      })
+  }
+}
 
 //type
-type AuthActionTypes = /*ReturnType<typeof updateUserDataAC> |*/ ReturnType<
-  typeof setAuthUserDataAC
->
-
-type AuthInitialStateType = {
+export type AuthInitialStateType = {
   _id: string
   email: string
   name: string
@@ -158,3 +154,7 @@ type AuthInitialStateType = {
 
   error?: string
 }
+
+export type AuthActionType =
+  | ReturnType<typeof updateUserDataAC>
+  | ReturnType<typeof setAuthUserDataAC>

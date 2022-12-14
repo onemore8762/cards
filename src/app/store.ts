@@ -3,7 +3,6 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { authReducer } from '../features/Auth/auth-reducer'
 import { loginReducer } from '../features/Login/login-reducer'
-import { profileReducer } from '../features/Profile/profile-reducer'
 import { registrationReducer } from '../features/Registration/registration-reducer'
 
 import { appReducer } from './app-reducer'
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   reducer: reducer,
   auth: loginReducer,
   registration: registrationReducer,
-  profile: profileReducer,
   app: appReducer,
   authMe: authReducer,
 })
@@ -30,6 +28,12 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
   unknown,
   AnyAction
 >
+
+// export type AppActionType =
+//   | LoginActionType
+//   | ProfileActionType
+//   | AuthActionType
+//   | ApplicationActionType
 
 // @ts-ignore
 window.store = store

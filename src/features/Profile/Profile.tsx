@@ -12,18 +12,17 @@ import { useNavigate } from 'react-router-dom'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { setAuthUserDataTC } from '../Auth/auth-reducer'
+import { setAuthUserDataTC, updateUserDataTC } from '../Auth/auth-reducer'
 import { logoutTC } from '../Login/login-reducer'
 
-import { updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const userName = useAppSelector<string>(state => state.profile.name)
-  const userEmail = useAppSelector<string | null>(state => state.authMe.email)
+  const userName = useAppSelector<string>(state => state.authMe.name)
+  const userEmail = useAppSelector<string>(state => state.authMe.email)
 
   const changeTaskTitleHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
@@ -45,6 +44,7 @@ export const Profile = () => {
     !isLoggedIn && navigate('/login')
   }, [isLoggedIn])
 
+  // чтобы данные в профайле были всегда в актуальном состоянии
   useEffect(() => {
     dispatch(setAuthUserDataTC())
   }, [])

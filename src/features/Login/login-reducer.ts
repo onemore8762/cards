@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux'
 
+import { appSetStatusAC } from '../../app/app-reducer'
+
 import { loginApi, LoginParamsType } from './login-api'
 
 const initialState: LoginInitialStateType = {
@@ -9,7 +11,7 @@ const initialState: LoginInitialStateType = {
 // reducer
 export const loginReducer = (
   state: LoginInitialStateType = initialState,
-  action: LoginActionTypes
+  action: LoginActionType
 ): LoginInitialStateType => {
   switch (action.type) {
     case 'LOGIN': {
@@ -21,15 +23,17 @@ export const loginReducer = (
 }
 
 //action
-const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
+export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
 
 //thunk
 export const loginTC = (data: LoginParamsType) => {
-  return (dispatch: Dispatch<LoginActionTypes>) => {
+  return (dispatch: Dispatch /*<LoginActionTypes>*/) => {
+    dispatch(appSetStatusAC('loading'))
     loginApi
       .login(data)
       .then(res => {
         dispatch(loginAC(true))
+        dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
         const error = e.response
@@ -42,11 +46,13 @@ export const loginTC = (data: LoginParamsType) => {
 }
 
 export const logoutTC = () => {
-  return (dispatch: Dispatch<LoginActionTypes>) => {
+  return (dispatch: Dispatch /*<LoginActionTypes>*/) => {
+    dispatch(appSetStatusAC('loading'))
     loginApi
       .logout()
       .then(res => {
         dispatch(loginAC(false))
+        dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
         const error = e.response
@@ -59,8 +65,8 @@ export const logoutTC = () => {
 }
 
 //type
-type LoginActionTypes = ReturnType<typeof loginAC>
-
-type LoginInitialStateType = {
+export type LoginInitialStateType = {
   isLoggedIn: boolean
 }
+
+export type LoginActionType = ReturnType<typeof loginAC>
