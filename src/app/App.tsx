@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 
 import './App.css'
 import { LinearProgress } from '@mui/material'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
+import { AdminMenu } from '../common/components/adminMenu/AdminMenu'
 import { NavBar } from '../common/components/NavBar/NavBar'
 import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
@@ -21,22 +22,23 @@ export const App = () => {
       <NavBar />
       {progress ? <LinearProgress /> : ''}
       <div></div>
-      <NavLink to={'/login'}>Login</NavLink>
-      <NavLink to={'/profile'}>Profile</NavLink>
-      <NavLink to={'/Registration'}>Registration</NavLink>
-      <NavLink to={'/Error404'}>Error404</NavLink>
-      <NavLink to={'/CreateNewPassword'}>CreateNewPassword</NavLink>
-      <NavLink to={'/checkEmail'}>checkEmail</NavLink>
-      <NavLink to={'/PasswordRecovery'}>PasswordRecovery</NavLink>
-      <div>-------------</div>
+      <AdminMenu>
+        <div>Login</div>
+        <div>Profile</div>
+        <div>Registration</div>
+        <div>Error404</div>
+        <div>CreateNewPassword</div>
+        <div>CheckEmail</div>
+        <div>PasswordRecovery</div>
+      </AdminMenu>
       <Routes>
         <Route path={'/login'} element={<Login />} />
-        <Route path={'/Profile'} element={<Profile />} />
-        <Route path={'/Registration'} element={<Registration />} />
-        <Route path={'/Error404'} element={<Error404 />} />
+        <Route path={'/profile'} element={<Profile />} />
+        <Route path={'/registration'} element={<Registration />} />
+        <Route path={'/error404'} element={<Error404 />} />
         <Route path={'/checkEmail'} element={<CheckEmail />} />
-        <Route path={'/CreateNewPassword'} element={<CreateNewPassword />} />
-        <Route path={'/PasswordRecovery'} element={<PasswordRecovery />} />
+        <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
+        <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
       </Routes>
     </div>
   )
