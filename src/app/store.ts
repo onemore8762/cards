@@ -10,7 +10,7 @@ import { registrationReducer } from '../features/Registration/registration-reduc
 import { appReducer } from './app-reducer'
 
 const rootReducer = combineReducers({
-  auth: loginReducer,
+  login: loginReducer,
   registration: registrationReducer,
   recovery: recoveryReducer,
   newPassword: newPasswordReducer,

@@ -21,7 +21,7 @@ import style from './Profile.module.css'
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
   const userName = useAppSelector<string>(state => state.authMe.name)
   const userEmail = useAppSelector<string>(state => state.authMe.email)
 

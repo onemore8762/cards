@@ -38,7 +38,7 @@ export const Login = () => {
     showPassword: false,
   })
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
