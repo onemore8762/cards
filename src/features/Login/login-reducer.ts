@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { appSetStatusAC } from '../../app/app-reducer'
+import { appSetErrorAC, appSetStatusAC } from '../../app/app-reducer'
 
 import { loginApi, LoginParamsType } from './login-api'
 
@@ -41,6 +41,9 @@ export const loginTC = (data: LoginParamsType) => {
           : e.message + ', more details in the console'
 
         console.log(error)
+        // console.log(e)
+        // dispatch(appSetErrorAC(e.response.data.error))
+        // dispatch(appSetStatusAC('failed'))
       })
   }
 }

@@ -5,6 +5,7 @@ import { LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
 import { AdminMenu } from '../common/components/adminMenu/AdminMenu'
+import { ErrorSnackBar } from '../common/components/ErrorSnackBar/ErrorSnackBar'
 import { NavBar } from '../common/components/NavBar/NavBar'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 import { Error404 } from '../features/Error404/Error404'
@@ -30,7 +31,6 @@ export const App = () => {
     <div className="App">
       <NavBar />
       {status === 'loading' && <LinearProgress />}
-      <div></div>
       <AdminMenu>
         <div>Login</div>
         <div>Profile</div>
@@ -40,15 +40,18 @@ export const App = () => {
         <div>CheckEmail</div>
         <div>PasswordRecovery</div>
       </AdminMenu>
-      <Routes>
-        <Route path={'/login'} element={<Login />} />
-        <Route path={'/profile'} element={<Profile />} />
-        <Route path={'/registration'} element={<Registration />} />
-        <Route path={'/error404'} element={<Error404 />} />
-        <Route path={'/checkEmail'} element={<CheckEmail />} />
-        <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
-        <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
-      </Routes>
+      <div style={{ marginTop: '50px' }}>
+        <Routes>
+          <Route path={'/login'} element={<Login />} />
+          <Route path={'/profile'} element={<Profile />} />
+          <Route path={'/registration'} element={<Registration />} />
+          <Route path={'/error404'} element={<Error404 />} />
+          <Route path={'/checkEmail'} element={<CheckEmail />} />
+          <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
+          <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
+        </Routes>
+      </div>
+      <ErrorSnackBar />
     </div>
   )
 }
