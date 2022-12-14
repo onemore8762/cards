@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { appSetStatusAC } from '../../app/app-reducer'
+import { appSetInitializedAC, appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
 
 import { loginApi, LoginParamsType } from './login-api'
@@ -65,6 +65,9 @@ export const logoutTC = (): AppThunkType => {
         const error = e.response
           ? e.response.data.error
           : e.message + ', more details in the console'
+
+        dispatch(setErrorAC(error))
+        dispatch(appSetStatusAC('failed'))
       })
   }
 }

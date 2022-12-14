@@ -53,14 +53,14 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
 // thunk
 export const initializeAppTC = (): AppThunkType => {
   return (dispatch: Dispatch) => {
-    dispatch(appSetStatusAC('loading'))
+    // dispatch(appSetStatusAC('loading'))
     authApi
       .authMe()
       .then(res => {
         // if (res.data.resultCode === 0) {
         dispatch(loginAC(true))
-        dispatch(appSetStatusAC('succeeded'))
         dispatch(appSetInitializedAC(true))
+        // dispatch(appSetStatusAC('succeeded'))
         // } else {
         // handleServerAppError(response.data, dispatch);
         // if (response.data.messages) {
@@ -78,8 +78,8 @@ export const initializeAppTC = (): AppThunkType => {
 
         console.log(error)
         // handleServerNetworkError(error, dispatch);
-        // dispatch(appSetErrorAC(error.message));
-        // dispatch(appSetStatusAC('failed'));
+        dispatch(appSetErrorAC(error))
+        dispatch(appSetStatusAC('failed'))
       })
   }
 }

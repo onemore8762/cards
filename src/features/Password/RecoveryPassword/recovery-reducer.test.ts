@@ -10,9 +10,7 @@ beforeEach(() => {
 })
 
 test('password should be recover', () => {
-  const error = 'some error'
-  const success = true
-  const endState = recoveryReducer(startState, recoveryAC(error, success))
+  const endState = recoveryReducer(startState, recoveryAC('some error', true))
 
   expect(endState.error).toBe('some error')
   expect(endState.success).toBe(true)

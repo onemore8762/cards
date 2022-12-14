@@ -1,18 +1,20 @@
 import { Dispatch } from 'redux'
 
+import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
+import { setErrorAC } from '../Login/login-reducer'
 
 import { authApi } from './auth-api'
 
 const initialState: AuthInitialStateType = {
-  _id: '',
-  email: '',
-  name: 'Enter Your Name',
+  _id: null,
+  email: null,
+  name: '',
   // avatar: null,
   publicCardPacksCount: 0, // количество колод
 
-  // created: Date,
-  // updated: Date,
+  // created: null,
+  // updated: null,
   isAdmin: false,
   verified: false, // подтвердил ли почту
   rememberMe: false,
@@ -52,13 +54,13 @@ export const authReducer = (
 
 //actions
 export const setAuthUserDataAC = (
-  _id: string,
-  email: string,
+  _id: string | null,
+  email: string | null,
   name: string,
   // avatar: string | null,
   publicCardPacksCount: number,
-  // created: Date,
-  // updated: Date,
+  // created: string | null,
+  // updated: string | null,
   isAdmin: boolean,
   verified: boolean,
   rememberMe: boolean
@@ -130,10 +132,12 @@ export const setAuthUserDataTC = (): AppThunkType => {
 
 export const updateUserDataTC = (name: string): AppThunkType => {
   return (dispatch: Dispatch) => {
+    dispatch(appSetStatusAC('loading'))
     authApi
       .updateUserData(name)
       .then(res => {
         dispatch(updateUserDataAC(name))
+        dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
         const error = e.response
@@ -141,20 +145,22 @@ export const updateUserDataTC = (name: string): AppThunkType => {
           : e.message + ', more details in the console'
 
         console.log(error)
+        dispatch(setErrorAC(error))
+        dispatch(appSetStatusAC('failed'))
       })
   }
 }
 
 //types
 export type AuthInitialStateType = {
-  _id: string
-  email: string
+  _id: string | null
+  email: string | null
   name: string
   // avatar?: string | null
   publicCardPacksCount: number // количество колод
 
-  // created: Date
-  // updated: Date
+  // created: string | null
+  // updated: string | null
   isAdmin: boolean
   verified: boolean // подтвердил ли почту
   rememberMe: boolean

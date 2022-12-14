@@ -14,8 +14,7 @@ beforeEach(() => {
 })
 
 test('new password should be received', () => {
-  const onSuccess = true
-  const endState = newPasswordReducer(startState, setPasswordSuccess(onSuccess))
+  const endState = newPasswordReducer(startState, setPasswordSuccess(true))
 
   expect(endState.onSuccess).toBe(true)
 })

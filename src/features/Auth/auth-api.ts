@@ -2,7 +2,7 @@ import { instance } from '../../common/api/cards-api'
 import { LoginResponseType } from '../Login/login-api'
 
 export const authApi = {
-  authMe(/*data: LoginResponseType*/) {
+  authMe() {
     return instance.post<LoginResponseType>('auth/me', {})
   },
   updateUserData(name: string /*, avatar: string*/) {

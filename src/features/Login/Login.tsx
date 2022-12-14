@@ -87,13 +87,13 @@ export const Login = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: 413, height: 552 }}>
-          <form onSubmit={formik.handleSubmit}>
+        <Card sx={{ width: '413px', height: '528px' }}>
+          <form onSubmit={formik.handleSubmit} style={{ padding: '10px 20px 0 20px' }}>
             <FormGroup sx={{ p: 2 }}>
               <FormLabel
                 sx={{ display: 'flex', justifyContent: 'center', color: '#000', fontSize: '26px' }}
               >
-                <h2 style={{ fontSize: '26px', fontWeight: '600', lineHeight: '32px' }}>Sign in</h2>
+                <span style={{ color: '#000', fontSize: '26px', fontWeight: '600' }}>Sign In</span>
               </FormLabel>
               <TextField
                 label="Email"
@@ -111,6 +111,7 @@ export const Login = () => {
                   type={values.showPassword ? 'text' : 'password'}
                   {...formik.getFieldProps('password')}
                   onBlur={formik.handleBlur}
+                  style={{ marginBottom: '20px' }}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -118,7 +119,11 @@ export const Login = () => {
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {values.showPassword ? (
+                          <VisibilityOff sx={{ color: 'black' }} />
+                        ) : (
+                          <Visibility sx={{ color: 'black' }} />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -162,8 +167,8 @@ export const Login = () => {
                   mb: 5,
                 }}
               >
-                <p>Already have an account?</p>
-                <NavLink to={'/Registration'} style={{ color: '#366EFF' }}>
+                <p style={{ fontWeight: '600', opacity: '50%' }}>Already have an account?</p>
+                <NavLink to={'/Registration'} style={{ color: '#366EFF', fontWeight: '600' }}>
                   Sign Up
                 </NavLink>
               </FormLabel>

@@ -1,19 +1,17 @@
-import { loginAC, LoginInitialStateType, loginReducer, setErrorAC } from '../Login/login-reducer'
-
 import { AuthInitialStateType, authReducer, setAuthUserDataAC } from './auth-reducer'
 
 let startState: AuthInitialStateType
 
 beforeEach(() => {
   startState = {
-    _id: '',
-    email: '',
+    _id: null,
+    email: null,
     name: 'Enter Your Name',
     // avatar: null,
     publicCardPacksCount: 0, // количество колод
 
-    // created: Date,
-    // updated: Date,
+    // created: null,
+    // updated: null,
     isAdmin: false,
     verified: false, // подтвердил ли почту
     rememberMe: false,
@@ -30,8 +28,8 @@ test('user should be authorized', () => {
     // avatar: null,
     publicCardPacksCount: 0, // количество колод
 
-    // created: Date,
-    // updated: Date,
+    // created: '2022-12-14',
+    // updated: '2022-12-15',
     isAdmin: false,
     verified: false, // подтвердил ли почту
     rememberMe: false,
@@ -45,6 +43,8 @@ test('user should be authorized', () => {
       action.email,
       action.name,
       action.publicCardPacksCount,
+      // action.created,
+      // action.updated,
       action.isAdmin,
       action.verified,
       action.rememberMe
@@ -53,6 +53,6 @@ test('user should be authorized', () => {
   )
 
   expect(endState._id).toBe('1')
-  expect(endState._id).toBe('newUser@google.com')
+  expect(endState._id).toBe('newUser@gmail.com')
   expect(endState.name).toBe('New User')
 })
