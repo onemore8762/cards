@@ -20,10 +20,10 @@ export const App = () => {
   const dispatch = useAppDispatch()
   const status = useAppSelector<string>(state => state.app.status)
 
-  // инициализация приложения
-  useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
+  // // инициализация приложения
+  // useEffect(() => {
+  //   dispatch(initializeAppTC())
+  // }, [])
 
   return (
     <div className="App">

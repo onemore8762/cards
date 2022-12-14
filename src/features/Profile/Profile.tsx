@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useNavigate } from 'react-router-dom'
 
+import { initializeAppTC } from '../../app/app-reducer'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
@@ -28,10 +29,11 @@ export const Profile = () => {
     dispatch(updateUserDataTC(newInputValue))
   }, [])
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     dispatch(logoutTC())
     navigate('/login')
-  }
+  }, [])
+
   const loadPhotoHandler = () => {
     alert('load photo')
     // dispatch(loadPhotoAC())
