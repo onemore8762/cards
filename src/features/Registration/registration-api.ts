@@ -1,9 +1,9 @@
 import { instance } from '../../common/api/cards-api'
 
-import { userData } from './registration-reducer'
+import { UserData } from './registration-reducer'
 
 export const registrationApi = {
-  registration(data: userData) {
+  registration(data: UserData) {
     return instance.post<ResponseTypeSuccess>('auth/register', data)
   },
 }
