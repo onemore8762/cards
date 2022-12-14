@@ -30,8 +30,8 @@ export const ErrorSnackBar = () => {
       return
     }
     // setOpen(false);
-    // @ts-ignore
-    dispatch(appSetErrorAC({ error: null }))
+
+    // dispatch(appSetErrorAC({ error: null })) // ошибка типизации
   }
 
   return (
