@@ -6,10 +6,8 @@ import { loginReducer } from '../features/Login/login-reducer'
 import { registrationReducer } from '../features/Registration/registration-reducer'
 
 import { appReducer } from './app-reducer'
-import { reducer } from './reducers'
 
 const rootReducer = combineReducers({
-  reducer: reducer,
   auth: loginReducer,
   registration: registrationReducer,
   app: appReducer,
