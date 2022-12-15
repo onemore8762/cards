@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Button,
-  Card,
-  FormGroup,
-  FormLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from '@mui/material'
+import { Button, Card, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
+import { Eye } from '../../../common/components/Eye/Eye'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
 
+import s from './CreateNewPassword.module.css'
 import { setNewPassword } from './new-password-reducer'
 
 export const CreateNewPassword = () => {
@@ -38,11 +30,7 @@ export const CreateNewPassword = () => {
       password: '',
     },
     validate: values => {
-      if (!values.password) {
-        return {
-          password: 'Password is required',
-        }
-      }
+      if (!values.password) return { password: 'Password is required' }
     },
     onSubmit: values => {
       dispatch(setNewPassword({ password: values.password, resetPasswordToken: token }))
@@ -59,45 +47,30 @@ export const CreateNewPassword = () => {
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card sx={{ width: '413px', height: '372px' }}>
-          <form onSubmit={formik.handleSubmit} style={{ padding: '33px 35px 0' }}>
+          <form onSubmit={formik.handleSubmit} className={s.form}>
             <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
-              <span style={{ color: '#000', fontSize: '26px', fontWeight: '600' }}>
-                Create new password
-              </span>
+              <span className={s.header}>Create new password</span>
             </FormLabel>
             <FormGroup sx={{ marginBottom: '34px', marginTop: '65px' }}>
               <TextField
                 fullWidth
                 id="password"
-                name="password"
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
-                value={formik.values.password}
-                onChange={formik.handleChange}
                 error={
                   (formik.touched.password && Boolean(formik.errors.password)) || Boolean(error)
                 }
+                {...formik.getFieldProps('password')}
                 variant="standard"
                 margin={'normal'}
                 helperText={(formik.touched.password && formik.errors.password) || error}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                      >
-                        {showPassword ? (
-                          <VisibilityOff sx={{ color: 'black' }} />
-                        ) : (
-                          <Visibility sx={{ color: 'black' }} />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
+                    <Eye show={showPassword} handleClickShow={handleClickShowPassword} />
                   ),
                 }}
               />
-              <p style={{ fontWeight: '600', opacity: '50%' }}>
+              <p className={s.description}>
                 Create new password and we will send you further instructions to email
               </p>
             </FormGroup>

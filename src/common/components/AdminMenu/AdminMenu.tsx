@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { useNavigate } from 'react-router-dom'
 
 import s from './AdminMenu.module.css'
+
 export const AdminMenu = ({ children }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
