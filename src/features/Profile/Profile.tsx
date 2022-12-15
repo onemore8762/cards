@@ -42,9 +42,8 @@ export const Profile = () => {
   }
 
   if (!isLoggedIn) {
-    navigate('/login')
-    // можно и так
-    // return <Navigate to={'/login'} />
+    // navigate('/login')
+    return <Navigate to={'/login'} />
   }
 
   return (
