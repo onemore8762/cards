@@ -2,7 +2,7 @@
 
 <p align="center"><img src="./src/assets/icons/newspaper.svg" width="100px"/></p>
 
-<p align="center"><img src="https://i.ibb.co/MBPTQZL/image.png" width=""/></p>
+<p align="center" style="border: 3px solid #666161; padding: 5px 5px 0 5px"><img src="https://i.ibb.co/ZGqmd6K/image.png" width=""/></p>
 
 <h1 align="center"> <a href="https://onemore8762.github.io/cards/">View a demo</a> </h1>
 
