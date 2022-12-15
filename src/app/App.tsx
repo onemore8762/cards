@@ -4,7 +4,7 @@ import './App.css'
 import { CircularProgress, LinearProgress } from '@mui/material'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
-import { AdminMenu } from '../common/components/adminMenu/AdminMenu'
+import { AdminMenu } from '../common/components/AdminMenu/AdminMenu'
 import { ErrorSnackBar } from '../common/components/ErrorSnackBar/ErrorSnackBar'
 import { NavBar } from '../common/components/NavBar/NavBar'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'

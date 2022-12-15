@@ -4,6 +4,7 @@ import { Dispatch } from 'redux'
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 import { setUserDataAC } from '../features/Profile/profile-reducer'
+import { setIsLoggedIn } from '../features/Registration/registration-reducer'
 
 import { AppThunkType } from './store'
 
@@ -60,6 +61,7 @@ export const initializeAppTC = (): AppThunkType => {
       .authMe()
       .then(res => {
         dispatch(loginAC(true))
+        dispatch(setIsLoggedIn(true))
         dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
         dispatch(appSetStatusAC('succeeded'))
       })

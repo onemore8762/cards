@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import { AppThunkType } from '../../app/store'
 
 import { registrationApi } from './registration-api'
@@ -41,17 +43,17 @@ export const setErrors = (errors: TypeError) => ({ type: 'ERRORS', payload: erro
 // thunk
 export const registrationUser =
   (data: UserData): AppThunkType =>
-  dispatch => {
-    registrationApi
-      .registration(data)
-      .then(response => {
-        console.log(response)
-        dispatch(setIsLoggedIn(true))
-      })
-      .catch(error => {
-        console.log(error)
-        dispatch(setErrors(error.response.data))
-      })
+  async dispatch => {
+    try {
+      await registrationApi.registration(data)
+      dispatch(setIsLoggedIn(true))
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(setErrors(error.response?.data))
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
   }
 
 // types

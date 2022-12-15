@@ -1,19 +1,10 @@
 import React, { useState } from 'react'
 
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Button,
-  Card,
-  FormGroup,
-  FormLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from '@mui/material'
+import { Button, Card, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
+import { Eye } from '../../common/components/Eye/Eye'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import { registrationUser, setErrors } from './registration-reducer'
@@ -34,21 +25,9 @@ export const Registration = () => {
       confirmPassword: '',
     },
     validate: values => {
-      if (!values.email) {
-        return {
-          email: 'Email is required',
-        }
-      }
-      if (!values.password) {
-        return {
-          password: 'Password is required',
-        }
-      }
-      if (!values.confirmPassword) {
-        return {
-          confirmPassword: 'confirmPassword is required',
-        }
-      }
+      if (!values.email) return { email: 'Email is required' }
+      if (!values.password) return { password: 'Password is required' }
+      if (!values.confirmPassword) return { confirmPassword: 'confirmPassword is required' }
     },
     onSubmit: (values, { setErrors }) => {
       if (values.password !== values.confirmPassword) {
@@ -60,16 +39,18 @@ export const Registration = () => {
         let { confirmPassword, ...data } = values
 
         dispatch(registrationUser(data))
-        console.log(data)
       }
     },
   })
 
   const handleClickShowPassword = (value: string) => {
-    if (value === 'password') {
-      setShowPassword({ ...showPassword, password: !showPassword.password })
-    } else if (value === 'confirmPassword') {
-      setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })
+    switch (value) {
+      case 'password':
+        setShowPassword({ ...showPassword, password: !showPassword.password })
+        break
+      case 'confirmPassword':
+        setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })
+        break
     }
   }
 
@@ -77,14 +58,16 @@ export const Registration = () => {
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     formik.handleChange(e)
-    dispatch(
-      setErrors({
-        error: '',
-        isEmailValid: true,
-        isPassValid: true,
-        passwordRegExp: '',
-      })
-    )
+    if (errors.error || !errors.isEmailValid || !errors.isPassValid || errors.passwordRegExp) {
+      dispatch(
+        setErrors({
+          error: '',
+          isEmailValid: true,
+          isPassValid: true,
+          passwordRegExp: '',
+        })
+      )
+    }
   }
 
   return (
@@ -99,35 +82,33 @@ export const Registration = () => {
               <TextField
                 fullWidth
                 id="email"
-                name="email"
                 label={
                   (formik.touched.email && formik.errors.email) ||
                   (!errors.isEmailValid && 'Email is not valid') ||
                   (errors.isEmailValid && errors.isPassValid && errors.error) ||
                   'Email'
                 }
-                value={formik.values.email}
-                onChange={onChangeHandler}
                 error={
                   !errors.isEmailValid ||
                   (formik.touched.email && Boolean(formik.errors.email)) ||
                   (errors.isEmailValid && errors.isPassValid && Boolean(errors.error))
                 }
+                {...formik.getFieldProps('email')}
+                onChange={onChangeHandler}
                 variant="standard"
                 margin={'normal'}
               />
               <TextField
                 fullWidth
                 id="password"
-                name="password"
                 label="Password"
                 type={showPassword.password ? 'text' : 'password'}
-                value={formik.values.password}
-                onChange={onChangeHandler}
                 error={
                   (formik.touched.password && Boolean(formik.errors.password)) ||
                   !errors.isPassValid
                 }
+                {...formik.getFieldProps('password')}
+                onChange={onChangeHandler}
                 variant="standard"
                 margin={'normal'}
                 helperText={
@@ -136,33 +117,24 @@ export const Registration = () => {
                 }
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => handleClickShowPassword('password')}
-                      >
-                        {showPassword.password ? (
-                          <VisibilityOff sx={{ color: 'black' }} />
-                        ) : (
-                          <Visibility sx={{ color: 'black' }} />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
+                    <Eye
+                      show={showPassword.password}
+                      handleClickShow={() => handleClickShowPassword('password')}
+                    />
                   ),
                 }}
               />
               <TextField
                 fullWidth
                 id="confirmPassword"
-                name="confirmPassword"
                 label="Confirm password"
                 type={showPassword.confirmPassword ? 'text' : 'password'}
-                value={formik.values.confirmPassword}
-                onChange={onChangeHandler}
                 error={
                   (formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)) ||
                   !errors.isPassValid
                 }
+                {...formik.getFieldProps('confirmPassword')}
+                onChange={onChangeHandler}
                 variant="standard"
                 margin={'normal'}
                 helperText={
@@ -171,18 +143,10 @@ export const Registration = () => {
                 }
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle confirmPassword visibility"
-                        onClick={() => handleClickShowPassword('confirmPassword')}
-                      >
-                        {showPassword.confirmPassword ? (
-                          <VisibilityOff sx={{ color: 'black' }} />
-                        ) : (
-                          <Visibility sx={{ color: 'black' }} />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
+                    <Eye
+                      show={showPassword.confirmPassword}
+                      handleClickShow={() => handleClickShowPassword('confirmPassword')}
+                    />
                   ),
                 }}
               />
