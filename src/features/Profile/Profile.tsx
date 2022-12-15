@@ -41,13 +41,10 @@ export const Profile = () => {
     alert('back')
   }
 
-  // редирект на логин, если не залогинились
-  useEffect(() => {
-    !isLoggedIn && navigate('/login')
-  }, [isLoggedIn])
-
   if (!isLoggedIn) {
-    return <Navigate to={'/login'} />
+    navigate('/login')
+    // можно и так
+    // return <Navigate to={'/login'} />
   }
 
   return (

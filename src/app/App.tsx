@@ -21,29 +21,23 @@ import { initializeAppTC } from './app-reducer'
 export const App = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
-  const status = useAppSelector<string>(state => state.app.status)
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const status = useAppSelector(state => state.app.status)
 
   // инициализация приложения
-  // useEffect(() => {
-  //   dispatch(initializeAppTC())
-  // }, [])
-
-  // редирект на логин, если не залогинились
-  // useEffect(() => {
-  //   !isLoggedIn && navigate('/login')
-  //   // isLoggedIn && navigate('/profile')
-  // }, [isLoggedIn])
+  useEffect(() => {
+    dispatch(initializeAppTC())
+  }, [])
 
   // лоадер, если приложение не инициализировано
-  // if (!isInitialized) {
-  //   return (
-  //     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
-  //       <CircularProgress />
-  //     </div>
-  //   )
-  // }
+  if (!isInitialized) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
+        <CircularProgress />
+      </div>
+    )
+  }
 
   return (
     <div className="App">

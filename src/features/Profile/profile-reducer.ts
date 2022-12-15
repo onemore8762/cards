@@ -2,7 +2,6 @@ import { Dispatch } from 'redux'
 
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
-import { loginApi } from '../Login/login-api'
 import { setErrorAC } from '../Login/login-reducer'
 
 import { profileApi } from './profile-api'

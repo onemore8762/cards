@@ -3,6 +3,7 @@ import { Dispatch } from 'redux'
 // import { profileApi } from '../features/Auth/auth-api'
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
+import { setUserDataAC } from '../features/Profile/profile-reducer'
 
 import { AppThunkType } from './store'
 
@@ -59,8 +60,8 @@ export const initializeAppTC = (): AppThunkType => {
       .authMe()
       .then(res => {
         dispatch(loginAC(true))
+        dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
         dispatch(appSetStatusAC('succeeded'))
-        dispatch(appSetInitializedAC(true))
       })
       .catch(e => {
         const error = e.response
@@ -68,11 +69,12 @@ export const initializeAppTC = (): AppThunkType => {
           : e.message + ', more details in the console'
 
         console.log(error)
-        // handleServerNetworkError(error, dispatch);
         dispatch(appSetErrorAC(error))
         dispatch(appSetStatusAC('failed'))
       })
-    // dispatch(appSetInitializedAC(true))
+      .finally(() => {
+        dispatch(appSetInitializedAC(true))
+      })
   }
 }
 
