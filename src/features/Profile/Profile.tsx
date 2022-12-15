@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect } from 'react'
 
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
@@ -14,18 +14,18 @@ import { initializeAppTC } from '../../app/app-reducer'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { setAuthUserDataTC, updateUserDataTC } from '../Auth/auth-reducer'
-import { logoutTC } from '../Login/login-reducer'
+// import { setAuthUserDataTC, updateUserDataTC } from '../Auth/auth-reducer'
+import { logoutTC, updateUserDataTC } from '../Login/login-reducer'
 
 import style from './Profile.module.css'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+  // const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const userName = useAppSelector<string>(state => state.authMe.name)
-  const userEmail = useAppSelector<string | null>(state => state.authMe.email)
+  const userName = useAppSelector<string | null>(state => state.login.profile.name)
+  const userEmail = useAppSelector<string | null>(state => state.login.profile.email)
 
   const changeTaskTitleHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
@@ -52,12 +52,15 @@ export const Profile = () => {
   // редирект на логин, если не залогинились
   useEffect(() => {
     !isLoggedIn && navigate('/login')
+    // if (!isLoggedIn) {
+    //   return
+    // }
   }, [isLoggedIn])
 
   // чтобы данные в профайле были всегда в актуальном состоянии
-  useEffect(() => {
-    dispatch(setAuthUserDataTC())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(setAuthUserDataTC())
+  // }, [])
 
   // лоадер, если приложение не инициализировано
   // if (!isInitialized) {
@@ -67,6 +70,10 @@ export const Profile = () => {
   //     </div>
   //   )
   // }
+
+  if (!isLoggedIn) {
+    navigate('/login')
+  }
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
@@ -89,7 +96,10 @@ export const Profile = () => {
             </div>
 
             <div className={style.userName}>
-              <EditableSpan title={userName} onChangeInput={changeTaskTitleHandler} />
+              <EditableSpan
+                title={userName ? userName : ''}
+                onChangeInput={changeTaskTitleHandler}
+              />
             </div>
 
             <div className={style.userEmail}>{userEmail}</div>

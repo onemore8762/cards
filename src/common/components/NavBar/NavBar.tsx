@@ -24,7 +24,7 @@ export const NavBar = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const userName = useAppSelector<string>(state => state.authMe.name)
+  const userName = useAppSelector(state => state.login.profile.name)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {

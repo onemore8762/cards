@@ -7,9 +7,15 @@ export const loginApi = {
   logout() {
     return instance.delete<LogoutResponseType>('auth/me')
   },
+  authMe() {
+    return instance.post<LoginResponseType>('auth/me')
+  },
+  updateUserData(name: string /*, avatar: string*/) {
+    return instance.put<UpdateDataResponseType>('auth/me', { name })
+  },
 }
 
-//type
+//types
 export type LoginParamsType = {
   email: string
   password: string
@@ -35,4 +41,12 @@ export type LoginResponseType = {
 export type LogoutResponseType = {
   info: string
   error: string
+}
+
+export type UpdateDataResponseType = {
+  updatedUser: {
+    name: string
+    avatar?: string
+  }
+  error?: string
 }

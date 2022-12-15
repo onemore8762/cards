@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux'
 
-import { authApi } from '../features/Auth/auth-api'
+// import { authApi } from '../features/Auth/auth-api'
+import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 
 import { AppThunkType } from './store'
@@ -54,23 +55,13 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
 export const initializeAppTC = (): AppThunkType => {
   return (dispatch: Dispatch) => {
     // dispatch(appSetStatusAC('loading'))
-    authApi
+    loginApi
       .authMe()
       .then(res => {
         // if (res.data.resultCode === 0) {
         dispatch(loginAC(true))
-        dispatch(appSetInitializedAC(true))
-        // dispatch(appSetStatusAC('succeeded'))
-        // } else {
-        // handleServerAppError(response.data, dispatch);
-        // if (response.data.messages) {
-        //     dispatch(appSetErrorAC(response.data.messages[0]));
-        // } else {
-        //     dispatch(appSetErrorAC('Some Error'));
-        // }
       })
       // dispatch(appSetInitializedAC(true))
-      // })
       .catch(e => {
         const error = e.response
           ? e.response.data.error
@@ -81,6 +72,7 @@ export const initializeAppTC = (): AppThunkType => {
         dispatch(appSetErrorAC(error))
         dispatch(appSetStatusAC('failed'))
       })
+    dispatch(appSetInitializedAC(true))
   }
 }
 

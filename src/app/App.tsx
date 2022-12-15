@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { LinearProgress } from '@mui/material'
+import { CircularProgress, LinearProgress } from '@mui/material'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { AdminMenu } from '../common/components/adminMenu/AdminMenu'
@@ -16,17 +16,34 @@ import { PasswordRecovery } from '../features/Password/RecoveryPassword/Password
 import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
+import { initializeAppTC } from './app-reducer'
+
 export const App = () => {
   const navigate = useNavigate()
-  // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
+  const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const status = useAppSelector<string>(state => state.app.status)
 
+  // инициализация приложения
+  // useEffect(() => {
+  //   dispatch(initializeAppTC())
+  // }, [])
+
   // редирект на логин, если не залогинились
-  useEffect(() => {
-    !isLoggedIn && navigate('/login')
-    isLoggedIn && navigate('/profile')
-  }, [isLoggedIn])
+  // useEffect(() => {
+  //   !isLoggedIn && navigate('/login')
+  //   isLoggedIn && navigate('/profile')
+  // }, [isLoggedIn])
+
+  // лоадер, если приложение не инициализировано
+  // if (!isInitialized) {
+  //   return (
+  //     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
+  //       <CircularProgress />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="App">
@@ -50,7 +67,7 @@ export const App = () => {
           <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
           <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
           <Route path={'/error404'} element={<Error404 />} />
-          <Route path={'*'} element={<Navigate to={'/error404'} />} />
+          {/*<Route path={'*'} element={<Navigate to={'/error404'} />} />*/}
         </Routes>
       </div>
       {/*<ErrorSnackBar />*/}
