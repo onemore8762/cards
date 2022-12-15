@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Children } from 'react'
 
-import Button from '@mui/material/Button'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { IconButton } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useNavigate } from 'react-router-dom'
@@ -23,15 +24,16 @@ export const AdminMenu = ({ children }: any) => {
 
   return (
     <div className={s.menu}>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? 'long-menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
         onClick={handleClick}
       >
-        Admin-menu
-      </Button>
+        <MoreVertIcon />
+      </IconButton>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -40,6 +42,7 @@ export const AdminMenu = ({ children }: any) => {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        className={s.items}
       >
         {Children.map(children, (child, index) => {
           return (
