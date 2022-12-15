@@ -1,31 +1,28 @@
-import React, { useCallback, useEffect, useLayoutEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
 import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
-import { CircularProgress } from '@mui/material'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
-import { initializeAppTC } from '../../app/app-reducer'
 import avatar from '../../assets/images/avatar.jpg'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-// import { setAuthUserDataTC, updateUserDataTC } from '../Auth/auth-reducer'
-import { logoutTC, updateUserDataTC } from '../Login/login-reducer'
+import { logoutTC } from '../Login/login-reducer'
 
+import { updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  // const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
-  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const userName = useAppSelector<string | null>(state => state.login.profile.name)
-  const userEmail = useAppSelector<string | null>(state => state.login.profile.email)
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const userName = useAppSelector(state => state.profile.name)
+  const userEmail = useAppSelector(state => state.profile.email)
 
   const changeTaskTitleHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
@@ -44,35 +41,13 @@ export const Profile = () => {
     alert('back')
   }
 
-  // инициализация приложения
-  // useEffect(() => {
-  //   dispatch(initializeAppTC())
-  // }, [])
-
   // редирект на логин, если не залогинились
   useEffect(() => {
     !isLoggedIn && navigate('/login')
-    // if (!isLoggedIn) {
-    //   return
-    // }
   }, [isLoggedIn])
 
-  // чтобы данные в профайле были всегда в актуальном состоянии
-  // useEffect(() => {
-  //   dispatch(setAuthUserDataTC())
-  // }, [])
-
-  // лоадер, если приложение не инициализировано
-  // if (!isInitialized) {
-  //   return (
-  //     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
-  //       <CircularProgress />
-  //     </div>
-  //   )
-  // }
-
   if (!isLoggedIn) {
-    navigate('/login')
+    return <Navigate to={'/login'} />
   }
 
   return (

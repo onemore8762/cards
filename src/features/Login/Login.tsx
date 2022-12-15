@@ -38,8 +38,8 @@ export const Login = () => {
     showPassword: false,
   })
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const authError = useAppSelector<string>(state => state.login.error)
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const authError = useAppSelector(state => state.login.error)
 
   const formik = useFormik({
     initialValues: {

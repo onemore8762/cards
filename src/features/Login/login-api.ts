@@ -10,9 +10,9 @@ export const loginApi = {
   authMe() {
     return instance.post<LoginResponseType>('auth/me')
   },
-  updateUserData(name: string /*, avatar: string*/) {
-    return instance.put<UpdateDataResponseType>('auth/me', { name })
-  },
+  // updateUserData(name: string /*, avatar: string*/) {
+  //   return instance.put<UpdateDataResponseType>('auth/me', { name })
+  // },
 }
 
 //types
@@ -43,10 +43,10 @@ export type LogoutResponseType = {
   error: string
 }
 
-export type UpdateDataResponseType = {
-  updatedUser: {
-    name: string
-    avatar?: string
-  }
-  error?: string
-}
+// export type UpdateDataResponseType = {
+//   updatedUser: {
+//     name: string
+//     avatar?: string
+//   }
+//   error?: string
+// }

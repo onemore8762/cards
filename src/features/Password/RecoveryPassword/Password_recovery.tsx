@@ -17,8 +17,8 @@ type FormikErrorType = {
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
-  const error = useAppSelector<string>(state => state.recovery.error)
-  const success = useAppSelector<boolean>(state => state.recovery.success)
+  const error = useAppSelector(state => state.recovery.error)
+  const success = useAppSelector(state => state.recovery.success)
   const formik = useFormik({
     initialValues: {
       email: '',

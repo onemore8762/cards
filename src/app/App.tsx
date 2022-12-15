@@ -33,7 +33,7 @@ export const App = () => {
   // редирект на логин, если не залогинились
   // useEffect(() => {
   //   !isLoggedIn && navigate('/login')
-  //   isLoggedIn && navigate('/profile')
+  //   // isLoggedIn && navigate('/profile')
   // }, [isLoggedIn])
 
   // лоадер, если приложение не инициализировано
@@ -60,6 +60,7 @@ export const App = () => {
       </AdminMenu>
       <div style={{ marginTop: '100px' }}>
         <Routes>
+          <Route path={'/'} element={<Profile />} />
           <Route path={'/login'} element={<Login />} />
           <Route path={'/profile'} element={<Profile />} />
           <Route path={'/registration'} element={<Registration />} />
@@ -67,7 +68,7 @@ export const App = () => {
           <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
           <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
           <Route path={'/error404'} element={<Error404 />} />
-          {/*<Route path={'*'} element={<Navigate to={'/error404'} />} />*/}
+          <Route path={'*'} element={<Navigate to={'/error404'} />} />
         </Routes>
       </div>
       {/*<ErrorSnackBar />*/}
