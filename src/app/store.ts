@@ -31,7 +31,7 @@ export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddle
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AppActionType>
 
 export type AppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
