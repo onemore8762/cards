@@ -61,7 +61,7 @@ export const App = () => {
           <Route path={'*'} element={<Navigate to={'/error404'} />} />
         </Routes>
       </div>
-      {/*<ErrorSnackBar />*/}
+      <ErrorSnackBar />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
@@ -42,7 +42,6 @@ export const Profile = () => {
   }
 
   if (!isLoggedIn) {
-    // navigate('/login')
     return <Navigate to={'/login'} />
   }
 
