@@ -1,10 +1,8 @@
 import { Dispatch } from 'redux'
 
-// import { profileApi } from '../features/Auth/auth-api'
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 import { setUserDataAC } from '../features/Profile/profile-reducer'
-import { setIsLoggedIn } from '../features/Registration/registration-reducer'
 
 import { AppThunkType } from './store'
 
@@ -56,14 +54,11 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
 // thunk
 export const initializeAppTC = (): AppThunkType => {
   return (dispatch: Dispatch) => {
-    dispatch(appSetStatusAC('loading'))
     loginApi
       .authMe()
       .then(res => {
         dispatch(loginAC(true))
-        dispatch(setIsLoggedIn(true))
         dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
-        dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
         const error = e.response

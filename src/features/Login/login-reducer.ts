@@ -3,7 +3,6 @@ import { Dispatch } from 'redux'
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
 import { setUserDataAC } from '../Profile/profile-reducer'
-import { setIsLoggedIn } from '../Registration/registration-reducer'
 
 import { loginApi, LoginParamsType } from './login-api'
 

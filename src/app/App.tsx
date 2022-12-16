@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { CircularProgress, LinearProgress } from '@mui/material'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { CircularProgress } from '@mui/material'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { AdminMenu } from '../common/components/AdminMenu/AdminMenu'
 import { ErrorSnackBar } from '../common/components/ErrorSnackBar/ErrorSnackBar'
@@ -19,11 +19,8 @@ import { Registration } from '../features/Registration/Registration'
 import { initializeAppTC } from './app-reducer'
 
 export const App = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
-  const status = useAppSelector(state => state.app.status)
 
   // инициализация приложения
   useEffect(() => {
@@ -33,7 +30,7 @@ export const App = () => {
   // лоадер, если приложение не инициализировано
   if (!isInitialized) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '300px' }}>
         <CircularProgress />
       </div>
     )
@@ -42,7 +39,6 @@ export const App = () => {
   return (
     <div className="App">
       <NavBar />
-      {status === 'loading' && <LinearProgress />}
       <AdminMenu>
         <div>Login</div>
         <div>Profile</div>
