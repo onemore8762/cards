@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button, Card, FormGroup, FormLabel } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import checkEmail from '../../../assets/images/checkEmail.svg'
 

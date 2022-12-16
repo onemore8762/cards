@@ -15,7 +15,7 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 
-export const PasswordRecovery = () => {
+export const RecoveryPassword = () => {
   const dispatch = useAppDispatch()
   const error = useAppSelector(state => state.recovery.error)
   const success = useAppSelector(state => state.recovery.success)

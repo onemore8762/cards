@@ -12,7 +12,7 @@ import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
 import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
-import { PasswordRecovery } from '../features/Password/RecoveryPassword/Password_recovery'
+import { RecoveryPassword } from '../features/Password/RecoveryPassword/RecoveryPassword'
 import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
@@ -56,7 +56,7 @@ export const App = () => {
           <Route path={'/registration'} element={<Registration />} />
           <Route path={'/checkEmail'} element={<CheckEmail />} />
           <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
-          <Route path={'/passwordRecovery'} element={<PasswordRecovery />} />
+          <Route path={'/passwordRecovery'} element={<RecoveryPassword />} />
           <Route path={'/error404'} element={<Error404 />} />
           <Route path={'*'} element={<Navigate to={'/error404'} />} />
         </Routes>
