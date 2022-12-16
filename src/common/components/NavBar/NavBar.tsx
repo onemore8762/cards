@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import icon from '../../../assets/icons/newspaper.svg'
 import avatar from '../../../assets/images/avatar.jpg'
@@ -67,9 +67,9 @@ export const NavBar = () => {
             {/*Логотип*/}
             <div className={style.navbarLogo}>
               <div className={style.navbarLogo_icon}>
-                <a href="/">
+                <NavLink to="/packs">
                   <img src={icon} alt="logo" />
-                </a>
+                </NavLink>
               </div>
               <Typography
                 className={style.navbarLogo_title}
