@@ -1,13 +1,22 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { loginReducer } from '../features/Login/login-reducer'
-import { newPasswordReducer } from '../features/Password/CreateNewPassword/new-password-reducer'
-import { recoveryReducer } from '../features/Password/RecoveryPassword/recovery-reducer'
-import { profileReducer } from '../features/Profile/profile-reducer'
-import { registrationReducer } from '../features/Registration/registration-reducer'
+import { LoginActionType, loginReducer } from '../features/Login/login-reducer'
+import {
+  NewPasswordActionType,
+  newPasswordReducer,
+} from '../features/Password/CreateNewPassword/new-password-reducer'
+import {
+  RecoveryActionType,
+  recoveryReducer,
+} from '../features/Password/RecoveryPassword/recovery-reducer'
+import { ProfileActionType, profileReducer } from '../features/Profile/profile-reducer'
+import {
+  RegistrationActionType,
+  registrationReducer,
+} from '../features/Registration/registration-reducer'
 
-import { appReducer } from './app-reducer'
+import { ApplicationActionType, appReducer } from './app-reducer'
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -28,16 +37,16 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   AppRootStateType,
   unknown,
-  AnyAction
+  AppActionType
 >
 
-// export type AppActionType =
-//   | ApplicationActionType
-//   | LoginActionType
-//   | ProfileActionType
-//   | RegistrationActionType
-//   | NewPasswordActionType
-//   | RecoveryActionType
+export type AppActionType =
+  | ApplicationActionType
+  | LoginActionType
+  | ProfileActionType
+  | RegistrationActionType
+  | NewPasswordActionType
+  | RecoveryActionType
 
 // @ts-ignore
 window.store = store

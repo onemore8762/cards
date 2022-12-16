@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
 import { setErrorAC } from '../Login/login-reducer'
@@ -50,12 +48,13 @@ export const updateUserDataAC = (name: string | null) =>
   ({ type: 'UPDATE_USER_DATA', name } as const)
 
 // thunk
-export const updateUserDataTC = (name: string): AppThunkType => {
-  return (dispatch: Dispatch) => {
+export const updateUserDataTC =
+  (name: string): AppThunkType =>
+  dispatch => {
     dispatch(appSetStatusAC('loading'))
     profileApi
       .updateUserData(name)
-      .then(res => {
+      .then(() => {
         dispatch(updateUserDataAC(name))
         dispatch(appSetStatusAC('succeeded'))
       })
@@ -69,7 +68,6 @@ export const updateUserDataTC = (name: string): AppThunkType => {
         dispatch(appSetStatusAC('failed'))
       })
   }
-}
 
 // types
 export type ProfileInitialStateType = {

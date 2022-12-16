@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
 import { setUserDataAC } from '../Profile/profile-reducer'
@@ -63,8 +61,9 @@ export const setErrorAC = (error: string) => ({ type: 'SET_ERROR', error } as co
 //   ({ type: 'UPDATE_USER_DATA', name } as const)
 
 //thunk
-export const loginTC = (data: LoginParamsType): AppThunkType => {
-  return (dispatch: Dispatch) => {
+export const loginTC =
+  (data: LoginParamsType): AppThunkType =>
+  dispatch => {
     dispatch(appSetStatusAC('loading'))
     loginApi
       .login(data)
@@ -82,26 +81,21 @@ export const loginTC = (data: LoginParamsType): AppThunkType => {
         dispatch(appSetStatusAC('failed'))
       })
   }
-}
 
-export const logoutTC = (): AppThunkType => {
-  return (dispatch: Dispatch) => {
-    dispatch(appSetStatusAC('loading'))
-    loginApi
-      .logout()
-      .then(res => {
-        dispatch(loginAC(false))
-        dispatch(appSetStatusAC('succeeded'))
-      })
-      .catch(e => {
-        const error = e.response
-          ? e.response.data.error
-          : e.message + ', more details in the console'
+export const logoutTC = (): AppThunkType => dispatch => {
+  dispatch(appSetStatusAC('loading'))
+  loginApi
+    .logout()
+    .then(() => {
+      dispatch(loginAC(false))
+      dispatch(appSetStatusAC('succeeded'))
+    })
+    .catch(e => {
+      const error = e.response ? e.response.data.error : e.message + ', more details in the console'
 
-        dispatch(setErrorAC(error))
-        dispatch(appSetStatusAC('failed'))
-      })
-  }
+      dispatch(setErrorAC(error))
+      dispatch(appSetStatusAC('failed'))
+    })
 }
 
 // export const setUserDataTC = (): AppThunkType => {

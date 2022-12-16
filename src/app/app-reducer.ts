@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 import { setUserDataAC } from '../features/Profile/profile-reducer'
@@ -52,27 +50,23 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
   } as const)
 
 // thunk
-export const initializeAppTC = (): AppThunkType => {
-  return (dispatch: Dispatch) => {
-    loginApi
-      .authMe()
-      .then(res => {
-        dispatch(loginAC(true))
-        dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
-      })
-      .catch(e => {
-        const error = e.response
-          ? e.response.data.error
-          : e.message + ', more details in the console'
+export const initializeAppTC = (): AppThunkType => dispatch => {
+  loginApi
+    .authMe()
+    .then(res => {
+      dispatch(loginAC(true))
+      dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
+    })
+    .catch(e => {
+      const error = e.response ? e.response.data.error : e.message + ', more details in the console'
 
-        console.log(error)
-        dispatch(appSetErrorAC(error))
-        dispatch(appSetStatusAC('failed'))
-      })
-      .finally(() => {
-        dispatch(appSetInitializedAC(true))
-      })
-  }
+      console.log(error)
+      dispatch(appSetErrorAC(error))
+      dispatch(appSetStatusAC('failed'))
+    })
+    .finally(() => {
+      dispatch(appSetInitializedAC(true))
+    })
 }
 
 // types

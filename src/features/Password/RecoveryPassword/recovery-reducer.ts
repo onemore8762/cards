@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { AppThunkType } from '../../../app/store'
 
 import { recoveryApi } from './recovery-api'
@@ -28,8 +26,9 @@ export const recoveryAC = (error: string, success: boolean) =>
   ({ type: 'RECOVERY', error, success } as const)
 
 //thunk
-export const recoveryTC = (email: string): AppThunkType => {
-  return (dispatch: Dispatch) => {
+export const recoveryTC =
+  (email: string): AppThunkType =>
+  dispatch => {
     recoveryApi
       .recovery(email)
       .then(res => {
@@ -40,7 +39,6 @@ export const recoveryTC = (email: string): AppThunkType => {
         dispatch(recoveryAC('неверный Email', false))
       })
   }
-}
 
 //types
 export type RecoveryStateType = {
