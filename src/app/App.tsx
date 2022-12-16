@@ -10,6 +10,7 @@ import { NavBar } from '../common/components/NavBar/NavBar'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 import { Error404 } from '../features/Error404/Error404'
 import { Login } from '../features/Login/Login'
+import { PackList } from '../features/packList/PackList'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
 import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
 import { RecoveryPassword } from '../features/Password/RecoveryPassword/RecoveryPassword'
@@ -58,6 +59,7 @@ export const App = () => {
           <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
           <Route path={'/passwordRecovery'} element={<RecoveryPassword />} />
           <Route path={'/error404'} element={<Error404 />} />
+          <Route path={'/packlist'} element={<PackList />} />
           <Route path={'*'} element={<Navigate to={'/error404'} />} />
         </Routes>
       </div>
