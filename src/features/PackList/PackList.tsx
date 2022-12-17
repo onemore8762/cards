@@ -1,5 +1,6 @@
 import React from 'react'
 
+import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
@@ -31,6 +32,23 @@ export const PackList = () => {
           >
             Add New Pack
           </Button>
+        </div>
+      </div>
+      <div className={style.search_row}>
+        <div>
+          <div className={style.column_title}>Search</div>
+          <div>Input</div>
+        </div>
+        <div>
+          <div className={style.column_title}>Show Packs Card</div>
+          <div>My All</div>
+        </div>
+        <div>
+          <div className={style.column_title}>Number of Cards</div>
+          <div>2 10</div>
+        </div>
+        <div className={style.filter_icon}>
+          <FilterAltOutlined fontSize="medium" />
         </div>
       </div>
       <div className={style.mainTable}>

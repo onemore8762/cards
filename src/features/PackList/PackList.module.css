@@ -2,16 +2,40 @@
     width: 75%;
     margin: 0 auto;
 }
+
 .header_row {
     display: flex;
     justify-content: space-between;
 
     margin-top: 50px;
-    margin-bottom: 120px;
+    margin-bottom: 40px;
 }
 .addNewPackBtn {
 
 }
+
+.search_row {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+.column_title {
+    font-size: 16px;
+    font-weight: bold;
+}
+.filter_icon {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+
+    border: 1px solid #E8E8E8;
+}
+
 .mainTable {
     /*width: 75%;*/
     /*margin: 0 auto;*/
