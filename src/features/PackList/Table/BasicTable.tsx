@@ -20,6 +20,7 @@ import { selectPackList } from '../packListSelectors'
 
 export const BasicTable = () => {
   const packList = useAppSelector(selectPackList)
+  const userId = useAppSelector(state => state.profile._id)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -55,8 +56,8 @@ export const BasicTable = () => {
                 <IconButton onClick={handleStyding}>
                   <SchoolOutlinedIcon />
                 </IconButton>
-                {row.__v ? (
-                  <div>
+                {row.user_id === userId ? (
+                  <span>
                     <IconButton
                     // onClick={handleClickShowPassword}
                     >
@@ -67,7 +68,7 @@ export const BasicTable = () => {
                     >
                       <DeleteOutlineIcon />
                     </IconButton>
-                  </div>
+                  </span>
                 ) : null}
               </TableCell>
             </TableRow>

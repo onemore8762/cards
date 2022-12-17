@@ -4,6 +4,18 @@ export const packListApi = {
   getPacks() {
     return instance.get<GetPacksResponseType>('/cards/pack')
   },
+  addPacks(cardsPack: newPack) {
+    return instance.post('/cards/pack', cardsPack)
+  },
+}
+//type
+export type newPack = {
+  cardsPack: addCardsPack
+}
+export type addCardsPack = {
+  name?: string // если не отправить будет 'no Name'
+  deckCover?: 'url or base64' // не обязателен
+  private?: boolean // если не отправить будет false
 }
 
 export type PacksType = {

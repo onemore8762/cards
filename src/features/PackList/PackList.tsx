@@ -4,13 +4,21 @@ import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
+import { useAppDispatch } from '../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../common/hooks/useAppSelector'
 
+import { addPacksTC } from './packList-reducer'
 import style from './PackList.module.css'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
+  const dispatch = useAppDispatch()
+
   const addNewPack = () => {
-    alert('add new pack')
+    //alert('add new pack')
+    dispatch(
+      addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
+    )
   }
 
   return (
