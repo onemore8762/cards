@@ -15,18 +15,19 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { getPacksTC } from '../packList-reducer'
+import { getPacksTC, sortPacksAC } from '../packList-reducer'
 import { selectPackList } from '../packListSelectors'
 
 export const BasicTable = () => {
   const packList = useAppSelector(selectPackList)
   const userId = useAppSelector(state => state.profile._id)
+  const sort = useAppSelector(state => state.packList.sortPacks)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getPacksTC())
-  }, [])
-  const handleStyding = () => {}
+  }, [sort])
+  const handelSortTable = () => dispatch(sortPacksAC())
 
   return (
     <TableContainer component={Paper}>
@@ -36,7 +37,13 @@ export const BasicTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Cards</TableCell>
             <TableCell>
-              <TableSortLabel>Last Updated</TableSortLabel>
+              <TableSortLabel
+                active
+                direction={sort === '0updated' ? 'desc' : 'asc'}
+                onClick={handelSortTable}
+              >
+                Last Updated
+              </TableSortLabel>
             </TableCell>
             <TableCell>Created by</TableCell>
             <TableCell>Actions</TableCell>
@@ -53,7 +60,7 @@ export const BasicTable = () => {
               <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
               <TableCell>{row.user_name}</TableCell>
               <TableCell>
-                <IconButton onClick={handleStyding}>
+                <IconButton>
                   <SchoolOutlinedIcon />
                 </IconButton>
                 {row.user_id === userId ? (
