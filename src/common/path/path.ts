@@ -8,7 +8,7 @@ export const PATH = {
   },
   PROFILE: {
     PROFILE: '/profile',
-    PACKLIST: '/packList',
+    PACKLIST: '/PackList',
   },
   COMMON: {
     ERROR404: '/error404',

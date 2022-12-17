@@ -1,9 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
+import { selectIsLoggedIn } from '../../../features/Login/loginSelectors'
+import { useAppSelector } from '../../hooks/useAppSelector'
 import { PATH } from '../../path/path'
 
 export const PrivateRoutes = () => {
-  let auth = { isLoggedIn: true }
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  return auth.isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN.LOGIN} />
+  return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN.LOGIN} />
 }

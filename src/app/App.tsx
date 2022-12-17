@@ -47,10 +47,10 @@ export const App = () => {
       <div style={{ marginTop: '100px' }}>
         <Routes>
           <Route element={<PrivateRoutes />}>
+            <Route path={'/'} element={<Profile />} />
             <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
             <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
           </Route>
-          <Route path={'/'} element={<Profile />} />
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />
           <Route path={PATH.LOGIN.CHECK_EMAIL} element={<CheckEmail />} />
