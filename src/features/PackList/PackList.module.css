@@ -1,0 +1,18 @@
+.packList {
+    width: 75%;
+    margin: 0 auto;
+}
+.header_row {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 50px;
+    margin-bottom: 120px;
+}
+.addNewPackBtn {
+
+}
+.mainTable {
+    /*width: 75%;*/
+    /*margin: 0 auto;*/
+}

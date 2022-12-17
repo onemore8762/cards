@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Children } from 'react'
+import React, { Children } from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton } from '@mui/material'

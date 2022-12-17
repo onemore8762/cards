@@ -11,7 +11,7 @@ export const Error404 = () => {
   let navigate = useNavigate()
 
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'}>
+    <Grid container justifyContent={'center'} alignItems={'center'} style={{ marginTop: '200px' }}>
       <Grid display="flex" justifyContent="center" alignItems="center" gap={'62px'}>
         <Box>
           <Box sx={{ marginBottom: '36px' }}>
@@ -29,7 +29,9 @@ export const Error404 = () => {
             Back to home page
           </Button>
         </Box>
-        <img src={image404} alt={'image-error404'} />
+        <div>
+          <img src={image404} alt={'image-error404'} />
+        </div>
       </Grid>
     </Grid>
   )

@@ -11,7 +11,7 @@ export const AdminMenuMain = () => {
       <div>Error404</div>
       <div>CreateNewPassword</div>
       <div>CheckEmail</div>
-      <div>PasswordRecovery</div>
+      <div>RecoveryPassword</div>
     </AdminMenu>
   )
 }

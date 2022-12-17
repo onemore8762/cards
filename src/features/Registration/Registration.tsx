@@ -75,7 +75,7 @@ export const Registration = () => {
   return (
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '528px' }}>
+        <Card sx={{ width: '413px', height: '528px' }} style={{ marginTop: '100px' }}>
           <form onSubmit={formik.handleSubmit} style={{ padding: '33px 35px 0' }}>
             <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
               <span style={{ color: '#000', fontSize: '26px', fontWeight: '600' }}>Sign Up</span>

@@ -44,7 +44,7 @@ export const App = () => {
     <div className="App">
       <NavBar />
       <AdminMenuMain />
-      <div style={{ marginTop: '100px' }}>
+      <div>
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path={'/'} element={<Profile />} />

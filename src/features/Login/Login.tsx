@@ -88,7 +88,7 @@ export const Login = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '528px' }}>
+        <Card sx={{ width: '413px', height: '528px' }} style={{ marginTop: '100px' }}>
           <form onSubmit={formik.handleSubmit} style={{ padding: '10px 20px 0 20px' }}>
             <FormGroup sx={{ p: 2 }}>
               <FormLabel

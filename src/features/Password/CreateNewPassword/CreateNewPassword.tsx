@@ -48,7 +48,7 @@ export const CreateNewPassword = () => {
   return (
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '372px' }}>
+        <Card sx={{ width: '413px', height: '372px' }} style={{ marginTop: '100px' }}>
           <form onSubmit={formik.handleSubmit} className={s.form}>
             <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
               <span className={s.header}>Create new password</span>

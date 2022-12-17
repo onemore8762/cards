@@ -49,7 +49,7 @@ export const RecoveryPassword = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: 413, height: 456 }}>
+        <Card sx={{ width: 413, height: 456 }} style={{ marginTop: '100px' }}>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup sx={{ p: 3 }}>
               <FormLabel
