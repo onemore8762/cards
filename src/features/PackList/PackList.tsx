@@ -4,16 +4,21 @@ import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
+import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 
+import { getPacksTC } from './packList-reducer'
 import style from './PackList.module.css'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
+  const dispatch = useAppDispatch()
   const headerInTable = ['Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
 
   const addNewPack = () => {
     alert('add new pack')
   }
+
+  const getTableData = () => dispatch(getPacksTC())
 
   return (
     <div className={style.packList}>
@@ -52,7 +57,7 @@ export const PackList = () => {
         </div>
       </div>
       <div className={style.mainTable}>
-        <BasicTable headerInTable={headerInTable} />
+        <BasicTable headerInTable={headerInTable} getTableData={getTableData} />
       </div>
     </div>
   )
