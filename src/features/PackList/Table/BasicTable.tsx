@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react'
 
+import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
+import { IconButton } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -57,7 +61,26 @@ export const BasicTable = (props: TablePropsType) => {
               <TableCell>{row.cardsCount}</TableCell>
               <TableCell>{row.updated}</TableCell>
               <TableCell>{row.user_id}</TableCell>
-              <TableCell>иконки действий</TableCell>
+              <TableCell>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  // onClick={handleClickShowPassword}
+                >
+                  <SchoolOutlinedIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  // onClick={handleClickShowPassword}
+                >
+                  <BorderColorOutlined />
+                </IconButton>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  // onClick={handleClickShowPassword}
+                >
+                  <DeleteOutlineIcon />
+                </IconButton>
+              </TableCell>
               {/*<TableCell>{row.carbs}</TableCell>*/}
               {/*<TableCell>{row.protein}</TableCell>*/}
             </TableRow>
