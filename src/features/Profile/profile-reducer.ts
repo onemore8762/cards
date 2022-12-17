@@ -1,5 +1,6 @@
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
+import { handleServerNetworkError } from '../../common/utils/errorUtils'
 import { setErrorAC } from '../Login/login-reducer'
 
 import { profileApi } from './profile-api'
@@ -59,13 +60,14 @@ export const updateUserDataTC =
         dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
-        const error = e.response
-          ? e.response.data.error
-          : e.message + ', more details in the console'
-
-        console.log(error)
-        dispatch(setErrorAC(error))
-        dispatch(appSetStatusAC('failed'))
+        // const error = e.response
+        //   ? e.response.data.error
+        //   : e.message + ', more details in the console'
+        //
+        // console.log(error)
+        // dispatch(setErrorAC(error))
+        // dispatch(appSetStatusAC('failed'))
+        handleServerNetworkError(e, dispatch)
       })
   }
 

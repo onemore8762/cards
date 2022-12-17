@@ -1,5 +1,6 @@
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
+import { handleServerNetworkError } from '../../common/utils/errorUtils'
 import { setUserDataAC } from '../Profile/profile-reducer'
 
 import { loginApi, LoginParamsType } from './login-api'
@@ -52,7 +53,7 @@ export const loginReducer = (
   }
 }
 
-//actions
+// actions
 export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN/SET_LOGIN', isLoggedIn } as const)
 export const setErrorAC = (error: string) => ({ type: 'LOGIN/SET_ERROR', error } as const)
 // export const setUserDataAC = (_id: string | null, email: string | null, name: string | null) =>
@@ -60,7 +61,7 @@ export const setErrorAC = (error: string) => ({ type: 'LOGIN/SET_ERROR', error }
 // export const updateUserDataAC = (name: string | null) =>
 //   ({ type: 'UPDATE_USER_DATA', name } as const)
 
-//thunk
+// thunk
 export const loginTC =
   (data: LoginParamsType): AppThunkType =>
   dispatch => {
@@ -73,12 +74,13 @@ export const loginTC =
         dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
-        const error = e.response
-          ? e.response.data.error
-          : e.message + ', more details in the console'
-
-        dispatch(setErrorAC(error))
-        dispatch(appSetStatusAC('failed'))
+        // const error = e.response
+        //   ? e.response.data.error
+        //   : e.message + ', more details in the console'
+        //
+        // dispatch(setErrorAC(error))
+        // dispatch(appSetStatusAC('failed'))
+        handleServerNetworkError(e, dispatch)
       })
   }
 
@@ -91,10 +93,11 @@ export const logoutTC = (): AppThunkType => dispatch => {
       dispatch(appSetStatusAC('succeeded'))
     })
     .catch(e => {
-      const error = e.response ? e.response.data.error : e.message + ', more details in the console'
-
-      dispatch(setErrorAC(error))
-      dispatch(appSetStatusAC('failed'))
+      // const error = e.response ? e.response.data.error : e.message + ', more details in the console'
+      //
+      // dispatch(setErrorAC(error))
+      // dispatch(appSetStatusAC('failed'))
+      handleServerNetworkError(e, dispatch)
     })
 }
 
@@ -165,7 +168,7 @@ export const logoutTC = (): AppThunkType => dispatch => {
 //   }
 // }
 
-//types
+// types
 export type LoginInitialStateType = {
   isLoggedIn: boolean
   error: string
