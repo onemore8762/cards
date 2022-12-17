@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { IconButton } from '@mui/material'
+import { IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -18,16 +18,12 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { getPacksTC } from '../packList-reducer'
 import { selectPackList } from '../packListSelectors'
 
-type TablePropsType = {
-  headerInTable: Array<string>
-  getTableData: () => void
-}
-
-export const BasicTable = (props: TablePropsType) => {
+export const BasicTable = () => {
   const packList = useAppSelector(selectPackList)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    props.getTableData()
+    dispatch(getPacksTC())
   }, [])
   const handleStyding = () => {}
 
@@ -36,9 +32,13 @@ export const BasicTable = (props: TablePropsType) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            {props.headerInTable.map((nameCell, index) => (
-              <TableCell key={index}>{nameCell}</TableCell>
-            ))}
+            <TableCell>Name</TableCell>
+            <TableCell>Cards</TableCell>
+            <TableCell>
+              <TableSortLabel>Last Updated</TableSortLabel>
+            </TableCell>
+            <TableCell>Created by</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,16 +55,20 @@ export const BasicTable = (props: TablePropsType) => {
                 <IconButton onClick={handleStyding}>
                   <SchoolOutlinedIcon />
                 </IconButton>
-                <IconButton
-                // onClick={handleClickShowPassword}
-                >
-                  <BorderColorOutlined />
-                </IconButton>
-                <IconButton
-                // onClick={handleClickShowPassword}
-                >
-                  <DeleteOutlineIcon />
-                </IconButton>
+                {row.__v ? (
+                  <div>
+                    <IconButton
+                    // onClick={handleClickShowPassword}
+                    >
+                      <BorderColorOutlined />
+                    </IconButton>
+                    <IconButton
+                    // onClick={handleClickShowPassword}
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </div>
+                ) : null}
               </TableCell>
             </TableRow>
           ))}
