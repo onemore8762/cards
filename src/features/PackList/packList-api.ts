@@ -6,27 +6,6 @@ export const packListApi = {
   },
 }
 
-// types
-// export type GetPacksResponseType = {
-//   cardPacks: PacksType[]
-//   cardPacksTotalCount: number
-//   // количество колод
-//   maxCardsCount: number
-//   minCardsCount: number
-//   page: number // выбранная страница
-//   pageCount: number
-//   // количество элементов на странице
-// }
-
-// export type PacksType = {
-//   _id: string
-//   user_id: string
-//   name: string
-//   cardsCount: number
-//   created: string
-//   updated: string
-// }
-
 export type PacksType = {
   _id: string
   user_id: string
