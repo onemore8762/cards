@@ -11,6 +11,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -40,6 +41,7 @@ export const BasicTable = (props: TablePropsType) => {
   useEffect(() => {
     dispatch(getPacksTC())
   }, [])
+  const handleStyding = () => {}
 
   return (
     <TableContainer component={Paper}>
@@ -59,24 +61,19 @@ export const BasicTable = (props: TablePropsType) => {
               </TableCell>
 
               <TableCell>{row.cardsCount}</TableCell>
-              <TableCell>{row.updated}</TableCell>
-              <TableCell>{row.user_id}</TableCell>
+              <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
+              <TableCell>{row.user_name}</TableCell>
               <TableCell>
-                <IconButton
-                  aria-label="toggle password visibility"
-                  // onClick={handleClickShowPassword}
-                >
+                <IconButton onClick={handleStyding}>
                   <SchoolOutlinedIcon />
                 </IconButton>
                 <IconButton
-                  aria-label="toggle password visibility"
-                  // onClick={handleClickShowPassword}
+                // onClick={handleClickShowPassword}
                 >
                   <BorderColorOutlined />
                 </IconButton>
                 <IconButton
-                  aria-label="toggle password visibility"
-                  // onClick={handleClickShowPassword}
+                // onClick={handleClickShowPassword}
                 >
                   <DeleteOutlineIcon />
                 </IconButton>
