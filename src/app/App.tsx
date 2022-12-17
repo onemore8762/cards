@@ -8,6 +8,7 @@ import { AdminMenuMain } from '../common/components/AdminMenu/AdminMenuMain'
 import { Error404 } from '../common/components/Error404/Error404'
 import { ErrorSnackBar } from '../common/components/ErrorSnackBar/ErrorSnackBar'
 import { NavBar } from '../common/components/NavBar/NavBar'
+import { PrivateRoutes } from '../common/components/PrivateRoutes/PrivateRoutes'
 import { useAppDispatch } from '../common/hooks/useAppDispatch'
 import { useAppSelector } from '../common/hooks/useAppSelector'
 import { PATH } from '../common/path/path'
@@ -45,15 +46,17 @@ export const App = () => {
       <AdminMenuMain />
       <div style={{ marginTop: '100px' }}>
         <Routes>
+          <Route element={<PrivateRoutes />}>
+            <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
+            <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
+          </Route>
           <Route path={'/'} element={<Profile />} />
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
-          <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />
           <Route path={PATH.LOGIN.CHECK_EMAIL} element={<CheckEmail />} />
           <Route path={PATH.LOGIN.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
           <Route path={PATH.LOGIN.RECOVERY_PASSWORD} element={<RecoveryPassword />} />
           <Route path={PATH.COMMON.ERROR404} element={<Error404 />} />
-          <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
           <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404} />} />
         </Routes>
       </div>

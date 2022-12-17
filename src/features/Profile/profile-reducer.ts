@@ -1,6 +1,6 @@
 import { appSetStatusAC } from '../../app/app-reducer'
 import { AppThunkType } from '../../app/store'
-import { handleServerNetworkError } from '../../common/utils/errorUtils'
+import { handleServerNetworkError } from '../../common/utils/errorUtils/errorUtils'
 import { setErrorAC } from '../Login/login-reducer'
 
 import { profileApi } from './profile-api'

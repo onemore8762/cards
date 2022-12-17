@@ -42,9 +42,10 @@ export const Profile = () => {
     // dispatch(loadPhotoAC())
   }
 
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN.LOGIN} />
-  }
+  // если нет PrivateRoutes
+  // if (!isLoggedIn) {
+  //   return <Navigate to={PATH.LOGIN.LOGIN} />
+  // }
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
