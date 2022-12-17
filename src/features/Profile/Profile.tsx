@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
-import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -10,9 +9,14 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { Navigate, useNavigate } from 'react-router-dom'
 
 import avatar from '../../assets/images/avatar.jpg'
+import { BackToPacksListButton } from '../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../common/hooks/useAppSelector'
+import { PATH } from '../../common/path/path'
 import { logoutTC } from '../Login/login-reducer'
+import { selectIsLoggedIn } from '../Login/loginSelectors'
+import { selectUserEmail, selectUserName } from '../Login/profileSelectors'
 
 import { updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
@@ -20,9 +24,9 @@ import style from './Profile.module.css'
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
-  const userName = useAppSelector(state => state.profile.name)
-  const userEmail = useAppSelector(state => state.profile.email)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const userName = useAppSelector(selectUserName)
+  const userEmail = useAppSelector(selectUserEmail)
 
   const changeTaskTitleHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
@@ -30,27 +34,21 @@ export const Profile = () => {
 
   const logoutHandler = useCallback(() => {
     dispatch(logoutTC())
-    navigate('/login')
+    navigate(PATH.LOGIN.LOGIN)
   }, [])
 
   const loadPhotoHandler = () => {
     alert('load photo')
     // dispatch(loadPhotoAC())
   }
-  const backHandler = () => {
-    alert('back')
-  }
 
   if (!isLoggedIn) {
-    return <Navigate to={'/login'} />
+    return <Navigate to={PATH.LOGIN.LOGIN} />
   }
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
-      <div className={style.backButton} onClick={backHandler}>
-        <KeyboardBackspace />
-        <div className={style.backButton_title}>Back to Packs List</div>
-      </div>
+      <BackToPacksListButton />
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>

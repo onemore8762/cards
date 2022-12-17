@@ -13,7 +13,7 @@ export const recoveryReducer = (
   action: RecoveryActionType
 ): RecoveryStateType => {
   switch (action.type) {
-    case 'RECOVERY': {
+    case 'RECOVERY/RECOVERY_PASSWORD': {
       return { ...state, error: action.error, success: action.success }
     }
     default:
@@ -23,7 +23,7 @@ export const recoveryReducer = (
 
 //actions
 export const recoveryAC = (error: string, success: boolean) =>
-  ({ type: 'RECOVERY', error, success } as const)
+  ({ type: 'RECOVERY/RECOVERY_PASSWORD', error, success } as const)
 
 //thunk
 export const recoveryTC =

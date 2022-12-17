@@ -22,7 +22,7 @@ export const registrationReducer = (
   switch (action.type) {
     case 'REGISTRATION/LOGIN':
       return { ...state, isLoggedIn: action.isLoggedIn }
-    case 'ERRORS':
+    case 'REGISTRATION/SET_ERRORS':
       return {
         ...state,
         errors: {
@@ -38,7 +38,8 @@ export const registrationReducer = (
 // actions
 export const setIsLoggedIn = (isLoggedIn: boolean) =>
   ({ type: 'REGISTRATION/LOGIN', isLoggedIn } as const)
-export const setErrors = (errors: TypeError) => ({ type: 'ERRORS', payload: errors } as const)
+export const setErrors = (errors: TypeError) =>
+  ({ type: 'REGISTRATION/SET_ERRORS', payload: errors } as const)
 
 // thunk
 export const registrationUser =

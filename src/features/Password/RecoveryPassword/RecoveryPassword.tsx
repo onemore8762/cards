@@ -5,9 +5,11 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
 
 import { recoveryTC } from './recovery-reducer'
+import { selectRecoveryPassError, selectRecoveryPassword } from './recoveryPasswordSelectors'
 
 type FormikErrorType = {
   email?: string
@@ -17,8 +19,8 @@ type FormikErrorType = {
 
 export const RecoveryPassword = () => {
   const dispatch = useAppDispatch()
-  const error = useAppSelector(state => state.recovery.error)
-  const success = useAppSelector(state => state.recovery.success)
+  const success = useAppSelector(selectRecoveryPassword)
+  const error = useAppSelector(selectRecoveryPassError)
   const formik = useFormik({
     initialValues: {
       email: '',

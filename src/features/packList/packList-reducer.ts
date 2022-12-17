@@ -2,27 +2,28 @@ import { AppThunkType } from '../../app/store'
 
 import { packListApi, PacksType } from './packList-api'
 
-const initialState: packListInitialStateType = {
+const initialState: PackListInitialStateType = {
   packList: [],
 }
 
 // reducer
 export const packListReducer = (
-  state = initialState,
-  action: packListActionType
-): packListInitialStateType => {
+  state: PackListInitialStateType = initialState,
+  action: PackListActionType
+): PackListInitialStateType => {
   switch (action.type) {
-    case 'GET-PACKS':
+    case 'PACKLIST/GET_PACKS':
       return { ...state, packList: action.packs }
     default:
       return state
   }
 }
 
-//action
-const getPacksAC = (packs: Array<PacksType>) => ({ type: 'GET-PACKS', packs } as const)
+// actions
+export const getPacksAC = (packs: Array<PacksType>) =>
+  ({ type: 'PACKLIST/GET_PACKS', packs } as const)
 
-//thunk
+// thunk
 export const getPacksTC = (): AppThunkType => {
   return dispatch => {
     packListApi.getPacks().then(res => {
@@ -33,8 +34,9 @@ export const getPacksTC = (): AppThunkType => {
     })
   }
 }
-//type
-type packListActionType = ReturnType<typeof getPacksAC>
-type packListInitialStateType = {
-  packList: PacksType[]
+
+// types
+export type PackListActionType = ReturnType<typeof getPacksAC>
+export type PackListInitialStateType = {
+  packList: Array<PacksType>
 }

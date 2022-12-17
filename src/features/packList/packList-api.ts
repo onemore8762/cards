@@ -5,7 +5,8 @@ export const packListApi = {
     return instance.get<GetPacksResponseType>('/cards/pack')
   },
 }
-//types
+
+// types
 // export type GetPacksResponseType = {
 //   cardPacks: PacksType[]
 //   cardPacksTotalCount: number
@@ -25,6 +26,7 @@ export const packListApi = {
 //   created: string
 //   updated: string
 // }
+
 export type PacksType = {
   _id: string
   user_id: string
@@ -44,7 +46,7 @@ export type PacksType = {
 }
 
 export type GetPacksResponseType = {
-  cardPacks: PacksType[]
+  cardPacks: Array<PacksType>
   page: number
   pageCount: number
   cardPacksTotalCount: number

@@ -4,13 +4,20 @@
 .navbarLogo {
     display: flex;
     align-items: center;
+
+
 }
 .navbarLogo_icon {
     width: 50px;
     height: 50px;
 }
 .navbarLogo_title {
+    margin-left: 15px;
 
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    letter-spacing: 2px;
 }
 
 .navbarUser {

@@ -29,13 +29,13 @@ export const loginReducer = (
   action: LoginActionType
 ): LoginInitialStateType => {
   switch (action.type) {
-    case 'LOGIN': {
+    case 'LOGIN/SET_LOGIN': {
       return {
         ...state,
         isLoggedIn: action.isLoggedIn,
       }
     }
-    case 'SET_ERROR': {
+    case 'LOGIN/SET_ERROR': {
       return { ...state, error: action.error }
     }
     // case 'SET_USER_DATA': {
@@ -53,8 +53,8 @@ export const loginReducer = (
 }
 
 //actions
-export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN', isLoggedIn } as const)
-export const setErrorAC = (error: string) => ({ type: 'SET_ERROR', error } as const)
+export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN/SET_LOGIN', isLoggedIn } as const)
+export const setErrorAC = (error: string) => ({ type: 'LOGIN/SET_ERROR', error } as const)
 // export const setUserDataAC = (_id: string | null, email: string | null, name: string | null) =>
 //   ({ type: 'SET_USER_DATA', _id, email, name } as const)
 // export const updateUserDataAC = (name: string | null) =>

@@ -3,7 +3,7 @@ import React from 'react'
 import { Box, Button, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import image404 from '../../assets/images/404.svg'
+import image404 from '../../../assets/images/404.svg'
 
 import s from './Error404.module.css'
 

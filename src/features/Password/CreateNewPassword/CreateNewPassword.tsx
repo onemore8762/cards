@@ -5,18 +5,20 @@ import { useFormik } from 'formik'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { Eye } from '../../../common/components/Eye/Eye'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
 
 import s from './CreateNewPassword.module.css'
 import { setNewPassword } from './new-password-reducer'
+import { selectNewPassword, selectPasswordError } from './newPasswordSelectors'
 
 export const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [searchParams] = useSearchParams()
   const [token, setToken] = useState<string>('')
   const dispatch = useAppDispatch()
-  const onSuccess = useAppSelector(state => state.newPassword.onSuccess)
-  const error = useAppSelector(state => state.newPassword.error)
+  const onSuccess = useAppSelector(selectNewPassword)
+  const error = useAppSelector(selectPasswordError)
 
   useEffect(() => {
     const params = Object.fromEntries(searchParams)

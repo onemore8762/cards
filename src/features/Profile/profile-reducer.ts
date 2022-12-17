@@ -24,10 +24,10 @@ export const profileReducer = (
   action: ProfileActionType
 ): ProfileInitialStateType => {
   switch (action.type) {
-    case 'UPDATE_USER_DATA': {
+    case 'PROFILE/UPDATE_USER_DATA': {
       return { ...state, name: action.name }
     }
-    case 'SET_USER_DATA': {
+    case 'PROFILE/SET_USER_DATA': {
       return {
         ...state,
         _id: action._id,
@@ -42,10 +42,10 @@ export const profileReducer = (
 
 // actions
 export const setUserDataAC = (_id: string | null, email: string | null, name: string | null) =>
-  ({ type: 'SET_USER_DATA', _id, email, name } as const)
+  ({ type: 'PROFILE/SET_USER_DATA', _id, email, name } as const)
 
 export const updateUserDataAC = (name: string | null) =>
-  ({ type: 'UPDATE_USER_DATA', name } as const)
+  ({ type: 'PROFILE/UPDATE_USER_DATA', name } as const)
 
 // thunk
 export const updateUserDataTC =

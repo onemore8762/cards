@@ -1,0 +1,13 @@
+.backButton {
+  position: absolute;
+  top: -50px;
+  left: 210px;
+
+  display: flex;
+}
+.backButton:hover {
+  cursor: pointer;
+}
+.backButton_title {
+  margin-left: 10px;
+}

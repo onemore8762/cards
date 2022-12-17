@@ -5,9 +5,11 @@ import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import { Eye } from '../../common/components/Eye/Eye'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../common/hooks/useAppSelector'
 
 import { registrationUser, setErrors } from './registration-reducer'
+import { selectRegistrationErrors, selectRegistrationIsLoggedIn } from './registrationSelectors'
 
 export const Registration = () => {
   const [showPassword, setShowPassword] = useState<any>({
@@ -15,8 +17,8 @@ export const Registration = () => {
     confirmPassword: false,
   })
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.registration.isLoggedIn)
-  const errors = useAppSelector(state => state.registration.errors)
+  const isLoggedIn = useAppSelector(selectRegistrationIsLoggedIn)
+  const errors = useAppSelector(selectRegistrationErrors)
 
   const formik = useFormik({
     initialValues: {

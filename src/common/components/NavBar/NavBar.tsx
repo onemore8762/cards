@@ -11,12 +11,14 @@ import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import icon from '../../../assets/icons/newspaper.svg'
 import avatar from '../../../assets/images/avatar.jpg'
 import { logoutTC } from '../../../features/Login/login-reducer'
-import { useAppDispatch, useAppSelector } from '../../hooks/react-redux-hooks'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
+import { PATH } from '../../path/path'
 
 import style from './NavBar.module.css'
 
@@ -31,7 +33,7 @@ export const NavBar = () => {
     {
       title: 'Profile',
       func: () => {
-        navigate('/profile')
+        navigate(PATH.PROFILE.PROFILE)
         setAnchorElUser(null)
       },
     },
@@ -39,14 +41,14 @@ export const NavBar = () => {
       title: 'Logout',
       func: () => {
         dispatch(logoutTC())
-        navigate('/login')
+        navigate(PATH.LOGIN.LOGIN)
         setAnchorElUser(null)
       },
     },
   ])
 
   const loginHandler = () => {
-    navigate('/login')
+    navigate(PATH.LOGIN.LOGIN)
   }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -65,32 +67,33 @@ export const NavBar = () => {
             sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 120px' }}
           >
             {/*Логотип*/}
-            <div className={style.navbarLogo}>
-              <div className={style.navbarLogo_icon}>
-                <NavLink to="/packs">
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <div className={style.navbarLogo}>
+                <div className={style.navbarLogo_icon}>
                   <img src={icon} alt="logo" />
-                </NavLink>
+                </div>
+                <div className={style.navbarLogo_title}>
+                  {/*<Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    // href="/"
+                    sx={{
+                      mr: 2,
+                      display: { xs: 'none', md: 'flex' },
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      letterSpacing: '.3rem',
+                      color: 'inherit',
+                      textDecoration: 'none',
+                      marginLeft: '15px',
+                    }}
+                  >*/}
+                  CARDS
+                  {/*</Typography>*/}
+                </div>
               </div>
-              <Typography
-                className={style.navbarLogo_title}
-                variant="h6"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: 'inherit',
-                  textDecoration: 'none',
-                  marginLeft: '15px',
-                }}
-              >
-                CARDS
-              </Typography>
-            </div>
+            </Link>
 
             {isLoggedIn ? (
               <div className={style.navbarUser}>

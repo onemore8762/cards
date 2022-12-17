@@ -13,9 +13,9 @@ export const newPasswordReducer = (
   action: NewPasswordActionType
 ): NewPasswordStateType => {
   switch (action.type) {
-    case 'SET_NEW_PASSWORD':
+    case 'NEW_PASSWORD/SET_NEW_PASSWORD':
       return { ...state, onSuccess: action.onSuccess }
-    case 'SET_ERROR':
+    case 'NEW_PASSWORD/SET_ERROR':
       return { ...state, error: action.error }
     default:
       return state
@@ -23,8 +23,9 @@ export const newPasswordReducer = (
 }
 // actions
 export const setPasswordSuccess = (onSuccess: boolean) =>
-  ({ type: 'SET_NEW_PASSWORD', onSuccess } as const)
-export const setPasswordError = (error: string) => ({ type: 'SET_ERROR', error } as const)
+  ({ type: 'NEW_PASSWORD/SET_NEW_PASSWORD', onSuccess } as const)
+export const setPasswordError = (error: string) =>
+  ({ type: 'NEW_PASSWORD/SET_ERROR', error } as const)
 
 // thunk
 export const setNewPassword =

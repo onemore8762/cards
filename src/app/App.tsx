@@ -4,13 +4,15 @@ import './App.css'
 import { CircularProgress } from '@mui/material'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { AdminMenu } from '../common/components/AdminMenu/AdminMenu'
+import { AdminMenuMain } from '../common/components/AdminMenu/AdminMenuMain'
+import { Error404 } from '../common/components/Error404/Error404'
 import { ErrorSnackBar } from '../common/components/ErrorSnackBar/ErrorSnackBar'
 import { NavBar } from '../common/components/NavBar/NavBar'
-import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
-import { Error404 } from '../features/Error404/Error404'
+import { useAppDispatch } from '../common/hooks/useAppDispatch'
+import { useAppSelector } from '../common/hooks/useAppSelector'
+import { PATH } from '../common/path/path'
 import { Login } from '../features/Login/Login'
-import { PackList } from '../features/packList/PackList'
+import { PackList } from '../features/PackList/PackList'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
 import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
 import { RecoveryPassword } from '../features/Password/RecoveryPassword/RecoveryPassword'
@@ -40,27 +42,19 @@ export const App = () => {
   return (
     <div className="App">
       <NavBar />
-      <AdminMenu>
-        <div>Login</div>
-        <div>Profile</div>
-        <div>Registration</div>
-        <div>Error404</div>
-        <div>CreateNewPassword</div>
-        <div>CheckEmail</div>
-        <div>PasswordRecovery</div>
-      </AdminMenu>
+      <AdminMenuMain />
       <div style={{ marginTop: '100px' }}>
         <Routes>
           <Route path={'/'} element={<Profile />} />
-          <Route path={'/login'} element={<Login />} />
-          <Route path={'/profile'} element={<Profile />} />
-          <Route path={'/registration'} element={<Registration />} />
-          <Route path={'/checkEmail'} element={<CheckEmail />} />
-          <Route path={'/createNewPassword'} element={<CreateNewPassword />} />
-          <Route path={'/passwordRecovery'} element={<RecoveryPassword />} />
-          <Route path={'/error404'} element={<Error404 />} />
-          <Route path={'/packlist'} element={<PackList />} />
-          <Route path={'*'} element={<Navigate to={'/error404'} />} />
+          <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
+          <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
+          <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />
+          <Route path={PATH.LOGIN.CHECK_EMAIL} element={<CheckEmail />} />
+          <Route path={PATH.LOGIN.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
+          <Route path={PATH.LOGIN.RECOVERY_PASSWORD} element={<RecoveryPassword />} />
+          <Route path={PATH.COMMON.ERROR404} element={<Error404 />} />
+          <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
+          <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404} />} />
         </Routes>
       </div>
       <ErrorSnackBar />

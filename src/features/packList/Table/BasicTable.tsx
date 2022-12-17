@@ -1,7 +1,5 @@
-import * as React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
-import { Button } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -10,8 +8,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { getPacksTC } from '../packList-reducer'
+import { selectPackList } from '../packListSelectors'
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein }
@@ -26,12 +26,12 @@ const rows = [
 ]
 
 type TablePropsType = {
-  headerInTable: string[]
+  headerInTable: Array<string>
 }
 
 export const BasicTable = (props: TablePropsType) => {
   const dispatch = useAppDispatch()
-  const packList = useAppSelector(state => state.packList.packList)
+  const packList = useAppSelector(selectPackList)
 
   useEffect(() => {
     dispatch(getPacksTC())

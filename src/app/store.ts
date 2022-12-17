@@ -2,7 +2,7 @@ import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { LoginActionType, loginReducer } from '../features/Login/login-reducer'
-import { packListReducer } from '../features/packList/packList-reducer'
+import { PackListActionType, packListReducer } from '../features/PackList/packList-reducer'
 import {
   NewPasswordActionType,
   newPasswordReducer,
@@ -49,6 +49,7 @@ export type AppActionType =
   | RegistrationActionType
   | NewPasswordActionType
   | RecoveryActionType
+  | PackListActionType
 
 // @ts-ignore
 window.store = store

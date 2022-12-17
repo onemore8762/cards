@@ -19,7 +19,8 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { useAppDispatch } from '../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../common/hooks/useAppSelector'
 
 import { loginTC } from './login-reducer'
 
