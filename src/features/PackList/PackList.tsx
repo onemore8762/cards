@@ -1,6 +1,7 @@
 import React from 'react'
 
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
+import { Paper } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'

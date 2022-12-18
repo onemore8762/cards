@@ -15,7 +15,7 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { getPacksTC, sortPacksAC } from '../packList-reducer'
+import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectPackList } from '../packListSelectors'
 
 export const BasicTable = () => {
@@ -28,6 +28,12 @@ export const BasicTable = () => {
     dispatch(getPacksTC())
   }, [sort])
   const handelSortTable = () => dispatch(sortPacksAC())
+  const handleUpdatePacks = (idPacks: string) => {
+    dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: idPacks } }))
+  }
+  const handleDeletePacks = (idPacks: string) => {
+    dispatch(deletePacksTC(idPacks))
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -65,14 +71,10 @@ export const BasicTable = () => {
                 </IconButton>
                 {row.user_id === userId ? (
                   <span>
-                    <IconButton
-                    // onClick={handleClickShowPassword}
-                    >
+                    <IconButton onClick={() => handleUpdatePacks(row._id)}>
                       <BorderColorOutlined />
                     </IconButton>
-                    <IconButton
-                    // onClick={handleClickShowPassword}
-                    >
+                    <IconButton onClick={() => handleDeletePacks(row._id)}>
                       <DeleteOutlineIcon />
                     </IconButton>
                   </span>
