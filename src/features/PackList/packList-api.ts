@@ -9,6 +9,12 @@ export const packListApi = {
   addPacks(cardsPack: newPack) {
     return instance.post('/cards/pack', cardsPack)
   },
+  update(cardsPack: newPack) {
+    return instance.put('/cards/pack', cardsPack)
+  },
+  delete(idPack: string) {
+    return instance.delete(`/cards/pack?id=${idPack}`)
+  },
 }
 //type
 export type getPacksParamsType = {
@@ -33,6 +39,7 @@ export type addCardsPack = {
   name?: string // если не отправить будет 'no Name'
   deckCover?: 'url or base64' // не обязателен
   private?: boolean // если не отправить будет false
+  _id?: string // для обновления
 }
 
 export type PacksType = {

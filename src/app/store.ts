@@ -1,4 +1,4 @@
-import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux'
+import { applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { LoginActionType, loginReducer } from '../features/Login/login-reducer'

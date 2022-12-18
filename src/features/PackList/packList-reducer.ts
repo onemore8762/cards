@@ -1,6 +1,6 @@
 import { AppThunkType } from '../../app/store'
 
-import { addCardsPack, newPack, packListApi, PacksType } from './packList-api'
+import { newPack, packListApi, PacksType } from './packList-api'
 
 const initialState: PackListInitialStateType = {
   packList: [],
@@ -21,7 +21,6 @@ export const packListReducer = (
       } else {
         return { ...state, sortPacks: '0updated' }
       }
-
     default:
       return state
   }
@@ -53,9 +52,26 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
     })
   }
 }
-
+export const updatePacksTC = (cardsPack: newPack): AppThunkType => {
+  return dispatch => {
+    packListApi.update(cardsPack).then(res => {
+      // @ts-ignore
+      dispatch(getPacksTC())
+    })
+  }
+}
+export const deletePacksTC = (idPacks: string): AppThunkType => {
+  return dispatch => {
+    packListApi.delete(idPacks).then(res => {
+      console.log(res.data.cardPacks)
+      // @ts-ignore
+      dispatch(getPacksTC())
+    })
+  }
+}
 // types
 export type PackListActionType = ReturnType<typeof getPacksAC> | ReturnType<typeof sortPacksAC>
+
 export type PackListInitialStateType = {
   packList: Array<PacksType>
   sortPacks: '0updated' | '1updated'
