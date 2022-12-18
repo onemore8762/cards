@@ -1,25 +1,37 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import style from './FilterShow.module.css'
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { useDispatch } from 'react-redux'
+
+import { getPacksTC, setIsMy } from '../../../features/PackList/packList-reducer'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 export const FilterShow = () => {
-  const [active, setActive] = useState<boolean>(false)
+  const isMy = useAppSelector(state => state.packList.isMy)
 
-  const showActiveHandler = () => {
-    setActive(!active)
+  const dispatch = useDispatch()
+  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {
+    if (newAlignment !== null) {
+      dispatch(setIsMy(!isMy))
+      dispatch<any>(getPacksTC())
+    }
   }
-
-  const showMy = `${!active && style.showActive}`
-  const showAll = `${active && style.showActive}`
+  const styleButtons = { width: '98px', height: '36px', color: 'black' }
 
   return (
-    <div className={style.filterShow}>
-      <div className={`${style.filterShow_item} ${showMy}`} onClick={showActiveHandler}>
+    <ToggleButtonGroup
+      color="primary"
+      value={isMy}
+      exclusive
+      onChange={handleChange}
+      aria-label="Platform"
+    >
+      <ToggleButton sx={styleButtons} value={true} selected={isMy}>
         My
-      </div>
-      <div className={`${style.filterShow_item} ${showAll}`} onClick={showActiveHandler}>
+      </ToggleButton>
+      <ToggleButton sx={styleButtons} value={false} selected={!isMy}>
         All
-      </div>
-    </div>
+      </ToggleButton>
+    </ToggleButtonGroup>
   )
 }

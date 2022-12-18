@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
-import { Paper } from '@mui/material'
+import { CircularProgress, IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
@@ -10,20 +10,47 @@ import { PaginationBlock } from '../../common/components/Pagination/PaginationBl
 import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../common/hooks/useAppSelector'
 
-import { addPacksTC } from './packList-reducer'
+import { addPacksTC, getPacksTC, initializePacksTC, setIsMy, setMaxMin } from './packList-reducer'
 import style from './PackList.module.css'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
-
+  const initialize = useAppSelector(state => state.packList.initialize)
   const addNewPack = () => {
     //alert('add new pack')
     dispatch(
       addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
     )
   }
+
+  const filterDefault = () => {
+    dispatch(setMaxMin(0, 110))
+    dispatch(setIsMy(false))
+    dispatch(getPacksTC())
+  }
+
+  useEffect(() => {
+    dispatch(initializePacksTC())
+  }, [])
+
+  if (initialize)
+    return (
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </div>
+    )
+
+  console.log(initialize)
 
   return (
     <div className={style.packList}>
@@ -64,7 +91,9 @@ export const PackList = () => {
           </div>
         </div>
         <div className={style.filter_icon}>
-          <FilterAltOutlined fontSize="medium" />
+          <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault}>
+            <FilterAltOutlined fontSize="medium" />
+          </IconButton>
         </div>
       </div>
       <div className={style.mainTable}>
