@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { IconButton, TableSortLabel } from '@mui/material'
+import { CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -21,13 +21,14 @@ import { selectPackList } from '../packListSelectors'
 export const BasicTable = () => {
   const packList = useAppSelector(selectPackList)
   const userId = useAppSelector(state => state.profile._id)
+  const isLoading = useAppSelector(state => state.packList.isLoading)
   const sort = useAppSelector(state => state.packList.sortPacks)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
+  const handelSortTable = () => {
+    dispatch(sortPacksAC())
     dispatch(getPacksTC())
-  }, [sort])
-  const handelSortTable = () => dispatch(sortPacksAC())
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -49,39 +50,52 @@ export const BasicTable = () => {
             <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Actions</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {packList.map(row => (
-            <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
+        <TableBody sx={{ minHeight: '300px' }}>
+          {!isLoading &&
+            packList.map(row => (
+              <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
 
-              <TableCell>{row.cardsCount}</TableCell>
-              <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
-              <TableCell>{row.user_name}</TableCell>
-              <TableCell>
-                <IconButton>
-                  <SchoolOutlinedIcon />
-                </IconButton>
-                {row.user_id === userId ? (
-                  <span>
-                    <IconButton
-                    // onClick={handleClickShowPassword}
-                    >
-                      <BorderColorOutlined />
-                    </IconButton>
-                    <IconButton
-                    // onClick={handleClickShowPassword}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </span>
-                ) : null}
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell>{row.cardsCount}</TableCell>
+                <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
+                <TableCell>{row.user_name}</TableCell>
+                <TableCell>
+                  <IconButton>
+                    <SchoolOutlinedIcon />
+                  </IconButton>
+                  {row.user_id === userId ? (
+                    <span>
+                      <IconButton
+                      // onClick={handleClickShowPassword}
+                      >
+                        <BorderColorOutlined />
+                      </IconButton>
+                      <IconButton
+                      // onClick={handleClickShowPassword}
+                      >
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </span>
+                  ) : null}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
+      {isLoading && (
+        <div
+          style={{
+            height: '200px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
     </TableContainer>
   )
 }

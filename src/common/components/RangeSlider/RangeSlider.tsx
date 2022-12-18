@@ -16,7 +16,6 @@ const selector = (state: any) => [state.packList.min, state.packList.max]
 
 export const RangeSlider = () => {
   const valueMaxMin = useAppSelector(selector)
-
   const [value, setValue] = useState<number[]>(valueMaxMin)
   const debouncedValue = useDebounce<number[]>(value, 1000)
   const dispatch = useDispatch()
@@ -46,6 +45,7 @@ export const RangeSlider = () => {
             onChange={handleChange}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
+            max={110}
           />
         </Box>
       </div>

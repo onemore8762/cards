@@ -1,44 +1,58 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 
-import FormControl from '@mui/material/FormControl'
-import MenuItem from '@mui/material/MenuItem'
+import { NativeSelect } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
+
+import { getPacksTC, setPage, setPageCount } from '../../../features/PackList/packList-reducer'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 import style from './PaginationBlock.module.css'
 
 export const PaginationBlock = () => {
-  const [age, setAge] = React.useState('')
+  const dispatch = useAppDispatch()
+  const pageCount = useAppSelector(state => state.packList.pageCount)
+  const page = useAppSelector(state => state.packList.page)
+  const maxPage = useAppSelector(state => state.packList.cardPacksTotalCount)
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value)
+  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setPageCount(+event.target.value))
+    dispatch(getPacksTC())
+  }
+
+  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
+    dispatch(setPage(value))
+    dispatch(getPacksTC())
   }
 
   return (
     <div className={style.pagination_block}>
       <div className={style.pagination}>
         <Stack spacing={2}>
-          <Pagination count={10} shape="rounded" />
+          <Pagination
+            count={Math.ceil(maxPage / pageCount) || 0}
+            shape="rounded"
+            page={page}
+            onChange={handleChangePage}
+          />
         </Stack>
       </div>
       <div className={style.pagination_show}>
         <div className={style.pagination_show_title}>Show</div>
         <div className={style.pagination_show_select}>
-          <FormControl sx={{ m: 1, minWidth: 70 }} size="small">
-            <Select
-              value={age}
-              onChange={handleChange}
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
-            >
-              <MenuItem value="">
-                <em>5</em>
-              </MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-            </Select>
-          </FormControl>
+          <NativeSelect
+            onChange={handleChangePagination}
+            defaultValue={4}
+            inputProps={{
+              id: 'uncontrolled-native',
+            }}
+          >
+            <option value={4}>4</option>
+            <option value={8}>8</option>
+            <option value={16}>16</option>
+            <option value={32}>32</option>
+          </NativeSelect>
         </div>
         <div className={style.pagination_show_text}>cards per page</div>
       </div>
