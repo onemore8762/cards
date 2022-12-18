@@ -1,7 +1,7 @@
 .filterShow {
     display: flex;
 }
-.filterShow > div {
+.filterShow_item {
     width: 80px;
     padding: 8px;
 
@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 
-.active {
+.showActive {
     color: white;
 
     background-color: #366EFF;

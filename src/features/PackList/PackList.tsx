@@ -57,7 +57,7 @@ export const PackList = () => {
         </div>
         <div>
           <div className={style.column_title}>Number of Cards</div>
-          <div>
+          <div className={style.rangeSlider}>
             <RangeSlider />
           </div>
         </div>
