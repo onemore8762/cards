@@ -1,10 +1,11 @@
 import { AppThunkType } from '../../app/store'
 
-import { addCardsPack, newPack, packListApi, PacksType } from './packList-api'
+import { newPack, packListApi, PacksType } from './packList-api'
 
 const initialState: PackListInitialStateType = {
   packList: [],
   sortPacks: '0updated',
+  isMy: false,
 }
 
 // reducer
@@ -21,7 +22,8 @@ export const packListReducer = (
       } else {
         return { ...state, sortPacks: '0updated' }
       }
-
+    case 'PACKLIST/SET_IS_MY':
+      return { ...state, isMy: action.isMy }
     default:
       return state
   }
@@ -31,14 +33,21 @@ export const packListReducer = (
 export const getPacksAC = (packs: Array<PacksType>) =>
   ({ type: 'PACKLIST/GET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
+export const setIsMy = (isMy: boolean) => ({ type: 'PACKLIST/SET_IS_MY', isMy: isMy } as const)
 // thunk
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
-    const { sortPacks } = getState().packList
+    const { sortPacks, isMy } = getState().packList
+    let user_id
 
-    packListApi.getPacks({ sortPacks }).then(res => {
+    if (isMy) {
+      const { _id } = getState().profile
+
+      user_id = _id
+    }
+
+    packListApi.getPacks({ sortPacks, user_id }).then(res => {
       console.log(res.data.cardPacks)
-
       // @ts-ignore
       dispatch(getPacksAC(res.data.cardPacks))
     })
@@ -55,8 +64,12 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
 }
 
 // types
-export type PackListActionType = ReturnType<typeof getPacksAC> | ReturnType<typeof sortPacksAC>
+export type PackListActionType =
+  | ReturnType<typeof getPacksAC>
+  | ReturnType<typeof sortPacksAC>
+  | ReturnType<typeof setIsMy>
 export type PackListInitialStateType = {
   packList: Array<PacksType>
   sortPacks: '0updated' | '1updated'
+  isMy: boolean
 }

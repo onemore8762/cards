@@ -18,7 +18,7 @@ export type getPacksParamsType = {
   sortPacks?: '0updated' | '1updated' // не обязательно
   page?: number // не обязательно
   pageCount?: number // не обязательно
-  user_id?: string
+  user_id?: string | null
   // чьи колоды не обязательно, или придут все
 
   block?: boolean // не обязательно

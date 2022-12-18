@@ -1,6 +1,7 @@
 import React from 'react'
 
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
+import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
@@ -63,7 +64,9 @@ export const PackList = () => {
           </div>
         </div>
         <div className={style.filter_icon}>
-          <FilterAltOutlined fontSize="medium" />
+          <IconButton sx={{ borderRadius: '0' }}>
+            <FilterAltOutlined fontSize="medium" />
+          </IconButton>
         </div>
       </div>
       <div className={style.mainTable}>
