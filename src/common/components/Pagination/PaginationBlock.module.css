@@ -1,0 +1,21 @@
+.pagination_block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination_show {
+    display: flex;
+    align-items: center;
+
+}
+.pagination_show > div {
+    margin: 0 5px;
+}
+
+.pagination_show_title {
+    font-size: 14px;
+}
+.pagination_show_text {
+    font-size: 14px;
+}

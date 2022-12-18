@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
+import { PaginationBlock } from '../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
@@ -68,6 +69,7 @@ export const PackList = () => {
       <div className={style.mainTable}>
         <BasicTable />
       </div>
+      <PaginationBlock />
     </div>
   )
 }
