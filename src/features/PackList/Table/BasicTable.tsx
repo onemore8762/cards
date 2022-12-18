@@ -34,9 +34,9 @@ export const BasicTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            <TableCell>Name</TableCell>
-            <TableCell>Cards</TableCell>
-            <TableCell>
+            <TableCell style={{ width: '30%', fontWeight: 'bold' }}>Name</TableCell>
+            <TableCell style={{ width: '10%', fontWeight: 'bold' }}>Cards</TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -45,8 +45,8 @@ export const BasicTable = () => {
                 Last Updated
               </TableSortLabel>
             </TableCell>
-            <TableCell>Created by</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Created by</TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
