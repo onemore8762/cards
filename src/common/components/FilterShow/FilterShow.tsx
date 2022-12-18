@@ -1,20 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import { getPacksTC, setIsMy } from '../../../features/PackList/packList-reducer'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 export const FilterShow = () => {
-  const [alignment, setAlignment] = useState(false)
+  const isMy = useAppSelector(state => state.packList.isMy)
 
   const dispatch = useDispatch()
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {
     if (newAlignment !== null) {
-      dispatch(setIsMy(newAlignment))
+      dispatch(setIsMy(!isMy))
       dispatch<any>(getPacksTC())
-
-      setAlignment(newAlignment)
     }
   }
   const styleButtons = { width: '98px', height: '36px', color: 'black' }
@@ -22,15 +21,15 @@ export const FilterShow = () => {
   return (
     <ToggleButtonGroup
       color="primary"
-      value={alignment}
+      value={isMy}
       exclusive
       onChange={handleChange}
       aria-label="Platform"
     >
-      <ToggleButton sx={styleButtons} value={true}>
+      <ToggleButton sx={styleButtons} value={true} selected={isMy}>
         My
       </ToggleButton>
-      <ToggleButton sx={styleButtons} value={false}>
+      <ToggleButton sx={styleButtons} value={false} selected={!isMy}>
         All
       </ToggleButton>
     </ToggleButtonGroup>

@@ -6,8 +6,8 @@ const initialState: PackListInitialStateType = {
   packList: [],
   sortPacks: '0updated',
   isMy: false,
-  min: null,
-  max: null,
+  min: 0,
+  max: 100,
 }
 
 // reducer
@@ -27,7 +27,7 @@ export const packListReducer = (
     case 'PACKLIST/SET_IS_MY':
       return { ...state, isMy: action.isMy }
     case 'PACKLIST/SET_MAX_MIN':
-      return { ...state, max: action.max, min: action.min }
+      return { ...state, min: action.min, max: action.max }
     default:
       return state
   }
@@ -38,8 +38,8 @@ export const setPacksAC = (packs: Array<PacksType>) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
 export const setIsMy = (isMy: boolean) => ({ type: 'PACKLIST/SET_IS_MY', isMy: isMy } as const)
-export const setMaxMin = (max: number, min: number) =>
-  ({ type: 'PACKLIST/SET_MAX_MIN', max, min } as const)
+export const setMaxMin = (min: number, max: number) =>
+  ({ type: 'PACKLIST/SET_MAX_MIN', min, max } as const)
 // thunk
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
@@ -79,6 +79,6 @@ export type PackListInitialStateType = {
   packList: Array<PacksType>
   sortPacks: '0updated' | '1updated'
   isMy: boolean
-  min: number | null
-  max: number | null
+  min: number
+  max: number
 }

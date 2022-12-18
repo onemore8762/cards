@@ -11,18 +11,23 @@ import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 
-import { addPacksTC } from './packList-reducer'
+import { addPacksTC, getPacksTC, setIsMy, setMaxMin } from './packList-reducer'
 import style from './PackList.module.css'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
-
   const addNewPack = () => {
     //alert('add new pack')
     dispatch(
       addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
     )
+  }
+
+  const filterDefault = () => {
+    dispatch(setMaxMin(0, 100))
+    dispatch(setIsMy(false))
+    dispatch(getPacksTC())
   }
 
   return (
@@ -64,7 +69,7 @@ export const PackList = () => {
           </div>
         </div>
         <div className={style.filter_icon}>
-          <IconButton sx={{ borderRadius: '0' }}>
+          <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault}>
             <FilterAltOutlined fontSize="medium" />
           </IconButton>
         </div>
