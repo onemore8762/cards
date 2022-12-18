@@ -3,9 +3,11 @@ import React from 'react'
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 
+import { FilterShow } from '../../common/components/FilterShow/FilterShow'
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
+import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
+import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
-import { useAppSelector } from '../../common/hooks/useAppSelector'
 
 import { addPacksTC } from './packList-reducer'
 import style from './PackList.module.css'
@@ -43,15 +45,21 @@ export const PackList = () => {
       <div className={style.search_row}>
         <div>
           <div className={style.column_title}>Search</div>
-          <div>Input</div>
+          <div>
+            <SearchInput />
+          </div>
         </div>
         <div>
           <div className={style.column_title}>Show Packs Card</div>
-          <div>My All</div>
+          <div>
+            <FilterShow />
+          </div>
         </div>
         <div>
           <div className={style.column_title}>Number of Cards</div>
-          <div>2 10</div>
+          <div>
+            <RangeSlider />
+          </div>
         </div>
         <div className={style.filter_icon}>
           <FilterAltOutlined fontSize="medium" />
