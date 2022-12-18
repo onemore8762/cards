@@ -6,6 +6,8 @@ const initialState: PackListInitialStateType = {
   packList: [],
   sortPacks: '0updated',
   isMy: false,
+  min: null,
+  max: null,
 }
 
 // reducer
@@ -14,7 +16,7 @@ export const packListReducer = (
   action: PackListActionType
 ): PackListInitialStateType => {
   switch (action.type) {
-    case 'PACKLIST/GET_PACKS':
+    case 'PACKLIST/SET_PACKS':
       return { ...state, packList: action.packs }
     case 'PACKLIST/SORT_PACKS':
       if (state.sortPacks === '0updated') {
@@ -30,14 +32,14 @@ export const packListReducer = (
 }
 
 // actions
-export const getPacksAC = (packs: Array<PacksType>) =>
-  ({ type: 'PACKLIST/GET_PACKS', packs } as const)
+export const setPacksAC = (packs: Array<PacksType>) =>
+  ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
 export const setIsMy = (isMy: boolean) => ({ type: 'PACKLIST/SET_IS_MY', isMy: isMy } as const)
 // thunk
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
-    const { sortPacks, isMy } = getState().packList
+    const { sortPacks, isMy, max, min } = getState().packList
     let user_id
 
     if (isMy) {
@@ -46,10 +48,10 @@ export const getPacksTC = (): AppThunkType => {
       user_id = _id
     }
 
-    packListApi.getPacks({ sortPacks, user_id }).then(res => {
+    packListApi.getPacks({ sortPacks, user_id, max, min }).then(res => {
       console.log(res.data.cardPacks)
       // @ts-ignore
-      dispatch(getPacksAC(res.data.cardPacks))
+      dispatch(setPacksAC(res.data.cardPacks))
     })
   }
 }
@@ -65,11 +67,13 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
 
 // types
 export type PackListActionType =
-  | ReturnType<typeof getPacksAC>
+  | ReturnType<typeof setPacksAC>
   | ReturnType<typeof sortPacksAC>
   | ReturnType<typeof setIsMy>
 export type PackListInitialStateType = {
   packList: Array<PacksType>
   sortPacks: '0updated' | '1updated'
   isMy: boolean
+  min: number | null
+  max: number | null
 }

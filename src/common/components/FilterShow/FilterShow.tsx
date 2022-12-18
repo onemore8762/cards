@@ -13,9 +13,9 @@ export const FilterShow = () => {
     if (newAlignment !== null) {
       dispatch(setIsMy(newAlignment))
       dispatch<any>(getPacksTC())
+
       setAlignment(newAlignment)
     }
-    console.log(newAlignment)
   }
   const styleButtons = { width: '98px', height: '36px', color: 'black' }
 

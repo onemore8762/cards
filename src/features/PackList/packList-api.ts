@@ -13,8 +13,8 @@ export const packListApi = {
 //type
 export type getPacksParamsType = {
   packName?: string // не обязательно
-  min?: number // не обязательно
-  max?: number // не обязательно
+  min?: number | null // не обязательно
+  max?: number | null // не обязательно
   sortPacks?: '0updated' | '1updated' // не обязательно
   page?: number // не обязательно
   pageCount?: number // не обязательно
