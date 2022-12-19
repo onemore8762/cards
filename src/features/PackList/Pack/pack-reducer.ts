@@ -6,13 +6,22 @@ const initialState: PackInitialStateType = {
   // sortPacks: '0updated',
 }
 
-export const packReducer = (state = initialState, action: PackActionType) => {
+// reducer
+export const packReducer = (
+  state: PackInitialStateType = initialState,
+  action: PackActionType
+): PackInitialStateType => {
+  // switch (action.type) {
+  //   case 'PACKS/GET_PACKS':
+  //     return {...state}
+  //   default:
   return state
 }
 
-//action
+// actions
 export const getPacksAC = () => ({ type: 'PACKS/GET_PACKS' } as const)
-//thunk
+
+// thunk
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
     const { sortPacks } = getState().packList
@@ -25,9 +34,9 @@ export const getPacksTC = (): AppThunkType => {
     })
   }
 }
-// type
+// types
 export type PackInitialStateType = {
   pack: PacksType | {}
   // sortPacks: '0updated' | '1updated'
 }
-export type PackActionType = any
+export type PackActionType = ReturnType<typeof getPacksAC>

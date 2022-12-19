@@ -16,14 +16,15 @@ import moment from 'moment'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { selectUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
-import { selectPackList } from '../packListSelectors'
+import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
 
 export const BasicTable = () => {
+  const userId = useAppSelector(selectUserId)
   const packList = useAppSelector(selectPackList)
-  const userId = useAppSelector(state => state.profile._id)
-  const isLoading = useAppSelector(state => state.packList.isLoading)
-  const sort = useAppSelector(state => state.packList.sortPacks)
+  const isLoading = useAppSelector(selectIsLoading)
+  const sort = useAppSelector(selectSortPacks)
   const dispatch = useAppDispatch()
 
   const handelSortTable = () => {

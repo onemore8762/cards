@@ -15,18 +15,20 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { selectUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
-import { selectPackList } from '../packListSelectors'
+import { selectPackList, selectSortPacks } from '../packListSelectors'
 
 export const PackTable = () => {
-  const packList = useAppSelector(selectPackList)
-  const userId = useAppSelector(state => state.profile._id)
-  const sort = useAppSelector(state => state.packList.sortPacks)
   const dispatch = useAppDispatch()
+  const userId = useAppSelector(selectUserId)
+  const packList = useAppSelector(selectPackList)
+  const sort = useAppSelector(selectSortPacks)
 
   useEffect(() => {
     dispatch(getPacksTC())
   }, [sort])
+
   const handelSortTable = () => dispatch(sortPacksAC())
   const handleUpdatePacks = (idPacks: string) => {
     dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: idPacks } }))

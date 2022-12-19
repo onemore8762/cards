@@ -17,8 +17,8 @@ import {
   addPacksTC,
   getPacksTC,
   initializePacksTC,
-  setIsMy,
-  setMaxMin,
+  setIsMyAC,
+  setMaxMinAC,
   setSearchTitleAC,
 } from './packList-reducer'
 import style from './PackList.module.css'
@@ -44,8 +44,9 @@ export const PackList = () => {
   }, [debouncedSearch])
 
   const filterDefault = () => {
-    dispatch(setMaxMin(0, 110))
-    dispatch(setIsMy(false))
+    dispatch(setMaxMinAC(0, 110))
+    dispatch(setIsMyAC(false))
+    dispatch(setSearchTitleAC(''))
     dispatch(getPacksTC())
   }
 

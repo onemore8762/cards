@@ -70,19 +70,19 @@ export const packListReducer = (
 }
 
 // actions
+export const setLoadingAC = (value: boolean) => ({ type: 'PACKLIST/SET_LOADING', value } as const)
+export const setInitializeAC = (value: boolean) =>
+  ({ type: 'PACKLIST/SET_INITIALIZE', value } as const)
 export const setInitializePacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_INITIALIZE_PACKS', packs } as const)
-export const setLoading = (value: boolean) => ({ type: 'PACKLIST/SET_LOADING', value } as const)
-export const setInitialize = (value: boolean) =>
-  ({ type: 'PACKLIST/SET_INITIALIZE', value } as const)
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
-export const setIsMy = (isMy: boolean) => ({ type: 'PACKLIST/SET_IS_MY', isMy: isMy } as const)
-export const setMaxMin = (min: number, max: number) =>
+export const setIsMyAC = (isMy: boolean) => ({ type: 'PACKLIST/SET_IS_MY', isMy } as const)
+export const setMaxMinAC = (min: number, max: number) =>
   ({ type: 'PACKLIST/SET_MAX_MIN', min, max } as const)
-export const setPage = (page: number) => ({ type: 'PACKLIST/SET_PAGE', page } as const)
-export const setPageCount = (pageCount: number) =>
+export const setPageAC = (page: number) => ({ type: 'PACKLIST/SET_PAGE', page } as const)
+export const setPageCountAC = (pageCount: number) =>
   ({ type: 'PACKLIST/SET_PAGE_COUNT', pageCount } as const)
 export const setSearchTitleAC = (search: string) =>
   ({ type: 'PACKLIST/SET_SEARCH_TITLE', search } as const)
@@ -90,9 +90,9 @@ export const setSearchTitleAC = (search: string) =>
 // thunk
 export const initializePacksTC = (): AppThunkType => {
   return dispatch => {
-    dispatch(setInitialize(true))
+    dispatch(setInitializeAC(true))
     packListApi.getPacks().then(res => {
-      dispatch(setInitialize(false))
+      dispatch(setInitializeAC(false))
       console.log(res.data)
       dispatch(setInitializePacksAC(res.data))
     })
@@ -108,11 +108,11 @@ export const getPacksTC = (): AppThunkType => {
 
       user_id = _id
     }
-    dispatch(setLoading(true))
+    dispatch(setLoadingAC(true))
     packListApi.getPacks({ sortPacks, user_id, max, min, page, pageCount, packName }).then(res => {
       console.log(res.data)
       dispatch(setPacksAC(res.data))
-      dispatch(setLoading(false))
+      dispatch(setLoadingAC(false))
     })
   }
 }
@@ -145,12 +145,12 @@ export type PackListActionType =
   | ReturnType<typeof setInitializePacksAC>
   | ReturnType<typeof setPacksAC>
   | ReturnType<typeof sortPacksAC>
-  | ReturnType<typeof setIsMy>
-  | ReturnType<typeof setMaxMin>
-  | ReturnType<typeof setPage>
-  | ReturnType<typeof setPageCount>
-  | ReturnType<typeof setLoading>
-  | ReturnType<typeof setInitialize>
+  | ReturnType<typeof setIsMyAC>
+  | ReturnType<typeof setMaxMinAC>
+  | ReturnType<typeof setPageAC>
+  | ReturnType<typeof setPageCountAC>
+  | ReturnType<typeof setLoadingAC>
+  | ReturnType<typeof setInitializeAC>
   | ReturnType<typeof setSearchTitleAC>
 
 export type PackListInitialStateType = {

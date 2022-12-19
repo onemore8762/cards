@@ -4,7 +4,7 @@ import { NativeSelect } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
-import { getPacksTC, setPage, setPageCount } from '../../../features/PackList/packList-reducer'
+import { getPacksTC, setPageAC, setPageCountAC } from '../../../features/PackList/packList-reducer'
 import {
   selectCardPacksTotalCount,
   selectPage,
@@ -26,12 +26,12 @@ export const PaginationBlock: React.FC<Props> = ({ disabled }) => {
   const maxPage = useAppSelector(selectCardPacksTotalCount)
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setPageCount(+event.target.value))
+    dispatch(setPageCountAC(+event.target.value))
     dispatch(getPacksTC())
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setPage(value))
+    dispatch(setPageAC(value))
     dispatch(getPacksTC())
   }
 
