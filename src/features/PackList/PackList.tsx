@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
-import { CircularProgress, IconButton } from '@mui/material'
+import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
@@ -14,6 +14,7 @@ import { useAppSelector } from '../../common/hooks/useAppSelector'
 
 import { addPacksTC, getPacksTC, initializePacksTC, setIsMy, setMaxMin } from './packList-reducer'
 import style from './PackList.module.css'
+import { PackListSkeleton } from './PackListSkeleton'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
@@ -37,20 +38,17 @@ export const PackList = () => {
     dispatch(initializePacksTC())
   }, [])
 
-  if (initialize)
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <CircularProgress />
-      </div>
-    )
-
+  if (initialize) return <PackListSkeleton />
+  /*    <div
+  style={{
+    height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+  }}
+>
+<CircularProgress />
+  </div>*/
   console.log(initialize)
 
   return (
