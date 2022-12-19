@@ -114,7 +114,7 @@ export const BasicTable = () => {
         <Box
           sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}
         >
-          There are no such pack
+          No Results For This Search
         </Box>
       )}
       {packList.length === 0 && isLoading && (
