@@ -22,7 +22,7 @@ import { selectPackList, selectSortPacks } from '../packListSelectors'
 export const PackTable = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectUserId)
-  const packList = useAppSelector(selectPackList)
+  const cardsList = useAppSelector(state => state.pack.cardList)
   const sort = useAppSelector(selectSortPacks)
 
   useEffect(() => {
@@ -57,13 +57,13 @@ export const PackTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {packList.map(row => (
+          {cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.question}
               </TableCell>
 
-              <TableCell>{row.cardsCount}</TableCell>
+              <TableCell>{row.answer}</TableCell>
               <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
               <TableCell>
                 <IconButton>
