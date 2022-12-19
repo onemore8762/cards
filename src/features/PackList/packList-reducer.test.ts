@@ -6,9 +6,11 @@ import {
   setIsMyAC,
   setLoadingAC,
   setMaxMinAC,
+  setPacksAC,
   setPageAC,
   setPageCountAC,
   setSearchTitleAC,
+  sortPacksAC,
 } from './packList-reducer'
 
 let startState: PackListInitialStateType
@@ -42,15 +44,84 @@ test('something should be initialized', () => {
 })
 
 test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
-  // const endState = packListReducer(startState, setInitializePacksAC())
-  //
-  // expect(endState.packs).toBe()
+  const actionObj = {
+    cardPacks: [
+      {
+        _id: '333',
+        user_id: '111',
+        user_name: 'Dan',
+        private: false,
+        name: 'pack name',
+        path: '/def',
+        grade: 0,
+        shots: 0,
+        cardsCount: 4,
+        type: 'pack',
+        rating: 5,
+        created: '2022-12-19T15:40:40.339Z',
+        updated: '2022-12-20T15:40:40.339Z',
+        more_id: '111',
+        __v: 1,
+      },
+    ],
+    page: 1,
+    pageCount: 4,
+    cardPacksTotalCount: 500,
+    minCardsCount: 10,
+    maxCardsCount: 20,
+    token: '00cc84e0-7fcd-11ed-b581-a36473125a03',
+    tokenDeathTime: 1672080197678,
+  }
+
+  const endState = packListReducer(startState, setInitializePacksAC(actionObj))
+
+  expect(endState.packList.length).toBe(1)
+  expect(endState.max).toBe(20)
+  expect(endState.min).toBe(10)
+  expect(endState.page).toBe(1)
+  expect(endState.pageCount).toBe(4)
+  expect(endState.cardPacksTotalCount).toBe(500)
 })
 
-test('packs should be initialized (SET_PACKS)', () => {
-  // const endState = packListReducer(startState, setPacksAC())
-  //
-  // expect(endState.packs).toBe()
+test('packs should be set to state (SET_PACKS)', () => {
+  const actionObj = {
+    cardPacks: [
+      {
+        _id: '333',
+        user_id: '111',
+        user_name: 'Dan',
+        private: false,
+        name: 'pack name',
+        path: '/def',
+        grade: 0,
+        shots: 0,
+        cardsCount: 4,
+        type: 'pack',
+        rating: 5,
+        created: '2022-12-19T15:40:40.339Z',
+        updated: '2022-12-20T15:40:40.339Z',
+        more_id: '111',
+        __v: 1,
+      },
+    ],
+    page: 1,
+    pageCount: 4,
+    cardPacksTotalCount: 200,
+    minCardsCount: 0,
+    maxCardsCount: 110,
+    token: '00cc84e0-7fcd-11ed-b581-a36473125a03',
+    tokenDeathTime: 1672080197678,
+  }
+  const endState = packListReducer(startState, setPacksAC(actionObj))
+
+  expect(endState.packList.length).toBe(1)
+  expect(endState.cardPacksTotalCount).toBe(200)
+})
+
+test('packs should be sorted to another', () => {
+  const endState = packListReducer(startState, sortPacksAC())
+
+  expect(endState.sortPacks).toBe('1updated')
 })
 
 test('my packs should be loaded', () => {
