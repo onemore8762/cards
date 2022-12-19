@@ -3,7 +3,7 @@ import React from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Box, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
+import { Box, Button, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,11 +12,13 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectUserId } from '../../Profile/profileSelectors'
+import { getCardsListTC } from '../Pack/pack-reducer'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
 
@@ -26,6 +28,7 @@ export const BasicTable = () => {
   const isLoading = useAppSelector(selectIsLoading)
   const sort = useAppSelector(selectSortPacks)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const handelSortTable = () => {
     dispatch(sortPacksAC())
@@ -37,6 +40,10 @@ export const BasicTable = () => {
   }
   const handleDeletePacks = (idPacks: string) => {
     dispatch(deletePacksTC(idPacks))
+  }
+  const handelGoCard = (id: string) => {
+    dispatch(getCardsListTC(id))
+    navigate('/pack')
   }
 
   return (
@@ -64,7 +71,11 @@ export const BasicTable = () => {
             return (
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  <SkeletonComponent isLoading={isLoading}>{row.name}</SkeletonComponent>
+                  <SkeletonComponent isLoading={isLoading}>
+                    <Button onClick={() => handelGoCard(row._id)} sx={{ color: 'black' }}>
+                      {row.name}
+                    </Button>
+                  </SkeletonComponent>
                 </TableCell>
                 <TableCell>
                   <SkeletonComponent isLoading={isLoading}>{row.cardsCount}</SkeletonComponent>
