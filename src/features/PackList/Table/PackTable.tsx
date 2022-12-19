@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 
-import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
+import StarOutlineIcon from '@mui/icons-material/StarOutline'
 import { IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -15,13 +13,11 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { selectUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
-import { selectPackList, selectSortPacks } from '../packListSelectors'
+import { selectSortPacks } from '../packListSelectors'
 
 export const PackTable = () => {
   const dispatch = useAppDispatch()
-  const userId = useAppSelector(selectUserId)
   const cardsList = useAppSelector(state => state.pack.cardList)
   const sort = useAppSelector(selectSortPacks)
 
@@ -67,18 +63,20 @@ export const PackTable = () => {
               <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
               <TableCell>
                 <IconButton>
-                  <SchoolOutlinedIcon />
+                  <StarOutlineIcon />
                 </IconButton>
-                {row.user_id === userId ? (
-                  <span>
-                    <IconButton onClick={() => handleUpdatePacks(row._id)}>
-                      <BorderColorOutlined />
-                    </IconButton>
-                    <IconButton onClick={() => handleDeletePacks(row._id)}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </span>
-                ) : null}
+                <IconButton>
+                  <StarOutlineIcon />
+                </IconButton>
+                <IconButton>
+                  <StarOutlineIcon />
+                </IconButton>
+                <IconButton>
+                  <StarOutlineIcon />
+                </IconButton>
+                <IconButton>
+                  <StarOutlineIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

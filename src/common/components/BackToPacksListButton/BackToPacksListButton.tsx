@@ -7,18 +7,23 @@ import { PATH } from '../../path/path'
 
 import style from './BackToPacksListButton.module.css'
 
-export const BackToPacksListButton = () => {
+export const BackToPacksListButton = (props: propsType) => {
   const navigate = useNavigate()
 
   const backButtonHandler = () => {
     // alert('back')
-    navigate(PATH.PROFILE.PACKLIST)
+    navigate(props.route)
   }
 
   return (
-    <div className={style.backButton} onClick={backButtonHandler}>
+    <div className={style.backButton} onClick={backButtonHandler} style={props.style}>
       <KeyboardBackspace />
-      <div className={style.backButton_title}>Back to Packs List</div>
+      <div className={style.backButton_title}>{props.title}</div>
     </div>
   )
+}
+type propsType = {
+  style: {}
+  route: string
+  title: string
 }

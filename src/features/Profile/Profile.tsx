@@ -49,7 +49,11 @@ export const Profile = () => {
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
-      <BackToPacksListButton />
+      <BackToPacksListButton
+        style={{ top: '40px', right: '210px' }}
+        route={PATH.PROFILE.PACKLIST}
+        title={'Back to Packs List'}
+      />
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>

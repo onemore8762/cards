@@ -41,8 +41,8 @@ export const BasicTable = () => {
   const handleDeletePacks = (idPacks: string) => {
     dispatch(deletePacksTC(idPacks))
   }
-  const handelGoCard = (id: string) => {
-    dispatch(getCardsListTC(id))
+  const handelGoCard = (id: string, userId: string) => {
+    dispatch(getCardsListTC(id, userId))
     navigate('/pack')
   }
 
@@ -72,7 +72,10 @@ export const BasicTable = () => {
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   <SkeletonComponent isLoading={isLoading}>
-                    <Button onClick={() => handelGoCard(row._id)} sx={{ color: 'black' }}>
+                    <Button
+                      onClick={() => handelGoCard(row._id, row.user_id)}
+                      sx={{ color: 'black' }}
+                    >
                       {row.name}
                     </Button>
                   </SkeletonComponent>
