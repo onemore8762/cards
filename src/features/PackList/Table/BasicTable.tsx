@@ -120,17 +120,3 @@ export const BasicTable = () => {
     </TableContainer>
   )
 }
-/*{
-  isLoading && (
-    <div
-      style={{
-        height: '200px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <CircularProgress />
-    </div>
-  )
-}*/
