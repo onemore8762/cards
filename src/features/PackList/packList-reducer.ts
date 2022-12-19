@@ -13,6 +13,7 @@ const initialState: PackListInitialStateType = {
   page: 0,
   cardPacksTotalCount: 0,
   pageCount: 0,
+  packName: '',
 }
 
 // reducer
@@ -61,6 +62,8 @@ export const packListReducer = (
       return { ...state, page: action.page }
     case 'PACKLIST/SET_PAGE_COUNT':
       return { ...state, pageCount: action.pageCount }
+    case 'PACKLIST/SET_SEARCH_TITLE':
+      return { ...state, packName: action.search }
     default:
       return state
   }
@@ -81,6 +84,8 @@ export const setMaxMin = (min: number, max: number) =>
 export const setPage = (page: number) => ({ type: 'PACKLIST/SET_PAGE', page } as const)
 export const setPageCount = (pageCount: number) =>
   ({ type: 'PACKLIST/SET_PAGE_COUNT', pageCount } as const)
+export const setSearchTitleAC = (search: string) =>
+  ({ type: 'PACKLIST/SET_SEARCH_TITLE', search } as const)
 
 // thunk
 export const initializePacksTC = (): AppThunkType => {
@@ -89,14 +94,13 @@ export const initializePacksTC = (): AppThunkType => {
     packListApi.getPacks().then(res => {
       dispatch(setInitialize(false))
       console.log(res.data)
-      // @ts-ignore
       dispatch(setInitializePacksAC(res.data))
     })
   }
 }
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
-    const { sortPacks, isMy, max, min, page, pageCount } = getState().packList
+    const { sortPacks, isMy, max, min, page, pageCount, packName } = getState().packList
     let user_id
 
     if (isMy) {
@@ -105,9 +109,8 @@ export const getPacksTC = (): AppThunkType => {
       user_id = _id
     }
     dispatch(setLoading(true))
-    packListApi.getPacks({ sortPacks, user_id, max, min, page, pageCount }).then(res => {
+    packListApi.getPacks({ sortPacks, user_id, max, min, page, pageCount, packName }).then(res => {
       console.log(res.data)
-      // @ts-ignore
       dispatch(setPacksAC(res.data))
       dispatch(setLoading(false))
     })
@@ -117,7 +120,6 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
   return dispatch => {
     packListApi.addPacks(cardsPack).then(res => {
       console.log(res.data.cardPacks)
-      // @ts-ignore
       dispatch(getPacksTC())
     })
   }
@@ -125,7 +127,6 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
 export const updatePacksTC = (cardsPack: newPack): AppThunkType => {
   return dispatch => {
     packListApi.update(cardsPack).then(() => {
-      // @ts-ignore
       dispatch(getPacksTC())
     })
   }
@@ -134,7 +135,6 @@ export const deletePacksTC = (idPacks: string): AppThunkType => {
   return dispatch => {
     packListApi.delete(idPacks).then(res => {
       console.log(res.data.cardPacks)
-      // @ts-ignore
       dispatch(getPacksTC())
     })
   }
@@ -151,6 +151,7 @@ export type PackListActionType =
   | ReturnType<typeof setPageCount>
   | ReturnType<typeof setLoading>
   | ReturnType<typeof setInitialize>
+  | ReturnType<typeof setSearchTitleAC>
 
 export type PackListInitialStateType = {
   initialize: boolean
@@ -163,4 +164,5 @@ export type PackListInitialStateType = {
   page: number
   cardPacksTotalCount: number
   pageCount: number
+  packName: string
 }

@@ -15,7 +15,7 @@ export const loginApi = {
   // },
 }
 
-//types
+// types
 export type LoginParamsType = {
   email: string
   password: string

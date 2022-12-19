@@ -3,7 +3,7 @@ import { instance } from '../../common/api/cards-api'
 export const packListApi = {
   getPacks(params: getPacksParamsType = {}) {
     return instance.get<GetPacksResponseType>('/cards/pack', {
-      params: params,
+      params,
     })
   },
   addPacks(cardsPack: newPack) {
@@ -16,7 +16,8 @@ export const packListApi = {
     return instance.delete(`/cards/pack?id=${idPack}`)
   },
 }
-//type
+
+// types
 export type getPacksParamsType = {
   packName?: string // не обязательно
   min?: number | null // не обязательно

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import { IconButton } from '@mui/material'
@@ -11,10 +11,18 @@ import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
+import { useDebounce } from '../../common/hooks/useDebounce'
 
-import { addPacksTC, getPacksTC, initializePacksTC, setIsMy, setMaxMin } from './packList-reducer'
+import {
+  addPacksTC,
+  getPacksTC,
+  initializePacksTC,
+  setIsMy,
+  setMaxMin,
+  setSearchTitleAC,
+} from './packList-reducer'
 import style from './PackList.module.css'
-import { selectInitialize, selectIsLoading } from './packListSelectors'
+import { selectInitialize, selectIsLoading, selectSearchPack } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
 import { BasicTable } from './Table/BasicTable'
 
@@ -22,12 +30,18 @@ export const PackList = () => {
   const dispatch = useAppDispatch()
   const initialize = useAppSelector(selectInitialize)
   const isLoading = useAppSelector(selectIsLoading)
+  const search = useAppSelector(selectSearchPack)
+  const debouncedSearch = useDebounce<string>(search, 1000)
 
   const addNewPack = () => {
     dispatch(
       addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
     )
   }
+
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [debouncedSearch])
 
   const filterDefault = () => {
     dispatch(setMaxMin(0, 110))
@@ -40,17 +54,10 @@ export const PackList = () => {
   }, [])
 
   if (initialize) return <PackListSkeleton />
-  /*    <div
-  style={{
-    height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-  }}
->
-<CircularProgress />
-  </div>*/
-  console.log(initialize)
+
+  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchTitleAC(e.currentTarget.value))
+  }
 
   return (
     <div className={style.packList}>
@@ -76,7 +83,7 @@ export const PackList = () => {
         <div>
           <div className={style.column_title}>Search</div>
           <div>
-            <SearchInput disabled={isLoading} />
+            <SearchInput disabled={isLoading} search={search} searchHandler={searchHandler} />
           </div>
         </div>
         <div>
