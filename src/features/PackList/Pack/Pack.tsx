@@ -1,8 +1,7 @@
 import React from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import StarOutlineIcon from '@mui/icons-material/StarOutline'
-import { Box, Grid, IconButton } from '@mui/material'
+import { Grid, IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -10,7 +9,6 @@ import Typography from '@mui/material/Typography'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
-import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 import { selectUserId } from '../../Profile/profileSelectors'
@@ -18,7 +16,6 @@ import style from '../PackList.module.css'
 import { PackTable } from '../Table/PackTable'
 
 export const Pack = () => {
-  const dispatch = useAppDispatch()
   const userId = useAppSelector(selectUserId)
   const createdId = useAppSelector(state => state.pack.userId)
 
@@ -87,7 +84,6 @@ export const Pack = () => {
                 width: '175px',
                 borderRadius: '30px',
               }}
-              //onClick={addNewPack}
             >
               Learn to pack
             </Button>

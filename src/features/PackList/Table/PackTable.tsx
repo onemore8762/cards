@@ -21,9 +21,9 @@ export const PackTable = () => {
   const cardsList = useAppSelector(state => state.pack.cardList)
   const sort = useAppSelector(selectSortPacks)
 
-  useEffect(() => {
-    dispatch(getPacksTC())
-  }, [sort])
+  // useEffect(() => {
+  //   dispatch(getPacksTC())
+  // }, [sort])
 
   const handelSortTable = () => dispatch(sortPacksAC())
   const handleUpdatePacks = (idPacks: string) => {
