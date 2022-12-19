@@ -9,10 +9,6 @@ type Props = {
 }
 
 export const SearchInput: React.FC<Props> = ({ disabled }) => {
-  // const searchHandler = () => {
-  //   alert('search')
-  // }
-
   return (
     <div>
       <TextField
@@ -20,6 +16,7 @@ export const SearchInput: React.FC<Props> = ({ disabled }) => {
         id="outlined-basic"
         variant="outlined"
         size="small"
+        placeholder="search cards"
         disabled={disabled}
         InputProps={{
           startAdornment: (

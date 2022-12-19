@@ -81,6 +81,7 @@ export const setMaxMin = (min: number, max: number) =>
 export const setPage = (page: number) => ({ type: 'PACKLIST/SET_PAGE', page } as const)
 export const setPageCount = (pageCount: number) =>
   ({ type: 'PACKLIST/SET_PAGE_COUNT', pageCount } as const)
+
 // thunk
 export const initializePacksTC = (): AppThunkType => {
   return dispatch => {
@@ -93,7 +94,6 @@ export const initializePacksTC = (): AppThunkType => {
     })
   }
 }
-
 export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
     const { sortPacks, isMy, max, min, page, pageCount } = getState().packList
@@ -139,6 +139,7 @@ export const deletePacksTC = (idPacks: string): AppThunkType => {
     })
   }
 }
+
 // types
 export type PackListActionType =
   | ReturnType<typeof setInitializePacksAC>

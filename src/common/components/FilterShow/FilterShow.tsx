@@ -4,13 +4,15 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import { getPacksTC, setIsMy, setPage } from '../../../features/PackList/packList-reducer'
+import { selectIsMy } from '../../../features/PackList/packListSelectors'
 import { useAppSelector } from '../../hooks/useAppSelector'
+
 type Props = {
   disabled: boolean
 }
 
 export const FilterShow: React.FC<Props> = ({ disabled }) => {
-  const isMy = useAppSelector(state => state.packList.isMy)
+  const isMy = useAppSelector(selectIsMy)
 
   const dispatch = useDispatch()
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {

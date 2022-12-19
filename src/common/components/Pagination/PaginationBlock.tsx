@@ -5,6 +5,11 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
 import { getPacksTC, setPage, setPageCount } from '../../../features/PackList/packList-reducer'
+import {
+  selectCardPacksTotalCount,
+  selectPage,
+  selectPageCount,
+} from '../../../features/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
@@ -16,9 +21,9 @@ type Props = {
 
 export const PaginationBlock: React.FC<Props> = ({ disabled }) => {
   const dispatch = useAppDispatch()
-  const pageCount = useAppSelector(state => state.packList.pageCount)
-  const page = useAppSelector(state => state.packList.page)
-  const maxPage = useAppSelector(state => state.packList.cardPacksTotalCount)
+  const pageCount = useAppSelector(selectPageCount)
+  const page = useAppSelector(selectPage)
+  const maxPage = useAppSelector(selectCardPacksTotalCount)
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCount(+event.target.value))

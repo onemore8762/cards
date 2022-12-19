@@ -14,15 +14,16 @@ import { useAppSelector } from '../../common/hooks/useAppSelector'
 
 import { addPacksTC, getPacksTC, initializePacksTC, setIsMy, setMaxMin } from './packList-reducer'
 import style from './PackList.module.css'
+import { selectInitialize, selectIsLoading } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
 import { BasicTable } from './Table/BasicTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
-  const initialize = useAppSelector(state => state.packList.initialize)
-  const isLoading = useAppSelector(state => state.packList.isLoading)
+  const initialize = useAppSelector(selectInitialize)
+  const isLoading = useAppSelector(selectIsLoading)
+
   const addNewPack = () => {
-    //alert('add new pack')
     dispatch(
       addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
     )
