@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import avatar from '../../assets/images/avatar.jpg'
 import { BackToPacksListButton } from '../../common/components/BackToPacksListButton/BackToPacksListButton'
@@ -15,7 +15,6 @@ import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
 import { logoutTC } from '../Login/login-reducer'
-import { selectIsLoggedIn } from '../Login/loginSelectors'
 import { selectUserEmail, selectUserName } from '../Login/profileSelectors'
 
 import { updateUserDataTC } from './profile-reducer'
@@ -24,7 +23,7 @@ import style from './Profile.module.css'
 export const Profile = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
   const userName = useAppSelector(selectUserName)
   const userEmail = useAppSelector(selectUserEmail)
 
@@ -48,12 +47,8 @@ export const Profile = () => {
   // }
 
   return (
-    <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
-      <BackToPacksListButton
-        style={{ top: '40px', right: '210px' }}
-        route={PATH.PROFILE.PACKLIST}
-        title={'Back to Packs List'}
-      />
+    <Grid display="flex" flexDirection={'column'} container>
+      <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>

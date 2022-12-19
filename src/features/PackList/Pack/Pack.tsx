@@ -19,11 +19,7 @@ export const Pack = () => {
 
   return (
     <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
-      <BackToPacksListButton
-        route={PATH.PROFILE.PACKLIST}
-        title={'Back to Packs List'}
-        style={{ top: '40px', left: '210px' }}
-      />
+      <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       <div className={style.packList}>
         <div className={style.header_row}>
           <PageTitle title={userId === createdId ? 'My Pack' : "Friend's Pack"} />

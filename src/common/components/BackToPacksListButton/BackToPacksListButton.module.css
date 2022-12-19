@@ -1,7 +1,8 @@
 .backButton {
-  position: relative;
-
   display: flex;
+
+  margin: 24px 0 12px 142px;
+
 
 
   /*margin-bottom: 15px;*/

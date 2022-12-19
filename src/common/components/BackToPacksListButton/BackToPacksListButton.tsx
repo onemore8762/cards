@@ -16,14 +16,13 @@ export const BackToPacksListButton = (props: propsType) => {
   }
 
   return (
-    <div className={style.backButton} onClick={backButtonHandler} style={props.style}>
+    <div className={style.backButton} onClick={backButtonHandler}>
       <KeyboardBackspace />
       <div className={style.backButton_title}>{props.title}</div>
     </div>
   )
 }
 type propsType = {
-  style: {}
   route: string
   title: string
 }
