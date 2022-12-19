@@ -19,6 +19,7 @@ import { BasicTable } from './Table/BasicTable'
 export const PackList = () => {
   const dispatch = useAppDispatch()
   const initialize = useAppSelector(state => state.packList.initialize)
+  const isLoading = useAppSelector(state => state.packList.isLoading)
   const addNewPack = () => {
     //alert('add new pack')
     dispatch(
@@ -58,6 +59,7 @@ export const PackList = () => {
         <PageTitle title={'Packs List'} />
         <div className={style.addNewPackBtn}>
           <Button
+            disabled={isLoading}
             type={'submit'}
             variant={'contained'}
             color={'primary'}
@@ -75,23 +77,23 @@ export const PackList = () => {
         <div>
           <div className={style.column_title}>Search</div>
           <div>
-            <SearchInput />
+            <SearchInput disabled={isLoading} />
           </div>
         </div>
         <div>
           <div className={style.column_title}>Show Packs Card</div>
           <div>
-            <FilterShow />
+            <FilterShow disabled={isLoading} />
           </div>
         </div>
         <div>
           <div className={style.column_title}>Number of Cards</div>
           <div className={style.rangeSlider}>
-            <RangeSlider />
+            <RangeSlider disabled={isLoading} />
           </div>
         </div>
         <div className={style.filter_icon}>
-          <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault}>
+          <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault} disabled={isLoading}>
             <FilterAltOutlined fontSize="medium" />
           </IconButton>
         </div>
@@ -99,7 +101,7 @@ export const PackList = () => {
       <div className={style.mainTable}>
         <BasicTable />
       </div>
-      <PaginationBlock />
+      <PaginationBlock disabled={isLoading} />
     </div>
   )
 }

@@ -4,7 +4,11 @@ import SearchIcon from '@mui/icons-material/Search'
 import { TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 
-export const SearchInput = () => {
+type Props = {
+  disabled: boolean
+}
+
+export const SearchInput: React.FC<Props> = ({ disabled }) => {
   // const searchHandler = () => {
   //   alert('search')
   // }
@@ -16,6 +20,7 @@ export const SearchInput = () => {
         id="outlined-basic"
         variant="outlined"
         size="small"
+        disabled={disabled}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

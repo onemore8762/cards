@@ -10,7 +10,11 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 
 import style from './PaginationBlock.module.css'
 
-export const PaginationBlock = () => {
+type Props = {
+  disabled: boolean
+}
+
+export const PaginationBlock: React.FC<Props> = ({ disabled }) => {
   const dispatch = useAppDispatch()
   const pageCount = useAppSelector(state => state.packList.pageCount)
   const page = useAppSelector(state => state.packList.page)
@@ -31,6 +35,7 @@ export const PaginationBlock = () => {
       <div className={style.pagination}>
         <Stack spacing={2}>
           <Pagination
+            disabled={disabled}
             count={Math.ceil(maxPage / pageCount) || 0}
             shape="rounded"
             page={page}
@@ -42,6 +47,7 @@ export const PaginationBlock = () => {
         <div className={style.pagination_show_title}>Show</div>
         <div className={style.pagination_show_select}>
           <NativeSelect
+            disabled={disabled}
             onChange={handleChangePagination}
             defaultValue={4}
             inputProps={{

@@ -3,7 +3,7 @@ import React from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { CircularProgress, IconButton, TableSortLabel } from '@mui/material'
+import { Box, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 
+import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
@@ -36,6 +37,7 @@ export const BasicTable = () => {
   const handleDeletePacks = (idPacks: string) => {
     dispatch(deletePacksTC(idPacks))
   }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -57,36 +59,53 @@ export const BasicTable = () => {
           </TableRow>
         </TableHead>
         <TableBody sx={{ minHeight: '300px' }}>
-          {!isLoading &&
-            packList.map(row => (
+          {packList.map(row => {
+            return (
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  <SkeletonComponent isLoading={isLoading}>{row.name}</SkeletonComponent>
                 </TableCell>
-
-              <TableCell>{row.cardsCount}</TableCell>
-              <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
-              <TableCell>{row.user_name}</TableCell>
-              <TableCell>
-                <IconButton>
-                  <SchoolOutlinedIcon />
-                </IconButton>
-                {row.user_id === userId ? (
-                  <span>
-                    <IconButton onClick={() => handleUpdatePacks(row._id)}>
-                      <BorderColorOutlined />
+                <TableCell>
+                  <SkeletonComponent isLoading={isLoading}>{row.cardsCount}</SkeletonComponent>
+                </TableCell>
+                <TableCell>
+                  <SkeletonComponent isLoading={isLoading}>
+                    {moment(row.updated).format('DD.MM.YYYY')}
+                  </SkeletonComponent>
+                </TableCell>
+                <TableCell>
+                  <SkeletonComponent isLoading={isLoading}>{row.user_name}</SkeletonComponent>
+                </TableCell>
+                <TableCell>
+                  <SkeletonComponent isLoading={isLoading}>
+                    <IconButton>
+                      <SchoolOutlinedIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDeletePacks(row._id)}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </span>
-                ) : null}
-              </TableCell>
-            </TableRow>
-          ))}
+                    {row.user_id === userId ? (
+                      <span>
+                        <IconButton onClick={() => handleUpdatePacks(row._id)}>
+                          <BorderColorOutlined />
+                        </IconButton>
+                        <IconButton onClick={() => handleDeletePacks(row._id)}>
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </span>
+                    ) : null}
+                  </SkeletonComponent>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
-      {isLoading && (
+      {packList.length === 0 && !isLoading && (
+        <Box
+          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}
+        >
+          There are no such pack
+        </Box>
+      )}
+      {packList.length === 0 && isLoading && (
         <div
           style={{
             height: '200px',
@@ -101,3 +120,17 @@ export const BasicTable = () => {
     </TableContainer>
   )
 }
+/*{
+  isLoading && (
+    <div
+      style={{
+        height: '200px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <CircularProgress />
+    </div>
+  )
+}*/

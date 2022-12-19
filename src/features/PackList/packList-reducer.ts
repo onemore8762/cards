@@ -1,7 +1,6 @@
 import { AppThunkType } from '../../app/store'
 
 import { GetPacksResponseType, newPack, packListApi, PacksType } from './packList-api'
-import { newPack, packListApi, PacksType } from './packList-api'
 
 const initialState: PackListInitialStateType = {
   initialize: false,
@@ -125,7 +124,7 @@ export const addPacksTC = (cardsPack: newPack): AppThunkType => {
 }
 export const updatePacksTC = (cardsPack: newPack): AppThunkType => {
   return dispatch => {
-    packListApi.update(cardsPack).then(res => {
+    packListApi.update(cardsPack).then(() => {
       // @ts-ignore
       dispatch(getPacksTC())
     })

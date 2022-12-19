@@ -12,9 +12,14 @@ import { useDebounce } from '../../hooks/useDebounce'
 function valuetext(value: number) {
   return `${value}`
 }
+
+type Props = {
+  disabled: boolean
+}
+
 const selector = (state: any) => [state.packList.min, state.packList.max]
 
-export const RangeSlider = () => {
+export const RangeSlider: React.FC<Props> = ({ disabled }) => {
   const valueMaxMin = useAppSelector(selector)
   const [value, setValue] = useState<number[]>(valueMaxMin)
   const debouncedValue = useDebounce<number[]>(value, 1000)
@@ -40,6 +45,7 @@ export const RangeSlider = () => {
       <div className={style.slider}>
         <Box sx={{ width: 150 }}>
           <Slider
+            disabled={disabled}
             getAriaLabel={() => 'Number of cards'}
             value={value}
             onChange={handleChange}
