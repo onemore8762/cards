@@ -21,6 +21,7 @@ import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
+import { PATH } from '../../common/path/path'
 
 import { loginTC } from './login-reducer'
 
@@ -144,7 +145,7 @@ export const Login = () => {
               />
               <FormLabel sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, mb: 5 }}>
                 <NavLink
-                  to={'/PasswordRecovery'}
+                  to={PATH.LOGIN.RECOVERY_PASSWORD}
                   style={{ color: '#000000', textDecoration: 'none' }}
                 >
                   Forgot Password?

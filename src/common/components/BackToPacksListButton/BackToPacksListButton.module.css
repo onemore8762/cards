@@ -1,6 +1,7 @@
 .backButton {
   display: flex;
 
+  max-height: 25px;
   margin: 24px 0 12px 142px;
 
 

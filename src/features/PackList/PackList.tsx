@@ -40,7 +40,9 @@ export const PackList = () => {
   }
 
   useEffect(() => {
-    dispatch(getPacksTC())
+    if (search) {
+      dispatch(getPacksTC())
+    }
   }, [debouncedSearch])
 
   const filterDefault = () => {
