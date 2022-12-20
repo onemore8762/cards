@@ -23,12 +23,12 @@ import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packLi
 import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
 
 export const BasicTable = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const userId = useAppSelector(selectProfileUserId)
   const packList = useAppSelector(selectPackList)
   const isLoading = useAppSelector(selectIsLoading)
   const sort = useAppSelector(selectSortPacks)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const handelSortTable = () => {
     dispatch(sortPacksAC())

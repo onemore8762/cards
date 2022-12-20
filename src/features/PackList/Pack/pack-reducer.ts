@@ -1,7 +1,6 @@
 import { AppThunkType } from '../../../app/store'
-import { packListApi, PacksType } from '../packList-api'
 
-import { Cards, getCardsParamsType, packApi } from './pack-api'
+import { Cards, packApi } from './pack-api'
 
 const initialState: PackInitialStateType = {
   cardList: [],
@@ -10,7 +9,10 @@ const initialState: PackInitialStateType = {
 }
 
 // reducer
-export const packReducer = (state = initialState, action: PackActionType): PackInitialStateType => {
+export const packReducer = (
+  state: PackInitialStateType = initialState,
+  action: PackActionType
+): PackInitialStateType => {
   switch (action.type) {
     case 'PACKS/GET_PACKS':
       return { ...state, cardList: action.cards, userId: action.userId }
