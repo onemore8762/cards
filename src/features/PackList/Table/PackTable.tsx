@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
+import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import StarOutlineIcon from '@mui/icons-material/StarOutline'
 import { IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
@@ -13,25 +15,34 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { selectCardsList } from '../Pack/packSelectors'
-import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
+import { selectProfileUserId } from '../../Profile/profileSelectors'
+import { Cards } from '../Pack/pack-api'
+import { deleteCardTC, updateCardTC } from '../Pack/pack-reducer'
+import { selectPackUserId } from '../Pack/packSelectors'
+import { sortPacksAC } from '../packList-reducer'
 import { selectSortPacks } from '../packListSelectors'
 
-export const PackTable = () => {
+type packTablePropsType = {
+  cardsList: Cards[]
+}
+
+export const PackTable = (props: packTablePropsType) => {
   const dispatch = useAppDispatch()
-  const cardsList = useAppSelector(selectCardsList)
+
   const sort = useAppSelector(selectSortPacks)
+  const userId = useAppSelector(selectProfileUserId)
+  const createdId = useAppSelector(selectPackUserId)
 
   // useEffect(() => {
   //   dispatch(getPacksTC())
   // }, [sort])
 
   const handelSortTable = () => dispatch(sortPacksAC())
-  const handleUpdatePacks = (idPacks: string) => {
-    dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: idPacks } }))
+  const handlerUpdateCard = (idCard: string) => {
+    dispatch(updateCardTC({ _id: idCard, question: 'new question' }))
   }
-  const handleDeletePacks = (idPacks: string) => {
-    dispatch(deletePacksTC(idPacks))
+  const handleDeleteCard = (idCard: string) => {
+    dispatch(deleteCardTC(idCard))
   }
 
   return (
@@ -54,7 +65,7 @@ export const PackTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cardsList.map(row => (
+          {props.cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {row.question}
@@ -78,6 +89,16 @@ export const PackTable = () => {
                 <IconButton>
                   <StarOutlineIcon />
                 </IconButton>
+                {userId === createdId ? (
+                  <span>
+                    <IconButton onClick={() => handlerUpdateCard(row._id)}>
+                      <BorderColorOutlined />
+                    </IconButton>
+                    <IconButton onClick={() => handleDeleteCard(row._id)}>
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </span>
+                ) : null}
               </TableCell>
             </TableRow>
           ))}

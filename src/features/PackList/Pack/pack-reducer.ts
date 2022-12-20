@@ -1,12 +1,14 @@
 import { AppThunkType } from '../../../app/store'
 
 import { Cards, packApi } from './pack-api'
+import { addCardType, Cards, packApi, updateCardType } from './pack-api'
 
 const initialState: PackInitialStateType = {
   cardList: [],
   userId: '',
   cardQuestion: '',
   cardPackId: '',
+  packId: '',
   // sortPacks: '0updated',
 }
 
@@ -17,7 +19,7 @@ export const packReducer = (
 ): PackInitialStateType => {
   switch (action.type) {
     case 'PACKS/GET_PACKS':
-      return { ...state, cardList: action.cards, userId: action.userId }
+      return { ...state, cardList: action.cards, userId: action.userId, packId: action.packId }
     case 'PACKS/SET_SEARCH_QUESTION':
       return { ...state, cardQuestion: action.question }
     case 'PACKS/SET_CARD-PACK-ID':
@@ -47,12 +49,41 @@ export const getCardsListTC = (id: string, userId: string): AppThunkType => {
     })
   }
 }
+export const addCardTC = (card: AddCardType): AppThunkType => {
+  return (dispatch, getState) => {
+    const { packId, userId } = getState().pack
+
+    packApi.addCard(card).then(res => {
+      dispatch(getCardsListTC(packId, userId))
+    })
+  }
+}
+export const updateCardTC = (card: UpdateCardType): AppThunkType => {
+  return (dispatch, getState) => {
+    const { packId, userId } = getState().pack
+
+    packApi.updateCard(card).then(res => {
+      dispatch(getCardsListTC(packId, userId))
+    })
+  }
+}
+export const deleteCardTC = (idCard: string): AppThunkType => {
+  return (dispatch, getState) => {
+    const { packId, userId } = getState().pack
+
+    packApi.deleteCard(idCard).then(res => {
+      dispatch(getCardsListTC(packId, userId))
+    })
+  }
+}
+
 // types
 export type PackInitialStateType = {
   cardList: Array<Cards>
   userId: string
   cardQuestion: string
   cardPackId: string
+  packId: string
   // sortPacks: '0updated' | '1updated'
 }
 export type PackActionType =

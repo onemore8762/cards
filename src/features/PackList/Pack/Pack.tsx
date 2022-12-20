@@ -1,6 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
+import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { Grid, IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -20,8 +23,10 @@ import { selectIsLoading } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
 import { getCardsListTC, setSearchQuestionAC } from './pack-reducer'
+import { addCardTC } from './pack-reducer'
 import s from './Pack.module.css'
 import { selectCardPackId, selectCardQuestion, selectPackUserId } from './packSelectors'
+import { selectCardsList, selectPackUserId } from './packSelectors'
 
 export const Pack = () => {
   const dispatch = useAppDispatch()
@@ -43,6 +48,10 @@ export const Pack = () => {
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchQuestionAC(e.currentTarget.value))
+  }
+
+  const handlerAddCard = () => {
+    dispatch(addCardTC({ cardsPack_id: cardPackId }))
   }
 
   useEffect(() => {
@@ -81,16 +90,16 @@ export const Pack = () => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem>
-                  <Typography textAlign="center">text</Typography>
-                  <MoreVertIcon />
+                  <BorderColorOutlined sx={{ mr: 1 }} />
+                  <Typography textAlign="center">Edit</Typography>
                 </MenuItem>
                 <MenuItem>
-                  <Typography textAlign="center">text</Typography>
-                  <MoreVertIcon />
+                  <DeleteOutlineIcon sx={{ mr: 1 }} />
+                  <Typography textAlign="center">Delete</Typography>
                 </MenuItem>
                 <MenuItem>
-                  <Typography textAlign="center">text</Typography>
-                  <MoreVertIcon />
+                  <SchoolOutlinedIcon sx={{ mr: 1 }} />
+                  <Typography textAlign="center">Learn</Typography>
                 </MenuItem>
               </Menu>
             </Grid>
@@ -99,18 +108,34 @@ export const Pack = () => {
           )}
 
           <div className={style.addNewPackBtn}>
-            <Button
-              // disabled={isLoading}
-              type={'submit'}
-              variant={'contained'}
-              color={'primary'}
-              sx={{
-                width: '175px',
-                borderRadius: '30px',
-              }}
-            >
-              Learn to pack
-            </Button>
+            {userId === createdId ? (
+              <Button
+                // disabled={isLoading}
+                onClick={handlerAddCard}
+                type={'submit'}
+                variant={'contained'}
+                color={'primary'}
+                sx={{
+                  width: '175px',
+                  borderRadius: '30px',
+                }}
+              >
+                Add new card
+              </Button>
+            ) : (
+              <Button
+                // disabled={isLoading}
+                type={'submit'}
+                variant={'contained'}
+                color={'primary'}
+                sx={{
+                  width: '175px',
+                  borderRadius: '30px',
+                }}
+              >
+                Learn to pack
+              </Button>
+            )}
           </div>
         </div>
         <div className={s.searchRow}>
@@ -125,7 +150,7 @@ export const Pack = () => {
             />
           </div>
         </div>
-        <PackTable />
+        <PackTable cardsList={cardsList} />
       </div>
     </Grid>
   )
