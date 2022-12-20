@@ -33,7 +33,7 @@ export const PackListSkeleton = () => {
           <div>
             <Skeleton
               animation="wave"
-              sx={{ width: '200px', margin: '0', height: '40px', position: 'absolute' }}
+              sx={{ width: '200px', margin: '0', height: '40px' }}
             ></Skeleton>
           </div>
         </div>
