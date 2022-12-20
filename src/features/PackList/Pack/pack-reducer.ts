@@ -1,7 +1,6 @@
 import { AppThunkType } from '../../../app/store'
 
-import { Cards, packApi } from './pack-api'
-import { addCardType, Cards, packApi, updateCardType } from './pack-api'
+import { AddCardType, Cards, packApi, UpdateCardType } from './pack-api'
 
 const initialState: PackInitialStateType = {
   cardList: [],
@@ -30,8 +29,8 @@ export const packReducer = (
 }
 
 // actions
-export const getCardsListAC = (cards: Array<Cards>, userId: string) =>
-  ({ type: 'PACKS/GET_PACKS', cards, userId } as const)
+export const getCardsListAC = (cards: Array<Cards>, userId: string, packId: string) =>
+  ({ type: 'PACKS/GET_PACKS', cards, userId, packId } as const)
 export const setSearchQuestionAC = (question: string) =>
   ({ type: 'PACKS/SET_SEARCH_QUESTION', question } as const)
 export const setCardPackIdAC = (cardPackId: string) =>
@@ -40,12 +39,12 @@ export const setCardPackIdAC = (cardPackId: string) =>
 // thunk
 export const getCardsListTC = (id: string, userId: string): AppThunkType => {
   return (dispatch, getState) => {
-    const { cardQuestion } = getState().pack
+    const { cardQuestion, packId } = getState().pack
 
     packApi.getCardsList({ cardsPack_id: id, cardQuestion }).then(res => {
       console.log(res.data.cards)
 
-      dispatch(getCardsListAC(res.data.cards, userId))
+      dispatch(getCardsListAC(res.data.cards, userId, packId))
     })
   }
 }

@@ -22,17 +22,23 @@ import style from '../PackList.module.css'
 import { selectIsLoading } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
-import { getCardsListTC, setSearchQuestionAC } from './pack-reducer'
-import { addCardTC } from './pack-reducer'
+import { getCardsListTC, setSearchQuestionAC, addCardTC } from './pack-reducer'
 import s from './Pack.module.css'
-import { selectCardPackId, selectCardQuestion, selectPackUserId } from './packSelectors'
-import { selectCardsList, selectPackUserId } from './packSelectors'
+import {
+  selectCardPackId,
+  selectCardPackIdSearch,
+  selectCardQuestion,
+  selectCardsList,
+  selectPackUserId,
+} from './packSelectors'
 
 export const Pack = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
   const cardPackId = useAppSelector(selectCardPackId)
+  const cardPackIdSearch = useAppSelector(selectCardPackIdSearch)
+  const cardList = useAppSelector(selectCardsList)
   const isLoading = useAppSelector(selectIsLoading)
   const searchQuestion = useAppSelector(selectCardQuestion)
   const debouncedSearchQuestion = useDebounce<string>(searchQuestion, 1000)
@@ -56,7 +62,7 @@ export const Pack = () => {
 
   useEffect(() => {
     if (searchQuestion) {
-      dispatch(getCardsListTC(cardPackId, searchQuestion))
+      dispatch(getCardsListTC(cardPackIdSearch, searchQuestion))
     }
   }, [debouncedSearchQuestion])
 
@@ -150,7 +156,7 @@ export const Pack = () => {
             />
           </div>
         </div>
-        <PackTable cardsList={cardsList} />
+        <PackTable cardsList={cardList} />
       </div>
     </Grid>
   )
