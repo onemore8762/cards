@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Grid, IconButton } from '@mui/material'
@@ -9,22 +9,37 @@ import Typography from '@mui/material/Typography'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
+import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
-import { selectUserId } from '../../Profile/profileSelectors'
+import { selectProfileUserId } from '../../Profile/profileSelectors'
+import { setSearchTitleAC } from '../packList-reducer'
 import style from '../PackList.module.css'
+import { selectIsLoading, selectSearchPack } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
-export const Pack = () => {
-  const userId = useAppSelector(selectUserId)
-  const createdId = useAppSelector(state => state.pack.userId)
+import s from './Pack.module.css'
+import { selectPackUserId } from './packSelectors'
 
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+export const Pack = () => {
+  const dispatch = useAppDispatch()
+  const userId = useAppSelector(selectProfileUserId)
+  const createdId = useAppSelector(selectPackUserId)
+  const isLoading = useAppSelector(selectIsLoading)
+  const search = useAppSelector(selectSearchPack)
+
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchTitleAC(e.currentTarget.value))
   }
 
   return (
@@ -89,7 +104,17 @@ export const Pack = () => {
             </Button>
           </div>
         </div>
-
+        <div className={s.searchRow}>
+          <div className={style.column_title}>Search</div>
+          <div>
+            <SearchInput
+              disabled={isLoading}
+              search={search}
+              searchHandler={searchHandler}
+              sx={{ width: '100%' }}
+            />
+          </div>
+        </div>
         <PackTable />
       </div>
     </Grid>

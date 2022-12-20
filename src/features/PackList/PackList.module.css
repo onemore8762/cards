@@ -1,5 +1,5 @@
 .packList {
-    width: 75%;
+    width: 85%;
     margin: 0 auto;
 }
 
@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
 
-    margin-top: 50px;
+    margin-top: 70px;
     margin-bottom: 40px;
 }
 .addNewPackBtn {
@@ -16,6 +16,7 @@
 
 .search_row {
     display: flex;
+    align-items: flex-end;
     justify-content: space-between;
 
     margin-bottom: 25px;

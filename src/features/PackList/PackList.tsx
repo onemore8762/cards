@@ -86,7 +86,12 @@ export const PackList = () => {
         <div>
           <div className={style.column_title}>Search</div>
           <div>
-            <SearchInput disabled={isLoading} search={search} searchHandler={searchHandler} />
+            <SearchInput
+              disabled={isLoading}
+              search={search}
+              searchHandler={searchHandler}
+              sx={{ width: '415px' }}
+            />
           </div>
         </div>
         <div>

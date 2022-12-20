@@ -17,13 +17,13 @@ import { useNavigate } from 'react-router-dom'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { selectUserId } from '../../Profile/profileSelectors'
+import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { getCardsListTC } from '../Pack/pack-reducer'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
 
 export const BasicTable = () => {
-  const userId = useAppSelector(selectUserId)
+  const userId = useAppSelector(selectProfileUserId)
   const packList = useAppSelector(selectPackList)
   const isLoading = useAppSelector(selectIsLoading)
   const sort = useAppSelector(selectSortPacks)

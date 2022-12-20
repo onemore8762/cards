@@ -13,12 +13,13 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { selectCardsList } from '../Pack/packSelectors'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectSortPacks } from '../packListSelectors'
 
 export const PackTable = () => {
   const dispatch = useAppDispatch()
-  const cardsList = useAppSelector(state => state.pack.cardList)
+  const cardsList = useAppSelector(selectCardsList)
   const sort = useAppSelector(selectSortPacks)
 
   // useEffect(() => {
