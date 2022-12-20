@@ -47,8 +47,10 @@ export const Profile = () => {
   // }
 
   return (
-    <Grid display="flex" flexDirection={'column'} container style={{ position: 'relative' }}>
-      <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
+    <Grid container display="flex" flexDirection={'column'} /*style={{ position: 'relative' }}*/>
+      <div className={style.backBtnBlock}>
+        <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
+      </div>
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card className={style.cardMain}>
           <CardContent className={style.cardContent}>

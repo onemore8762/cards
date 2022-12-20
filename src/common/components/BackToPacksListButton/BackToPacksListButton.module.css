@@ -1,9 +1,12 @@
 .backButton {
-  position: absolute;
-  top: 25px;
-  left: 100px;
+  /*position: absolute;*/
+  /*top: 25px;*/
+  /*left: 100px;*/
 
   display: flex;
+
+  width: 85%;
+  margin-top: 20px;
 }
 .backButton:hover {
   cursor: pointer;

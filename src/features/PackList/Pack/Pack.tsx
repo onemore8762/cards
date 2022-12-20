@@ -43,7 +43,7 @@ export const Pack = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'} style={{ position: 'relative' }}>
+    <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>
       <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       <div className={style.packList}>
         <div className={style.header_row}>

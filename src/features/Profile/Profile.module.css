@@ -1,14 +1,18 @@
+.backBtnBlock {
+  width: 190px;
+  margin: 10px auto 0;
+}
+
 .cardMain {
   width: 413px;
   height: 360px;
-  margin-top: 100px;
+  margin-top: 70px;
+  /*margin-top: 100px;*/
 }
 .cardContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /*minHeight: 90%;*/
-  /*justifyContent: space-evenly;*/
 }
 .cardTitle {
   margin-bottom: 20px;
