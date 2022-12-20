@@ -59,7 +59,7 @@ export const NavBar = () => {
   }
 
   return (
-    <div>
+    <div className={style.appBar}>
       <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
         <Container maxWidth="xl">
           <Toolbar
