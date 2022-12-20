@@ -19,7 +19,7 @@ import {
   initializePacksTC,
   setIsMyAC,
   setMaxMinAC,
-  setSearchTitleAC,
+  setSearchPackNameAC,
 } from './packList-reducer'
 import style from './PackList.module.css'
 import { selectInitialize, selectIsLoading, selectSearchPack } from './packListSelectors'
@@ -30,8 +30,8 @@ export const PackList = () => {
   const dispatch = useAppDispatch()
   const initialize = useAppSelector(selectInitialize)
   const isLoading = useAppSelector(selectIsLoading)
-  const search = useAppSelector(selectSearchPack)
-  const debouncedSearch = useDebounce<string>(search, 1000)
+  const searchPackName = useAppSelector(selectSearchPack)
+  const debouncedSearchPack = useDebounce<string>(searchPackName, 1000)
 
   const addNewPack = () => {
     dispatch(
@@ -40,15 +40,15 @@ export const PackList = () => {
   }
 
   useEffect(() => {
-    if (search) {
+    if (searchPackName) {
       dispatch(getPacksTC())
     }
-  }, [debouncedSearch])
+  }, [debouncedSearchPack])
 
   const filterDefault = () => {
     dispatch(setMaxMinAC(0, 110))
     dispatch(setIsMyAC(false))
-    dispatch(setSearchTitleAC(''))
+    dispatch(setSearchPackNameAC(''))
     dispatch(getPacksTC())
   }
 
@@ -59,7 +59,7 @@ export const PackList = () => {
   if (initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchTitleAC(e.currentTarget.value))
+    dispatch(setSearchPackNameAC(e.currentTarget.value))
   }
 
   return (
@@ -88,7 +88,7 @@ export const PackList = () => {
           <div>
             <SearchInput
               disabled={isLoading}
-              search={search}
+              search={searchPackName}
               searchHandler={searchHandler}
               placeholder={'find pack'}
               sx={{ width: '415px' }}

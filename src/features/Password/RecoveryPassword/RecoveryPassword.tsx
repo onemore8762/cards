@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Button, Card, FormGroup, FormLabel, TextField } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useFormik } from 'formik'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { PATH } from '../../../common/path/path'
 
 import { recoveryTC } from './recovery-reducer'
 import { selectRecoveryPassError, selectRecoveryPassword } from './recoveryPasswordSelectors'
@@ -18,6 +19,7 @@ type FormikErrorType = {
 }
 
 export const RecoveryPassword = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const success = useAppSelector(selectRecoveryPassword)
   const error = useAppSelector(selectRecoveryPassError)
@@ -42,8 +44,14 @@ export const RecoveryPassword = () => {
     },
   })
 
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate(PATH.LOGIN.CHECK_EMAIL)
+  //   }
+  // }, [])
+
   if (success) {
-    return <Navigate to={'/checkEmail'} />
+    return <Navigate to={PATH.LOGIN.CHECK_EMAIL} />
   }
 
   return (

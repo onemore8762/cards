@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Grid, IconButton } from '@mui/material'
@@ -12,22 +12,25 @@ import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { setSearchTitleAC } from '../packList-reducer'
 import style from '../PackList.module.css'
-import { selectIsLoading, selectSearchPack } from '../packListSelectors'
+import { selectIsLoading } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
+import { getCardsListTC, setSearchQuestionAC } from './pack-reducer'
 import s from './Pack.module.css'
-import { selectPackUserId } from './packSelectors'
+import { selectCardPackId, selectCardQuestion, selectPackUserId } from './packSelectors'
 
 export const Pack = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
+  const cardPackId = useAppSelector(selectCardPackId)
   const isLoading = useAppSelector(selectIsLoading)
-  const search = useAppSelector(selectSearchPack)
+  const searchQuestion = useAppSelector(selectCardQuestion)
+  const debouncedSearchQuestion = useDebounce<string>(searchQuestion, 1000)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
@@ -39,8 +42,14 @@ export const Pack = () => {
   }
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchTitleAC(e.currentTarget.value))
+    dispatch(setSearchQuestionAC(e.currentTarget.value))
   }
+
+  useEffect(() => {
+    if (searchQuestion) {
+      dispatch(getCardsListTC(cardPackId, searchQuestion))
+    }
+  }, [debouncedSearchQuestion])
 
   return (
     <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>
@@ -109,7 +118,7 @@ export const Pack = () => {
           <div>
             <SearchInput
               disabled={isLoading}
-              search={search}
+              search={searchQuestion}
               searchHandler={searchHandler}
               placeholder={'find question'}
               sx={{ width: '100%' }}

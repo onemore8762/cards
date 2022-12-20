@@ -62,8 +62,8 @@ export const packListReducer = (
       return { ...state, page: action.page }
     case 'PACKLIST/SET_PAGE_COUNT':
       return { ...state, pageCount: action.pageCount }
-    case 'PACKLIST/SET_SEARCH_TITLE':
-      return { ...state, packName: action.search }
+    case 'PACKLIST/SET_SEARCH_PACK-NAME':
+      return { ...state, packName: action.packName }
     default:
       return state
   }
@@ -84,8 +84,8 @@ export const setMaxMinAC = (min: number, max: number) =>
 export const setPageAC = (page: number) => ({ type: 'PACKLIST/SET_PAGE', page } as const)
 export const setPageCountAC = (pageCount: number) =>
   ({ type: 'PACKLIST/SET_PAGE_COUNT', pageCount } as const)
-export const setSearchTitleAC = (search: string) =>
-  ({ type: 'PACKLIST/SET_SEARCH_TITLE', search } as const)
+export const setSearchPackNameAC = (packName: string) =>
+  ({ type: 'PACKLIST/SET_SEARCH_PACK-NAME', packName } as const)
 
 // thunk
 export const initializePacksTC = (): AppThunkType => {
@@ -151,7 +151,7 @@ export type PackListActionType =
   | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setLoadingAC>
   | ReturnType<typeof setInitializeAC>
-  | ReturnType<typeof setSearchTitleAC>
+  | ReturnType<typeof setSearchPackNameAC>
 
 export type PackListInitialStateType = {
   initialize: boolean

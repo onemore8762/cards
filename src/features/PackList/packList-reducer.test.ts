@@ -9,7 +9,7 @@ import {
   setPacksAC,
   setPageAC,
   setPageCountAC,
-  setSearchTitleAC,
+  setSearchPackNameAC,
   sortPacksAC,
 } from './packList-reducer'
 
@@ -150,7 +150,7 @@ test('number of page count should be set', () => {
 })
 
 test('search title should be set to state', () => {
-  const endState = packListReducer(startState, setSearchTitleAC('find something'))
+  const endState = packListReducer(startState, setSearchPackNameAC('find something'))
 
   expect(endState.packName).toBe('find something')
 })
