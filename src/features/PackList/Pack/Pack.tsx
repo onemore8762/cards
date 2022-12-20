@@ -111,6 +111,7 @@ export const Pack = () => {
               disabled={isLoading}
               search={search}
               searchHandler={searchHandler}
+              placeholder={'find question'}
               sx={{ width: '100%' }}
             />
           </div>

@@ -8,12 +8,19 @@ type Props = {
   disabled: boolean
   search: string
   searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
+  placeholder?: string
   sx?: {
     width: string
   }
 }
 
-export const SearchInput: React.FC<Props> = ({ disabled, search, searchHandler, sx }) => {
+export const SearchInput: React.FC<Props> = ({
+  disabled,
+  search,
+  searchHandler,
+  placeholder,
+  sx,
+}) => {
   return (
     <div>
       <TextField
@@ -23,7 +30,7 @@ export const SearchInput: React.FC<Props> = ({ disabled, search, searchHandler, 
         variant="outlined"
         size="small"
         style={{ height: '38px' }}
-        placeholder="search pack"
+        placeholder={placeholder}
         disabled={disabled}
         value={search}
         onChange={searchHandler}

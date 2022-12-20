@@ -90,6 +90,7 @@ export const PackList = () => {
               disabled={isLoading}
               search={search}
               searchHandler={searchHandler}
+              placeholder={'find pack'}
               sx={{ width: '415px' }}
             />
           </div>

@@ -1,15 +1,15 @@
 import { instance } from '../../../common/api/cards-api'
 
 export const packApi = {
-  getCardsList<responseGetCardsType>(params: getCardsParamsType) {
+  getCardsList<ResponseGetCardsType>(params: GetCardsParamsType) {
     return instance.get('/cards/card', {
       params,
     })
   },
 }
 
-//types
-export type getCardsParamsType = {
+// types
+export type GetCardsParamsType = {
   cardsPack_id: string
   cardAnswer?: string
   cardQuestion?: string
@@ -19,6 +19,7 @@ export type getCardsParamsType = {
   page?: number
   pageCount?: string
 }
+
 export type Cards = {
   _id: string
   cardsPack_id: string
@@ -40,8 +41,8 @@ export type Cards = {
   questionVideo: string
 }
 
-export type responseGetCardsType = {
-  cards: Cards[]
+export type ResponseGetCardsType = {
+  cards: Array<Cards>
   packUserId: string
   packName: string
   packPrivate: boolean

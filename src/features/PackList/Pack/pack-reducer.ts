@@ -22,7 +22,7 @@ export const packReducer = (
 }
 
 // actions
-export const getCardsListAC = (cards: Cards[], userId: string) =>
+export const getCardsListAC = (cards: Array<Cards>, userId: string) =>
   ({ type: 'PACKS/GET_PACKS', cards, userId } as const)
 
 // thunk
@@ -37,7 +37,7 @@ export const getCardsListTC = (id: string, userId: string): AppThunkType => {
 }
 // types
 export type PackInitialStateType = {
-  cardList: Cards[]
+  cardList: Array<Cards>
   userId: string
   // sortPacks: '0updated' | '1updated'
 }
