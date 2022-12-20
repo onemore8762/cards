@@ -47,7 +47,7 @@ export const Profile = () => {
   // }
 
   return (
-    <Grid container display="flex" flexDirection={'column'} /*style={{ position: 'relative' }}*/>
+    <Grid container display="flex" flexDirection={'column'}>
       <div className={style.backBtnBlock}>
         <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       </div>
