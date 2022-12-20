@@ -6,15 +6,34 @@ export const packApi = {
       params,
     })
   },
-  addCard(card: waitCardType) {
+  addCard(card: addCardType) {
     return instance.post('/cards/card', {
       card,
     })
   },
+  updateCard(card: updateCardType) {
+    return instance.put('/cards/card', {
+      card,
+    })
+  },
+  deleteCard(idCard: string) {
+    return instance.delete(`/cards/card?id=${idCard}`)
+  },
 }
 
 //types
-export type waitCardType = {
+export type updateCardType = {
+  _id: string // id карточки
+  question?: string // если не отправить будет дефолтное
+  answer?: string // если не отправить будет таким
+  grade?: number // 0..5, не обязателен
+  shots?: number // не обязателен
+  answerImg?: string // не обязателен
+  questionImg?: string // не обязателен
+  questionVideo?: string // не обязателен
+  answerVideo?: string
+}
+export type addCardType = {
   cardsPack_id: string
   question?: string // если не отправить будет таким
   answer?: string // если не отправить будет таким

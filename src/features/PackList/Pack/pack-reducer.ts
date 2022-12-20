@@ -1,7 +1,6 @@
 import { AppThunkType } from '../../../app/store'
-import { packListApi, PacksType } from '../packList-api'
 
-import { Cards, getCardsParamsType, packApi, waitCardType } from './pack-api'
+import { addCardType, Cards, packApi, updateCardType } from './pack-api'
 
 const initialState: PackInitialStateType = {
   cardList: [],
@@ -34,12 +33,30 @@ export const getCardsListTC = (id: string, userId: string): AppThunkType => {
     })
   }
 }
-export const addCardTC = (card: waitCardType): AppThunkType => {
+export const addCardTC = (card: addCardType): AppThunkType => {
   return (dispatch, getState) => {
-    packApi.addCard(card).then(res => {
-      console.log(res.data.cards)
+    const { packId, userId } = getState().pack
 
-      //dispatch(getCardsListAC(res.data.cards, userId))
+    packApi.addCard(card).then(res => {
+      dispatch(getCardsListTC(packId, userId))
+    })
+  }
+}
+export const updateCardTC = (card: updateCardType): AppThunkType => {
+  return (dispatch, getState) => {
+    const { packId, userId } = getState().pack
+
+    packApi.updateCard(card).then(res => {
+      dispatch(getCardsListTC(packId, userId))
+    })
+  }
+}
+export const deleteCardTC = (idCard: string): AppThunkType => {
+  return (dispatch, getState) => {
+    const { packId, userId } = getState().pack
+
+    packApi.deleteCard(idCard).then(res => {
+      dispatch(getCardsListTC(packId, userId))
     })
   }
 }

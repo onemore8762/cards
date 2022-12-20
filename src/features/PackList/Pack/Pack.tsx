@@ -28,7 +28,8 @@ import { selectCardsList, selectPackUserId } from './packSelectors'
 
 export const Pack = () => {
   const dispatch = useAppDispatch()
-  const cardsList = useAppSelector(selectCardsList)
+  //const cardsList = useAppSelector(selectCardsList)
+  const cardsList = useAppSelector(state => state.pack.cardList)
   const userId = useAppSelector(selectProfileUserId)
   const packId = useAppSelector(state => state.pack.packId)
   const createdId = useAppSelector(selectPackUserId)
