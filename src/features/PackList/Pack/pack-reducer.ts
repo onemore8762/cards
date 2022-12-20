@@ -39,12 +39,12 @@ export const setCardPackIdAC = (cardPackId: string) =>
 // thunk
 export const getCardsListTC = (id: string, userId: string): AppThunkType => {
   return (dispatch, getState) => {
-    const { cardQuestion, packId } = getState().pack
+    const { cardQuestion } = getState().pack
 
     packApi.getCardsList({ cardsPack_id: id, cardQuestion }).then(res => {
       console.log(res.data.cards)
 
-      dispatch(getCardsListAC(res.data.cards, userId, packId))
+      dispatch(getCardsListAC(res.data.cards, userId, id))
     })
   }
 }
@@ -52,7 +52,7 @@ export const addCardTC = (card: AddCardType): AppThunkType => {
   return (dispatch, getState) => {
     const { packId, userId } = getState().pack
 
-    packApi.addCard(card).then(res => {
+    packApi.addCard(card).then(() => {
       dispatch(getCardsListTC(packId, userId))
     })
   }
@@ -61,7 +61,7 @@ export const updateCardTC = (card: UpdateCardType): AppThunkType => {
   return (dispatch, getState) => {
     const { packId, userId } = getState().pack
 
-    packApi.updateCard(card).then(res => {
+    packApi.updateCard(card).then(() => {
       dispatch(getCardsListTC(packId, userId))
     })
   }
@@ -70,7 +70,7 @@ export const deleteCardTC = (idCard: string): AppThunkType => {
   return (dispatch, getState) => {
     const { packId, userId } = getState().pack
 
-    packApi.deleteCard(idCard).then(res => {
+    packApi.deleteCard(idCard).then(() => {
       dispatch(getCardsListTC(packId, userId))
     })
   }
