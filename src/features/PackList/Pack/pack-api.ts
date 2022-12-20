@@ -6,9 +6,25 @@ export const packApi = {
       params,
     })
   },
+  addCard(card: waitCardType) {
+    return instance.post('/cards/card', {
+      card,
+    })
+  },
 }
 
 //types
+export type waitCardType = {
+  cardsPack_id: string
+  question?: string // если не отправить будет таким
+  answer?: string // если не отправить будет таким
+  grade?: number // 0..5, не обязателен
+  shots?: number // не обязателен
+  answerImg?: string // не обязателен
+  questionImg?: string // не обязателен
+  questionVideo?: string // не обязателен
+  answerVideo?: string // не обязателен
+}
 export type getCardsParamsType = {
   cardsPack_id: string
   cardAnswer?: string

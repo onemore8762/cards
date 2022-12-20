@@ -13,13 +13,18 @@ import moment from 'moment'
 
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { Cards } from '../Pack/pack-api'
 import { selectCardsList } from '../Pack/packSelectors'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectSortPacks } from '../packListSelectors'
 
-export const PackTable = () => {
+type packTablePropsType = {
+  cardsList: Cards[]
+}
+
+export const PackTable = (props: packTablePropsType) => {
   const dispatch = useAppDispatch()
-  const cardsList = useAppSelector(selectCardsList)
+
   const sort = useAppSelector(selectSortPacks)
 
   // useEffect(() => {
@@ -54,7 +59,7 @@ export const PackTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cardsList.map(row => (
+          {props.cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {row.question}
