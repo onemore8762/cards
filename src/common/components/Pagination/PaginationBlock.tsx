@@ -4,37 +4,25 @@ import { NativeSelect } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
-import { getPacksTC, setPageAC, setPageCountAC } from '../../../features/PackList/packList-reducer'
-import {
-  selectCardPacksTotalCount,
-  selectPage,
-  selectPageCount,
-} from '../../../features/PackList/packListSelectors'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { useAppSelector } from '../../hooks/useAppSelector'
-
 import style from './PaginationBlock.module.css'
 
 type Props = {
   disabled: boolean
+  pageCount: number
+  page: number
+  maxPage: number
+  handleChangePagination?: (event: ChangeEvent<HTMLSelectElement>) => void
+  handleChangePage?: (event: ChangeEvent<unknown>, value: number) => void
 }
 
-export const PaginationBlock: React.FC<Props> = ({ disabled }) => {
-  const dispatch = useAppDispatch()
-  const pageCount = useAppSelector(selectPageCount)
-  const page = useAppSelector(selectPage)
-  const maxPage = useAppSelector(selectCardPacksTotalCount)
-
-  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setPageCountAC(+event.target.value))
-    dispatch(getPacksTC())
-  }
-
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setPageAC(value))
-    dispatch(getPacksTC())
-  }
-
+export const PaginationBlock: React.FC<Props> = ({
+  disabled,
+  page,
+  pageCount,
+  maxPage,
+  handleChangePage,
+  handleChangePagination,
+}) => {
   return (
     <div className={style.pagination_block}>
       <div className={style.pagination}>

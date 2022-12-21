@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
+import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -22,7 +23,13 @@ import style from '../PackList.module.css'
 import { selectIsLoading } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
-import { getCardsListTC, setSearchQuestionAC, addCardTC } from './pack-reducer'
+import {
+  addCardTC,
+  getCardsListTC,
+  setPageCardsAC,
+  setPageCountCardsAC,
+  setSearchQuestionAC,
+} from './pack-reducer'
 import s from './Pack.module.css'
 import {
   selectCardPackId,
@@ -42,6 +49,9 @@ export const Pack = () => {
   const isLoading = useAppSelector(selectIsLoading)
   const searchQuestion = useAppSelector(selectCardQuestion)
   const debouncedSearchQuestion = useDebounce<string>(searchQuestion, 1000)
+  const pageCount = useAppSelector(state => state.pack.pageCount)
+  const page = useAppSelector(state => state.pack.page)
+  const maxPage = useAppSelector(state => state.pack.cardsTotalCount)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
@@ -60,9 +70,19 @@ export const Pack = () => {
     dispatch(addCardTC({ cardsPack_id: cardPackId }))
   }
 
+  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setPageCountCardsAC(+event.target.value))
+    dispatch(getCardsListTC(cardPackIdSearch))
+  }
+
+  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
+    dispatch(setPageCardsAC(value))
+    dispatch(getCardsListTC(cardPackIdSearch))
+  }
+
   useEffect(() => {
     if (searchQuestion) {
-      dispatch(getCardsListTC(cardPackIdSearch, searchQuestion))
+      dispatch(getCardsListTC(cardPackIdSearch))
     }
   }, [debouncedSearchQuestion])
 
@@ -157,6 +177,14 @@ export const Pack = () => {
           </div>
         </div>
         <PackTable cardsList={cardList} />
+        <PaginationBlock
+          disabled={isLoading}
+          page={page}
+          maxPage={maxPage}
+          pageCount={pageCount}
+          handleChangePage={handleChangePage}
+          handleChangePagination={handleChangePagination}
+        />
       </div>
     </Grid>
   )

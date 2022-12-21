@@ -30,7 +30,7 @@ export type GetCardsParamsType = {
   max?: number
   sortCards?: string
   page?: number
-  pageCount?: string
+  pageCount?: number
 }
 
 export type Cards = {

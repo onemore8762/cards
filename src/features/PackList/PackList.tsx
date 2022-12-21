@@ -19,10 +19,19 @@ import {
   initializePacksTC,
   setIsMyAC,
   setMaxMinAC,
+  setPageAC,
+  setPageCountAC,
   setSearchPackNameAC,
 } from './packList-reducer'
 import style from './PackList.module.css'
-import { selectInitialize, selectIsLoading, selectSearchPack } from './packListSelectors'
+import {
+  selectCardPacksTotalCount,
+  selectInitialize,
+  selectIsLoading,
+  selectPage,
+  selectPageCount,
+  selectSearchPack,
+} from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
 import { BasicTable } from './Table/BasicTable'
 
@@ -32,6 +41,9 @@ export const PackList = () => {
   const isLoading = useAppSelector(selectIsLoading)
   const searchPackName = useAppSelector(selectSearchPack)
   const debouncedSearchPack = useDebounce<string>(searchPackName, 1000)
+  const pageCount = useAppSelector(selectPageCount)
+  const page = useAppSelector(selectPage)
+  const maxPage = useAppSelector(selectCardPacksTotalCount)
 
   const addNewPack = () => {
     dispatch(
@@ -60,6 +72,16 @@ export const PackList = () => {
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchPackNameAC(e.currentTarget.value))
+  }
+
+  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setPageCountAC(+event.target.value))
+    dispatch(getPacksTC())
+  }
+
+  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
+    dispatch(setPageAC(value))
+    dispatch(getPacksTC())
   }
 
   return (
@@ -116,7 +138,14 @@ export const PackList = () => {
       <div className={style.mainTable}>
         <BasicTable />
       </div>
-      <PaginationBlock disabled={isLoading} />
+      <PaginationBlock
+        disabled={isLoading}
+        page={page}
+        maxPage={maxPage}
+        pageCount={pageCount}
+        handleChangePage={handleChangePage}
+        handleChangePagination={handleChangePagination}
+      />
     </div>
   )
 }

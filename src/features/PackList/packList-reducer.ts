@@ -93,7 +93,6 @@ export const initializePacksTC = (): AppThunkType => {
     dispatch(setInitializeAC(true))
     packListApi.getPacks().then(res => {
       dispatch(setInitializeAC(false))
-      console.log(res.data)
       dispatch(setInitializePacksAC(res.data))
     })
   }
@@ -110,7 +109,6 @@ export const getPacksTC = (): AppThunkType => {
     }
     dispatch(setLoadingAC(true))
     packListApi.getPacks({ sortPacks, user_id, max, min, page, pageCount, packName }).then(res => {
-      console.log(res.data)
       dispatch(setPacksAC(res.data))
       dispatch(setLoadingAC(false))
     })
