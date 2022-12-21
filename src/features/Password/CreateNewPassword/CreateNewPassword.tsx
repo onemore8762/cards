@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Button, Card, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { Eye } from '../../../common/components/Eye/Eye'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
@@ -14,18 +14,11 @@ import { selectNewPassword, selectPasswordError } from './newPasswordSelectors'
 
 export const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [searchParams] = useSearchParams()
-  const [token, setToken] = useState<string>('')
+
   const dispatch = useAppDispatch()
   const onSuccess = useAppSelector(selectNewPassword)
   const error = useAppSelector(selectPasswordError)
-
-  useEffect(() => {
-    const params = Object.fromEntries(searchParams)
-    const key = Object.keys(params)
-
-    setToken(params[key[0]])
-  }, [])
+  const params = useParams()
 
   const formik = useFormik({
     initialValues: {
@@ -35,7 +28,9 @@ export const CreateNewPassword = () => {
       if (!values.password) return { password: 'Password is required' }
     },
     onSubmit: values => {
-      dispatch(setNewPassword({ password: values.password, resetPasswordToken: token }))
+      dispatch(
+        setNewPassword({ password: values.password, resetPasswordToken: params.token || '' })
+      )
     },
   })
 

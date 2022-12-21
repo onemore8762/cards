@@ -7,7 +7,7 @@ export const recoveryApi = {
       from: 'test-front-admin',
       message: `<div style="background-color: lime; padding: 15px">
 password recovery link: 
-<a href='http://localhost:3000/#/CreateNewPassword?token=$token$'>
+<a href='http://localhost:3000/#/CreateNewPassword/$token$'>
 link</a>
 </div>`, // хтмп-письмо, вместо $token$ бэк вставит токен
     }

@@ -9,7 +9,7 @@ export const AdminMenuMain = () => {
       <div>Profile</div>
       <div>Registration</div>
       <div>Error404</div>
-      <div>CreateNewPassword</div>
+      <div>CreateNewPassword/testToken</div>
       <div>CheckEmail</div>
       <div>RecoveryPassword</div>
     </AdminMenu>
