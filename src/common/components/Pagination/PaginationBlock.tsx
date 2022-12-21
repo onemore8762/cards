@@ -33,7 +33,7 @@ export const PaginationBlock: React.FC<Props> = ({
             disabled={disabled}
             count={Math.ceil(maxPage / pageCount) || 0}
             shape="rounded"
-            page={page}
+            page={page || 4}
             onChange={handleChangePage}
           />
         </Stack>

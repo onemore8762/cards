@@ -108,9 +108,9 @@ export const Pack = () => {
   useEffect(() => {
     const object1 = Object.fromEntries(searchParams)
 
-    dispatch(setSearchQuestionAC(object1['cardQuestion']))
-    dispatch(setPageCardsAC(+object1['page']))
-    dispatch(setPageCountCardsAC(+object1['pageCount']))
+    dispatch(setSearchQuestionAC(object1['cardQuestion'] || ''))
+    dispatch(setPageCardsAC(+object1['page']) || 1)
+    dispatch(setPageCountCardsAC(+object1['pageCount'] || 4))
     dispatch(getCardsListTC(cardPackId || params.packId || ''))
   }, [])
 

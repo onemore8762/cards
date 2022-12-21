@@ -47,7 +47,7 @@ export const BasicTable = () => {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>
+    <TableContainer component={Paper} sx={{ maxHeight: '495px' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
