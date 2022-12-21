@@ -57,7 +57,7 @@ export const Pack = () => {
   const maxPage = useAppSelector(selectCardsTotalCount)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValue, setInputValue] = useState<string | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const debouncedSearchQuestion = useDebounce<string | null>(inputValue, 1000)
@@ -74,6 +74,7 @@ export const Pack = () => {
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchQuestionAC(e.currentTarget.value))
     setInputValue(e.currentTarget.value)
+
     searchParams.set('cardQuestion', e.currentTarget.value)
     setSearchParams(searchParams)
   }
@@ -85,6 +86,7 @@ export const Pack = () => {
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCountCardsAC(+event.target.value))
     dispatch(getCardsListTC(cardPackId))
+
     searchParams.set('pageCount', event.target.value)
     setSearchParams(searchParams)
   }
@@ -92,12 +94,13 @@ export const Pack = () => {
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setPageCardsAC(value))
     dispatch(getCardsListTC(cardPackId))
+
     searchParams.set('page', `${value}`)
     setSearchParams(searchParams)
   }
 
   useEffect(() => {
-    if (inputValue) {
+    if (inputValue !== null) {
       dispatch(getCardsListTC(cardPackId))
     }
   }, [debouncedSearchQuestion])
@@ -110,8 +113,6 @@ export const Pack = () => {
     dispatch(setPageCountCardsAC(+object1['pageCount']))
     dispatch(getCardsListTC(cardPackId || params.packId || ''))
   }, [])
-  console.log(userId)
-  console.log(createdId)
 
   return (
     <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>
