@@ -6,6 +6,7 @@ import { getPacksTC, setIsMyAC, setPageAC } from '../../../features/PackList/pac
 import { selectIsMy } from '../../../features/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { selectMaxCardsCount, selectMinCardsCount } from '../RangeSlider/rangeSelector'
 
 type FilterShowPropsType = {
   disabled: boolean
@@ -13,13 +14,15 @@ type FilterShowPropsType = {
 
 export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
   const isMy = useAppSelector(selectIsMy)
+  const minCardsCount = useAppSelector(selectMinCardsCount)
+  const maxCardsCount = useAppSelector(selectMaxCardsCount)
 
   const dispatch = useAppDispatch()
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {
     if (newAlignment !== null) {
       dispatch(setIsMyAC(!isMy))
-      dispatch(getPacksTC())
       dispatch(setPageAC(1))
+      dispatch(getPacksTC())
     }
   }
   const styleButtons = { width: '98px', height: '36px', color: 'black' }

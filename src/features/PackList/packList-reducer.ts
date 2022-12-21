@@ -5,11 +5,13 @@ import { GetPacksResponseType, newPack, packListApi, PacksType } from './packLis
 const initialState: PackListInitialStateType = {
   initialize: false,
   isLoading: false,
-  packList: [],
+  cardPacks: [],
   sortPacks: '0updated',
   isMy: false,
   min: 0,
   max: 100,
+  maxCardsCount: 0,
+  minCardsCount: 0,
   page: 0,
   cardPacksTotalCount: 0,
   pageCount: 0,
@@ -25,28 +27,17 @@ export const packListReducer = (
     case 'PACKLIST/SET_LOADING':
       return {
         ...state,
-        isLoading: action.value,
+        isLoading: action.isLoading,
       }
     case 'PACKLIST/SET_INITIALIZE':
       return {
         ...state,
-        initialize: action.value,
-      }
-    case 'PACKLIST/SET_INITIALIZE_PACKS':
-      return {
-        ...state,
-        packList: action.packs.cardPacks,
-        max: action.packs.maxCardsCount,
-        min: action.packs.minCardsCount,
-        page: action.packs.page,
-        pageCount: action.packs.pageCount,
-        cardPacksTotalCount: action.packs.cardPacksTotalCount,
+        initialize: action.initialize,
       }
     case 'PACKLIST/SET_PACKS':
       return {
         ...state,
-        packList: action.packs.cardPacks,
-        cardPacksTotalCount: action.packs.cardPacksTotalCount,
+        ...action.packs,
       }
     case 'PACKLIST/SORT_PACKS':
       if (state.sortPacks === '0updated') {
@@ -64,17 +55,18 @@ export const packListReducer = (
       return { ...state, pageCount: action.pageCount }
     case 'PACKLIST/SET_SEARCH_PACK-NAME':
       return { ...state, packName: action.packName }
+    case 'PACKLIST/UPDATE_PACK':
+      return { ...state, ...action.payload }
     default:
       return state
   }
 }
 
 // actions
-export const setLoadingAC = (value: boolean) => ({ type: 'PACKLIST/SET_LOADING', value } as const)
-export const setInitializeAC = (value: boolean) =>
-  ({ type: 'PACKLIST/SET_INITIALIZE', value } as const)
-export const setInitializePacksAC = (packs: GetPacksResponseType) =>
-  ({ type: 'PACKLIST/SET_INITIALIZE_PACKS', packs } as const)
+export const setLoadingAC = (isLoading: boolean) =>
+  ({ type: 'PACKLIST/SET_LOADING', isLoading } as const)
+export const setInitializeAC = (initialize: boolean) =>
+  ({ type: 'PACKLIST/SET_INITIALIZE', initialize } as const)
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
@@ -87,19 +79,27 @@ export const setPageCountAC = (pageCount: number) =>
 export const setSearchPackNameAC = (packName: string) =>
   ({ type: 'PACKLIST/SET_SEARCH_PACK-NAME', packName } as const)
 
-// thunk
-export const initializePacksTC = (): AppThunkType => {
-  return dispatch => {
-    dispatch(setInitializeAC(true))
-    packListApi.getPacks().then(res => {
-      dispatch(setInitializeAC(false))
-      dispatch(setInitializePacksAC(res.data))
-    })
-  }
+// -------------------------------------------------------------------
+export const setUpdatePack = (payload: UpdatePack) =>
+  ({ type: 'PACKLIST/UPDATE_PACK', payload } as const)
+
+type UpdatePack = {
+  isLoading?: boolean
+  initialize?: boolean
+  packs?: GetPacksResponseType
+  isMy?: boolean
+  min?: number
+  max?: number
+  page?: number
+  pageCount?: number
+  packName?: string
 }
-export const getPacksTC = (): AppThunkType => {
+// -------------------------------------------------------------------
+
+// thunk
+export const getPacksTC = (min?: number, max?: number): AppThunkType => {
   return (dispatch, getState) => {
-    const { sortPacks, isMy, max, min, page, pageCount, packName } = getState().packList
+    const { sortPacks, isMy, page, pageCount, packName } = getState().packList
     let user_id
 
     if (isMy) {
@@ -108,16 +108,26 @@ export const getPacksTC = (): AppThunkType => {
       user_id = _id
     }
     dispatch(setLoadingAC(true))
-    packListApi.getPacks({ sortPacks, user_id, max, min, page, pageCount, packName }).then(res => {
-      dispatch(setPacksAC(res.data))
-      dispatch(setLoadingAC(false))
-    })
+    packListApi
+      .getPacks({ sortPacks, user_id, max, min, page, pageCount, packName })
+      .then(res => {
+        dispatch(setPacksAC(res.data))
+        dispatch(setLoadingAC(false))
+      })
+      .finally(() => {
+        dispatch(setUpdatePack({ initialize: true }))
+      })
   }
 }
+
+type GetPacksType = {
+  min?: boolean
+  max?: boolean
+}
+
 export const addPacksTC = (cardsPack: newPack): AppThunkType => {
   return dispatch => {
-    packListApi.addPacks(cardsPack).then(res => {
-      console.log(res.data.cardPacks)
+    packListApi.addPacks(cardsPack).then(() => {
       dispatch(getPacksTC())
     })
   }
@@ -131,8 +141,7 @@ export const updatePacksTC = (cardsPack: newPack): AppThunkType => {
 }
 export const deletePacksTC = (idPacks: string): AppThunkType => {
   return dispatch => {
-    packListApi.delete(idPacks).then(res => {
-      console.log(res.data.cardPacks)
+    packListApi.delete(idPacks).then(() => {
       dispatch(getPacksTC())
     })
   }
@@ -140,7 +149,6 @@ export const deletePacksTC = (idPacks: string): AppThunkType => {
 
 // types
 export type PackListActionType =
-  | ReturnType<typeof setInitializePacksAC>
   | ReturnType<typeof setPacksAC>
   | ReturnType<typeof sortPacksAC>
   | ReturnType<typeof setIsMyAC>
@@ -150,11 +158,14 @@ export type PackListActionType =
   | ReturnType<typeof setLoadingAC>
   | ReturnType<typeof setInitializeAC>
   | ReturnType<typeof setSearchPackNameAC>
+  | ReturnType<typeof setUpdatePack>
 
 export type PackListInitialStateType = {
   initialize: boolean
   isLoading: boolean
-  packList: Array<PacksType>
+  cardPacks: Array<PacksType>
+  maxCardsCount: number
+  minCardsCount: number
   sortPacks: '0updated' | '1updated'
   isMy: boolean
   min: number

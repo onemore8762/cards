@@ -5,10 +5,11 @@ import Slider from '@mui/material/Slider'
 
 import { getPacksTC, setMaxMinAC } from '../../../features/PackList/packList-reducer'
 import style from '../../../features/PackList/PackList.module.css'
-import { selectMaxMinFilter } from '../../../features/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useDebounce } from '../../hooks/useDebounce'
+
+import { selectMaxCardsCount, selectMinCardsCount } from './rangeSelector'
 
 function valuetext(value: number) {
   return `${value}`
@@ -19,24 +20,25 @@ type RangeSliderPropsType = {
 }
 
 export const RangeSlider: React.FC<RangeSliderPropsType> = ({ disabled }) => {
-  const valueMaxMin = useAppSelector(selectMaxMinFilter)
-  const [value, setValue] = useState<number[]>(valueMaxMin)
+  const minCardsCount = useAppSelector(selectMinCardsCount)
+  const maxCardsCount = useAppSelector(selectMaxCardsCount)
+  const [value, setValue] = useState<number[]>([minCardsCount, maxCardsCount])
   const debouncedValue = useDebounce<number[]>(value, 1000)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (minCardsCount !== value[0] || maxCardsCount !== value[1]) {
+      dispatch(getPacksTC(debouncedValue[0], debouncedValue[1])) // {max:}
+    }
+  }, [debouncedValue])
+  useEffect(() => {
+    setValue([minCardsCount, maxCardsCount])
+    dispatch(setMaxMinAC(minCardsCount, maxCardsCount))
+  }, [minCardsCount, maxCardsCount])
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[])
   }
-
-  useEffect(() => {
-    if (valueMaxMin[0] !== value[0] || valueMaxMin[1] !== value[1]) {
-      dispatch(setMaxMinAC(debouncedValue[0], debouncedValue[1]))
-      dispatch(getPacksTC())
-    }
-  }, [debouncedValue])
-
-  useEffect(() => {
-    setValue(valueMaxMin)
-  }, [valueMaxMin])
 
   return (
     <>
@@ -50,7 +52,8 @@ export const RangeSlider: React.FC<RangeSliderPropsType> = ({ disabled }) => {
             onChange={handleChange}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
-            max={110}
+            min={minCardsCount}
+            max={maxCardsCount}
           />
         </Box>
       </div>

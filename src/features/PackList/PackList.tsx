@@ -16,7 +16,6 @@ import { useDebounce } from '../../common/hooks/useDebounce'
 import {
   addPacksTC,
   getPacksTC,
-  initializePacksTC,
   setIsMyAC,
   setMaxMinAC,
   setPageAC,
@@ -65,10 +64,10 @@ export const PackList = () => {
   }
 
   useEffect(() => {
-    dispatch(initializePacksTC())
+    dispatch(getPacksTC())
   }, [])
 
-  if (initialize) return <PackListSkeleton />
+  if (!initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchPackNameAC(e.currentTarget.value))

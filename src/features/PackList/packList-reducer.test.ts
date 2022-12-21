@@ -2,7 +2,6 @@ import {
   PackListInitialStateType,
   packListReducer,
   setInitializeAC,
-  setInitializePacksAC,
   setIsMyAC,
   setLoadingAC,
   setMaxMinAC,
@@ -19,7 +18,7 @@ beforeEach(() => {
   startState = {
     initialize: false,
     isLoading: false,
-    packList: [],
+    cardPacks: [],
     sortPacks: '0updated',
     isMy: false,
     min: 0,
@@ -28,6 +27,8 @@ beforeEach(() => {
     cardPacksTotalCount: 0,
     pageCount: 0,
     packName: '',
+    maxCardsCount: 0,
+    minCardsCount: 0,
   }
 })
 
@@ -42,7 +43,7 @@ test('something should be initialized', () => {
 
   expect(endState.initialize).toBeTruthy()
 })
-
+/*
 test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
   const actionObj = {
     cardPacks: [
@@ -81,7 +82,7 @@ test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
   expect(endState.page).toBe(1)
   expect(endState.pageCount).toBe(4)
   expect(endState.cardPacksTotalCount).toBe(500)
-})
+})*/ // Инициализация вырезана
 
 test('packs should be set to state (SET_PACKS)', () => {
   const actionObj = {
@@ -114,7 +115,7 @@ test('packs should be set to state (SET_PACKS)', () => {
   }
   const endState = packListReducer(startState, setPacksAC(actionObj))
 
-  expect(endState.packList.length).toBe(1)
+  expect(endState.cardPacks.length).toBe(1)
   expect(endState.cardPacksTotalCount).toBe(200)
 })
 
