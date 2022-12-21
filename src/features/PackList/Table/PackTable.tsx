@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Pack/pack-api'
-import { deleteCardTC, updateCardTC } from '../Pack/pack-reducer'
+import { deleteCardTC, getCardsListTC, sortCardsAC, updateCardTC } from '../Pack/pack-reducer'
 import { selectPackUserId } from '../Pack/packSelectors'
 import { sortPacksAC } from '../packList-reducer'
 import { selectSortPacks } from '../packListSelectors'
@@ -40,7 +40,9 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
     }
   }, [sort])*/
 
-  const handelSortTable = () => dispatch(sortPacksAC())
+  const handelSortTable = () => {
+    dispatch(sortCardsAC())
+  }
   const handlerUpdateCard = (idCard: string) => {
     dispatch(updateCardTC({ _id: idCard, question: 'new question' }))
   }
