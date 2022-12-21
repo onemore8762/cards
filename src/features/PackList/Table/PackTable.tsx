@@ -3,7 +3,7 @@ import React from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import StarOutlineIcon from '@mui/icons-material/StarOutline'
-import { IconButton, TableSortLabel } from '@mui/material'
+import { Box, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 
+import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
@@ -24,9 +25,10 @@ import { selectSortPacks } from '../packListSelectors'
 
 type packTablePropsType = {
   cardsList: Cards[]
+  isLoading: boolean
 }
 
-export const PackTable = (props: packTablePropsType) => {
+export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }) => {
   const dispatch = useAppDispatch()
 
   const sort = useAppSelector(selectSortPacks)
@@ -44,6 +46,8 @@ export const PackTable = (props: packTablePropsType) => {
   const handleDeleteCard = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
   }
+
+  console.log(isLoading)
 
   return (
     <TableContainer component={Paper}>
@@ -65,45 +69,71 @@ export const PackTable = (props: packTablePropsType) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.cardsList.map(row => (
+          {cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {row.question}
+                <SkeletonComponent isLoading={isLoading}>{row.question}</SkeletonComponent>{' '}
               </TableCell>
-
-              <TableCell>{row.answer}</TableCell>
-              <TableCell>{moment(row.updated).format('DD.MM.YYYY')}</TableCell>
               <TableCell>
-                <IconButton>
-                  <StarOutlineIcon />
-                </IconButton>
-                <IconButton>
-                  <StarOutlineIcon />
-                </IconButton>
-                <IconButton>
-                  <StarOutlineIcon />
-                </IconButton>
-                <IconButton>
-                  <StarOutlineIcon />
-                </IconButton>
-                <IconButton>
-                  <StarOutlineIcon />
-                </IconButton>
-                {userId === createdId ? (
-                  <span>
-                    <IconButton onClick={() => handlerUpdateCard(row._id)}>
-                      <BorderColorOutlined />
-                    </IconButton>
-                    <IconButton onClick={() => handleDeleteCard(row._id)}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </span>
-                ) : null}
+                <SkeletonComponent isLoading={isLoading}>{row.answer}</SkeletonComponent>
+              </TableCell>
+              <TableCell>
+                <SkeletonComponent isLoading={isLoading}>
+                  {moment(row.updated).format('DD.MM.YYYY')}
+                </SkeletonComponent>
+              </TableCell>
+              <TableCell>
+                <SkeletonComponent isLoading={isLoading}>
+                  <IconButton>
+                    <StarOutlineIcon />
+                  </IconButton>
+                  <IconButton>
+                    <StarOutlineIcon />
+                  </IconButton>
+                  <IconButton>
+                    <StarOutlineIcon />
+                  </IconButton>
+                  <IconButton>
+                    <StarOutlineIcon />
+                  </IconButton>
+                  <IconButton>
+                    <StarOutlineIcon />
+                  </IconButton>
+                  {userId === createdId ? (
+                    <span>
+                      <IconButton onClick={() => handlerUpdateCard(row._id)}>
+                        <BorderColorOutlined />
+                      </IconButton>
+                      <IconButton onClick={() => handleDeleteCard(row._id)}>
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </span>
+                  ) : null}
+                </SkeletonComponent>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {cardsList.length === 0 && !isLoading && (
+        <Box
+          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}
+        >
+          No Results For This Search
+        </Box>
+      )}
+      {cardsList.length === 0 && isLoading && (
+        <div
+          style={{
+            height: '200px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
     </TableContainer>
   )
 }

@@ -1,9 +1,4 @@
-import {
-  PackInitialStateType,
-  packReducer,
-  setCardPackIdAC,
-  setSearchQuestionAC,
-} from './pack-reducer'
+import { PackInitialStateType, packReducer, setSearchQuestionAC } from './pack-reducer'
 
 let startState: PackInitialStateType
 
@@ -13,7 +8,6 @@ beforeEach(() => {
     cardList: [],
     userId: '',
     cardQuestion: '',
-    cardPackId: '',
     packId: '',
     page: 0,
     pageCount: 0,
@@ -64,8 +58,8 @@ test('question should be set to the state', () => {
   expect(endState.cardQuestion).toBe('react')
 })
 
-test('cardId should be set to the state', () => {
+/*test('cardId should be set to the state', () => {
   const endState = packReducer(startState, setCardPackIdAC('63a181a87361470004494fd5'))
 
   expect(endState.cardPackId).toBe('63a181a87361470004494fd5')
-})
+})*/

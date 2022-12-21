@@ -20,7 +20,6 @@ import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import style from '../PackList.module.css'
-import { selectIsLoading } from '../packListSelectors'
 import { PackTable } from '../Table/PackTable'
 
 import {
@@ -33,8 +32,8 @@ import {
 import s from './Pack.module.css'
 import {
   selectCardPackId,
-  selectCardPackIdSearch,
   selectCardQuestion,
+  selectCardsIsLoading,
   selectCardsList,
   selectPackUserId,
 } from './packSelectors'
@@ -43,10 +42,10 @@ export const Pack = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
+  const packName = useAppSelector(state => state.pack.packName)
   const cardPackId = useAppSelector(selectCardPackId)
-  const cardPackIdSearch = useAppSelector(selectCardPackIdSearch)
   const cardList = useAppSelector(selectCardsList)
-  const isLoading = useAppSelector(selectIsLoading)
+  const isLoading = useAppSelector(selectCardsIsLoading)
   const searchQuestion = useAppSelector(selectCardQuestion)
   const debouncedSearchQuestion = useDebounce<string>(searchQuestion, 1000)
   const pageCount = useAppSelector(state => state.pack.pageCount)
@@ -72,19 +71,25 @@ export const Pack = () => {
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCountCardsAC(+event.target.value))
-    dispatch(getCardsListTC(cardPackIdSearch))
+    dispatch(getCardsListTC(cardPackId))
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setPageCardsAC(value))
-    dispatch(getCardsListTC(cardPackIdSearch))
+    dispatch(getCardsListTC(cardPackId))
   }
 
   useEffect(() => {
     if (searchQuestion) {
-      dispatch(getCardsListTC(cardPackIdSearch))
+      dispatch(getCardsListTC(cardPackId))
     }
   }, [debouncedSearchQuestion])
+
+  useEffect(() => {
+    if (cardPackId) {
+      dispatch(getCardsListTC(cardPackId))
+    }
+  }, [cardPackId])
 
   return (
     <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>
@@ -93,7 +98,7 @@ export const Pack = () => {
         <div className={style.header_row}>
           {userId === createdId ? (
             <Grid display="flex" alignItems="center">
-              <PageTitle title="My Pack" />
+              <PageTitle title={packName} />
               <IconButton onClick={handleOpenUserMenu}>
                 <MoreVertIcon
                   sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }}
@@ -130,7 +135,7 @@ export const Pack = () => {
               </Menu>
             </Grid>
           ) : (
-            <PageTitle title="Friend's Pack" />
+            <PageTitle title={packName} />
           )}
 
           <div className={style.addNewPackBtn}>
@@ -176,7 +181,7 @@ export const Pack = () => {
             />
           </div>
         </div>
-        <PackTable cardsList={cardList} />
+        <PackTable cardsList={cardList} isLoading={isLoading} />
         <PaginationBlock
           disabled={isLoading}
           page={page}

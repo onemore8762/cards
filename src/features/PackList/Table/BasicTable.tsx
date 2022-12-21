@@ -18,7 +18,7 @@ import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { getCardsListTC, setCardPackIdAC } from '../Pack/pack-reducer'
+import { setCardPackIdAC } from '../Pack/pack-reducer'
 import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
 import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
 
@@ -42,7 +42,6 @@ export const BasicTable = () => {
     dispatch(deletePacksTC(idPacks))
   }
   const handelGoCard = (packId: string) => {
-    dispatch(getCardsListTC(packId))
     dispatch(setCardPackIdAC(packId)) // set card id to state
     navigate('/pack')
   }

@@ -7,7 +7,6 @@ const initialState: PackInitialStateType = {
   cardList: [],
   userId: '',
   cardQuestion: '',
-  cardPackId: '',
   packId: '',
   page: 0,
   pageCount: 0,
@@ -23,6 +22,11 @@ export const packReducer = (
   action: PackActionType
 ): PackInitialStateType => {
   switch (action.type) {
+    case 'PACKS/SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.value,
+      }
     case 'PACKS/GET_PACKS':
       return {
         ...state,
@@ -32,11 +36,12 @@ export const packReducer = (
         page: action.data.page,
         pageCount: action.data.pageCount,
         cardsTotalCount: action.data.cardsTotalCount,
+        packName: action.data.packName,
       }
     case 'PACKS/SET_SEARCH_QUESTION':
       return { ...state, cardQuestion: action.question }
     case 'PACKS/SET_CARD-PACK-ID':
-      return { ...state, cardPackId: action.cardPackId }
+      return { ...state, packId: action.packId }
     case 'PACKS/SET_PAGE':
       return { ...state, page: action.page }
     case 'PACKS/SET_PAGE_COUNT':
@@ -51,21 +56,26 @@ export const setCardsListAC = (packId: string, data: ResponseGetCardsType) =>
   ({ type: 'PACKS/GET_PACKS', data, packId } as const)
 export const setSearchQuestionAC = (question: string) =>
   ({ type: 'PACKS/SET_SEARCH_QUESTION', question } as const)
-export const setCardPackIdAC = (cardPackId: string) =>
-  ({ type: 'PACKS/SET_CARD-PACK-ID', cardPackId } as const)
+export const setCardPackIdAC = (packId: string) =>
+  ({ type: 'PACKS/SET_CARD-PACK-ID', packId } as const)
 export const setPageCardsAC = (page: number) => ({ type: 'PACKS/SET_PAGE', page } as const)
 export const setPageCountCardsAC = (pageCount: number) =>
   ({ type: 'PACKS/SET_PAGE_COUNT', pageCount } as const)
+export const setLoadingCardsAC = (value: boolean) => ({ type: 'PACKS/SET_LOADING', value } as const)
+
 // thunk
 export const getCardsListTC = (packId: string): AppThunkType => {
   return (dispatch, getState) => {
     const { cardQuestion, page, pageCount } = getState().pack
 
+    dispatch(setLoadingCardsAC(true))
     packApi.getCardsList({ cardsPack_id: packId, cardQuestion, page, pageCount }).then(res => {
       dispatch(setCardsListAC(packId, res.data))
+      dispatch(setLoadingCardsAC(false))
     })
   }
 }
+
 export const addCardTC = (card: AddCardType): AppThunkType => {
   return (dispatch, getState) => {
     const { packId } = getState().pack
@@ -100,7 +110,6 @@ export type PackInitialStateType = {
   cardList: Array<Cards>
   userId: string
   cardQuestion: string
-  cardPackId: string
   packId: string
   page: number
   pageCount: number
@@ -115,3 +124,4 @@ export type PackActionType =
   | ReturnType<typeof setCardPackIdAC>
   | ReturnType<typeof setPageCardsAC>
   | ReturnType<typeof setPageCountCardsAC>
+  | ReturnType<typeof setLoadingCardsAC>
