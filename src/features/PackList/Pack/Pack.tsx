@@ -129,7 +129,7 @@ export const Pack = () => {
                   <DeleteOutlineIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Delete</Typography>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem disabled={cardList.length === 0}>
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
                 </MenuItem>
