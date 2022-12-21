@@ -90,7 +90,7 @@ export const BasicTable = () => {
                 </TableCell>
                 <TableCell>
                   <SkeletonComponent isLoading={isLoading}>
-                    <IconButton>
+                    <IconButton disabled={row.cardsCount === 0}>
                       <SchoolOutlinedIcon />
                     </IconButton>
                     {row.user_id === userId ? (

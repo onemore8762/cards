@@ -14,7 +14,7 @@ beforeEach(() => {
     packName: '',
     packUserId: '',
     cardsTotalCount: 0,
-    // sortPacks: '0updated',
+    sortCards: '0updated',
   }
 })
 
