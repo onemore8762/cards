@@ -53,13 +53,17 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   console.log(isLoading)
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            <TableCell style={{ width: '30%', fontWeight: 'bold' }}>Question</TableCell>
-            <TableCell style={{ width: '10%', fontWeight: 'bold' }}>Answer</TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>
+            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Question
+            </TableCell>
+            <TableCell style={{ width: '10%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Answer
+            </TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -68,7 +72,9 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                 Last Updated
               </TableSortLabel>
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Grade</TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Grade
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

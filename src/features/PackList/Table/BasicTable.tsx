@@ -47,13 +47,17 @@ export const BasicTable = () => {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            <TableCell style={{ width: '30%', fontWeight: 'bold' }}>Name</TableCell>
-            <TableCell style={{ width: '10%', fontWeight: 'bold' }}>Cards</TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>
+            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Name
+            </TableCell>
+            <TableCell style={{ width: '10%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Cards
+            </TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -62,8 +66,12 @@ export const BasicTable = () => {
                 Last Updated
               </TableSortLabel>
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Created by</TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold' }}>Actions</TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Created by
+            </TableCell>
+            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{ minHeight: '300px' }}>

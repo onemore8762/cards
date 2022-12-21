@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-import { Button, LinearProgress } from '@mui/material'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
+import { Button, LinearProgress, SvgIcon } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -31,6 +33,7 @@ export const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {
+      icon: PersonOutlineOutlinedIcon,
       title: 'Profile',
       func: () => {
         navigate(PATH.PROFILE.PROFILE)
@@ -38,6 +41,7 @@ export const NavBar = () => {
       },
     },
     {
+      icon: LogoutOutlinedIcon,
       title: 'Logout',
       func: () => {
         dispatch(logoutTC())
@@ -125,6 +129,7 @@ export const NavBar = () => {
                   >
                     {settings.map(setting => (
                       <MenuItem key={setting.title} onClick={setting.func}>
+                        <SvgIcon component={setting.icon} sx={{ mr: 1 }} />
                         <Typography textAlign="center">{setting.title}</Typography>
                       </MenuItem>
                     ))}
