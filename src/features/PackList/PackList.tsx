@@ -7,6 +7,10 @@ import Button from '@mui/material/Button'
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../common/components/Pagination/PaginationBlock'
+import {
+  selectMaxCardsCount,
+  selectMinCardsCount,
+} from '../../common/components/RangeSlider/rangeSelector'
 import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
@@ -43,6 +47,8 @@ export const PackList = () => {
   const pageCount = useAppSelector(selectPageCount)
   const page = useAppSelector(selectPage)
   const maxPage = useAppSelector(selectCardPacksTotalCount)
+  const min = useAppSelector(state => state.packList.min)
+  const max = useAppSelector(state => state.packList.max)
 
   const addNewPack = () => {
     dispatch(
@@ -51,21 +57,14 @@ export const PackList = () => {
   }
 
   useEffect(() => {
-    if (searchPackName) {
-      dispatch(getPacksTC())
-    }
-  }, [debouncedSearchPack])
+    dispatch(getPacksTC())
+  }, [debouncedSearchPack, page, pageCount, min, max])
 
   const filterDefault = () => {
     dispatch(setMaxMinAC(0, 110))
     dispatch(setIsMyAC(false))
     dispatch(setSearchPackNameAC(''))
-    dispatch(getPacksTC())
   }
-
-  useEffect(() => {
-    dispatch(getPacksTC())
-  }, [])
 
   if (!initialize) return <PackListSkeleton />
 
@@ -75,12 +74,10 @@ export const PackList = () => {
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCountAC(+event.target.value))
-    dispatch(getPacksTC())
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setPageAC(value))
-    dispatch(getPacksTC())
   }
 
   return (

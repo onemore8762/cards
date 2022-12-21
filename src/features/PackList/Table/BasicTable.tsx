@@ -32,7 +32,6 @@ export const BasicTable = () => {
 
   const handelSortTable = () => {
     dispatch(sortPacksAC())
-    dispatch(getPacksTC())
   }
 
   const handleUpdatePacks = (idPacks: string) => {

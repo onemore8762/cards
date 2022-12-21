@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 import { getPacksTC, setIsMyAC, setPageAC } from '../../../features/PackList/packList-reducer'
 import { selectIsMy } from '../../../features/PackList/packListSelectors'
@@ -14,6 +15,7 @@ type FilterShowPropsType = {
 
 export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
   const isMy = useAppSelector(selectIsMy)
+  const [searchParams, setSearchParams] = useSearchParams()
   const minCardsCount = useAppSelector(selectMinCardsCount)
   const maxCardsCount = useAppSelector(selectMaxCardsCount)
 
@@ -23,6 +25,8 @@ export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
       dispatch(setIsMyAC(!isMy))
       dispatch(setPageAC(1))
       dispatch(getPacksTC())
+      searchParams.set('my', `true`)
+      setSearchParams(searchParams)
     }
   }
   const styleButtons = { width: '98px', height: '36px', color: 'black' }

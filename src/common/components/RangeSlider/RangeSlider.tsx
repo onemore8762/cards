@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
+import { useSearchParams } from 'react-router-dom'
 
 import { getPacksTC, setMaxMinAC } from '../../../features/PackList/packList-reducer'
 import style from '../../../features/PackList/PackList.module.css'
@@ -26,18 +27,34 @@ export const RangeSlider: React.FC<RangeSliderPropsType> = ({ disabled }) => {
   const debouncedValue = useDebounce<number[]>(value, 1000)
   const dispatch = useAppDispatch()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
   useEffect(() => {
     if (minCardsCount !== value[0] || maxCardsCount !== value[1]) {
-      dispatch(getPacksTC(debouncedValue[0], debouncedValue[1])) // {max:}
+      dispatch(setMaxMinAC(debouncedValue[0], debouncedValue[1])) // getPacksTC(debouncedValue[0], debouncedValue[1])
     }
   }, [debouncedValue])
-  useEffect(() => {
-    setValue([minCardsCount, maxCardsCount])
-    dispatch(setMaxMinAC(minCardsCount, maxCardsCount))
-  }, [minCardsCount, maxCardsCount])
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  /*
+  useEffect(() => {
+    const urlSetting = Object.fromEntries(searchParams)
+
+    let min = +urlSetting['min'] || minCardsCount
+    let max = +urlSetting['max'] || maxCardsCount
+
+    setValue([min, max])
+
+    searchParams.set('min', `${min}`)
+    searchParams.set('max', `${max}`)
+    setSearchParams(searchParams)
+  }, [minCardsCount, maxCardsCount])
+*/
+
+  const handleChange = (event: Event, newValue: number[] | number) => {
     setValue(newValue as number[])
+    searchParams.set('min', `${(newValue as number[])[0]}`)
+    searchParams.set('max', `${(newValue as number[])[1]}`)
+    setSearchParams(searchParams)
   }
 
   return (

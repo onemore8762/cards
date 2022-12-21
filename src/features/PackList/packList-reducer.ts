@@ -12,9 +12,9 @@ const initialState: PackListInitialStateType = {
   max: 100,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0,
+  page: 1,
+  pageCount: 4,
   cardPacksTotalCount: 0,
-  pageCount: 0,
   packName: '',
 }
 
@@ -24,20 +24,13 @@ export const packListReducer = (
   action: PackListActionType
 ): PackListInitialStateType => {
   switch (action.type) {
-    case 'PACKLIST/SET_LOADING':
-      return {
-        ...state,
-        isLoading: action.isLoading,
-      }
-    case 'PACKLIST/SET_INITIALIZE':
-      return {
-        ...state,
-        initialize: action.initialize,
-      }
     case 'PACKLIST/SET_PACKS':
       return {
         ...state,
-        ...action.packs,
+        cardPacks: action.packs.cardPacks,
+        maxCardsCount: action.packs.maxCardsCount,
+        minCardsCount: action.packs.minCardsCount,
+        cardPacksTotalCount: action.packs.cardPacksTotalCount,
       }
     case 'PACKLIST/SORT_PACKS':
       if (state.sortPacks === '0updated') {
@@ -63,10 +56,7 @@ export const packListReducer = (
 }
 
 // actions
-export const setLoadingAC = (isLoading: boolean) =>
-  ({ type: 'PACKLIST/SET_LOADING', isLoading } as const)
-export const setInitializeAC = (initialize: boolean) =>
-  ({ type: 'PACKLIST/SET_INITIALIZE', initialize } as const)
+
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
@@ -97,9 +87,9 @@ type UpdatePack = {
 // -------------------------------------------------------------------
 
 // thunk
-export const getPacksTC = (min?: number, max?: number): AppThunkType => {
+export const getPacksTC = (): AppThunkType => {
   return (dispatch, getState) => {
-    const { sortPacks, isMy, page, pageCount, packName } = getState().packList
+    const { sortPacks, isMy, page, pageCount, packName, max, min } = getState().packList
     let user_id
 
     if (isMy) {
@@ -107,22 +97,17 @@ export const getPacksTC = (min?: number, max?: number): AppThunkType => {
 
       user_id = _id
     }
-    dispatch(setLoadingAC(true))
+    dispatch(setUpdatePack({ isLoading: true }))
     packListApi
       .getPacks({ sortPacks, user_id, max, min, page, pageCount, packName })
       .then(res => {
         dispatch(setPacksAC(res.data))
-        dispatch(setLoadingAC(false))
+        dispatch(setUpdatePack({ isLoading: false }))
       })
       .finally(() => {
         dispatch(setUpdatePack({ initialize: true }))
       })
   }
-}
-
-type GetPacksType = {
-  min?: boolean
-  max?: boolean
 }
 
 export const addPacksTC = (cardsPack: newPack): AppThunkType => {
@@ -155,8 +140,6 @@ export type PackListActionType =
   | ReturnType<typeof setMaxMinAC>
   | ReturnType<typeof setPageAC>
   | ReturnType<typeof setPageCountAC>
-  | ReturnType<typeof setLoadingAC>
-  | ReturnType<typeof setInitializeAC>
   | ReturnType<typeof setSearchPackNameAC>
   | ReturnType<typeof setUpdatePack>
 
