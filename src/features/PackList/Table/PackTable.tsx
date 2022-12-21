@@ -30,14 +30,15 @@ type packTablePropsType = {
 
 export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }) => {
   const dispatch = useAppDispatch()
-
   const sort = useAppSelector(selectSortPacks)
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
 
-  // useEffect(() => {
-  //   dispatch(getPacksTC())
-  // }, [sort])
+  /*  useEffect(() => {
+    if (sort) {
+      dispatch(getCardsListTC())
+    }
+  }, [sort])*/
 
   const handelSortTable = () => dispatch(sortPacksAC())
   const handlerUpdateCard = (idCard: string) => {

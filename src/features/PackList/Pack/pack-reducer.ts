@@ -69,10 +69,14 @@ export const getCardsListTC = (packId: string): AppThunkType => {
     const { cardQuestion, page, pageCount } = getState().pack
 
     dispatch(setLoadingCardsAC(true))
-    packApi.getCardsList({ cardsPack_id: packId, cardQuestion, page, pageCount }).then(res => {
-      dispatch(setCardsListAC(packId, res.data))
-      dispatch(setLoadingCardsAC(false))
-    })
+    packApi
+      .getCardsList({ cardsPack_id: packId, cardQuestion, page, pageCount })
+      .then(res => {
+        dispatch(setCardsListAC(packId, res.data))
+      })
+      .finally(() => {
+        dispatch(setLoadingCardsAC(false))
+      })
   }
 }
 

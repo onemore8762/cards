@@ -35,6 +35,7 @@ import {
   selectCardQuestion,
   selectCardsIsLoading,
   selectCardsList,
+  selectCardsPackName,
   selectPackUserId,
 } from './packSelectors'
 
@@ -42,7 +43,7 @@ export const Pack = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
-  const packName = useAppSelector(state => state.pack.packName)
+  const packName = useAppSelector(selectCardsPackName)
   const cardPackId = useAppSelector(selectCardPackId)
   const cardList = useAppSelector(selectCardsList)
   const isLoading = useAppSelector(selectCardsIsLoading)
