@@ -23,6 +23,8 @@ export const PaginationBlock: React.FC<Props> = ({
   handleChangePage,
   handleChangePagination,
 }) => {
+  console.log(pageCount)
+
   return (
     <div className={style.pagination_block}>
       <div className={style.pagination}>
@@ -42,15 +44,15 @@ export const PaginationBlock: React.FC<Props> = ({
           <NativeSelect
             disabled={disabled}
             onChange={handleChangePagination}
-            defaultValue={4}
+            value={pageCount}
             inputProps={{
               id: 'uncontrolled-native',
             }}
           >
-            <option value={4}>4</option>
-            <option value={8}>8</option>
-            <option value={16}>16</option>
-            <option value={32}>32</option>
+            <option value={4}>{pageCount === 4 ? pageCount : 4}</option>
+            <option value={8}>{pageCount === 8 ? pageCount : 8}</option>
+            <option value={16}>{pageCount === 16 ? pageCount : 16}</option>
+            <option value={32}>{pageCount === 32 ? pageCount : 32}</option>
           </NativeSelect>
         </div>
         <div className={style.pagination_show_text}>cards per page</div>

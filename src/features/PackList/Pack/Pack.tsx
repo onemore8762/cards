@@ -9,6 +9,7 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
@@ -36,6 +37,9 @@ import {
   selectCardsIsLoading,
   selectCardsList,
   selectCardsPackName,
+  selectCardsPage,
+  selectCardsPageCount,
+  selectCardsTotalCount,
   selectPackUserId,
 } from './packSelectors'
 
@@ -48,12 +52,17 @@ export const Pack = () => {
   const cardList = useAppSelector(selectCardsList)
   const isLoading = useAppSelector(selectCardsIsLoading)
   const searchQuestion = useAppSelector(selectCardQuestion)
-  const debouncedSearchQuestion = useDebounce<string>(searchQuestion, 1000)
-  const pageCount = useAppSelector(state => state.pack.pageCount)
-  const page = useAppSelector(state => state.pack.page)
-  const maxPage = useAppSelector(state => state.pack.cardsTotalCount)
+  const pageCount = useAppSelector(selectCardsPageCount)
+  const page = useAppSelector(selectCardsPage)
+  const maxPage = useAppSelector(selectCardsTotalCount)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+  const [inputValue, setInputValue] = useState<string>('')
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const debouncedSearchQuestion = useDebounce<string | null>(inputValue, 1000)
+
+  const params = useParams() // packId достаем
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -64,6 +73,9 @@ export const Pack = () => {
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchQuestionAC(e.currentTarget.value))
+    setInputValue(e.currentTarget.value)
+    searchParams.set('cardQuestion', e.currentTarget.value)
+    setSearchParams(searchParams)
   }
 
   const handlerAddCard = () => {
@@ -73,24 +85,33 @@ export const Pack = () => {
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCountCardsAC(+event.target.value))
     dispatch(getCardsListTC(cardPackId))
+    searchParams.set('pageCount', event.target.value)
+    setSearchParams(searchParams)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setPageCardsAC(value))
     dispatch(getCardsListTC(cardPackId))
+    searchParams.set('page', `${value}`)
+    setSearchParams(searchParams)
   }
 
   useEffect(() => {
-    if (searchQuestion) {
+    if (inputValue) {
       dispatch(getCardsListTC(cardPackId))
     }
   }, [debouncedSearchQuestion])
 
   useEffect(() => {
-    if (cardPackId) {
-      dispatch(getCardsListTC(cardPackId))
-    }
-  }, [cardPackId])
+    const object1 = Object.fromEntries(searchParams)
+
+    dispatch(setSearchQuestionAC(object1['cardQuestion']))
+    dispatch(setPageCardsAC(+object1['page']))
+    dispatch(setPageCountCardsAC(+object1['pageCount']))
+    dispatch(getCardsListTC(cardPackId || params.packId || ''))
+  }, [])
+  console.log(userId)
+  console.log(createdId)
 
   return (
     <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>

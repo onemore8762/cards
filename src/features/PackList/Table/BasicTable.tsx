@@ -43,7 +43,7 @@ export const BasicTable = () => {
   }
   const handelGoCard = (packId: string) => {
     dispatch(setCardPackIdAC(packId)) // set card id to state
-    navigate('/pack')
+    navigate(`/pack/${packId}`)
   }
 
   return (

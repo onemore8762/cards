@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 
 type Props = {
   disabled: boolean
-  search: string
+  search: string | null
   searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
   sx?: {
@@ -32,7 +32,7 @@ export const SearchInput: React.FC<Props> = ({
         style={{ height: '38px' }}
         placeholder={placeholder}
         disabled={disabled}
-        value={search}
+        value={search || ''}
         onChange={searchHandler}
         InputProps={{
           startAdornment: (

@@ -6,7 +6,7 @@ const initialState: PackInitialStateType = {
   isLoading: false,
   cardList: [],
   userId: '',
-  cardQuestion: '',
+  cardQuestion: null,
   packId: '',
   page: 0,
   pageCount: 0,
@@ -113,7 +113,7 @@ export type PackInitialStateType = {
   isLoading: boolean
   cardList: Array<Cards>
   userId: string
-  cardQuestion: string
+  cardQuestion: string | null
   packId: string
   page: number
   pageCount: number

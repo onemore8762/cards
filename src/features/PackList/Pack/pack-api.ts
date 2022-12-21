@@ -25,7 +25,7 @@ export const packApi = {
 export type GetCardsParamsType = {
   cardsPack_id: string
   cardAnswer?: string
-  cardQuestion?: string
+  cardQuestion?: string | null
   min?: number
   max?: number
   sortCards?: string
