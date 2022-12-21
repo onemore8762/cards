@@ -75,7 +75,7 @@ export type UpdateCardType = {
   _id: string // id карточки
   question?: string // если не отправить будет дефолтное
   answer?: string // если не отправить будет таким
-  grade?: number // 0..5, не обязателен
+  grade?: number // 0...5, не обязателен
   shots?: number // не обязателен
   answerImg?: string // не обязателен
   questionImg?: string // не обязателен
