@@ -30,7 +30,7 @@ export const NavBar = () => {
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
   const userName = useAppSelector(state => state.profile.name)
   const status = useAppSelector(state => state.app.status)
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {
       icon: PersonOutlineOutlinedIcon,

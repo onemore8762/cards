@@ -3,29 +3,18 @@ import React, { ChangeEvent, useEffect } from 'react'
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
+import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../common/components/FilterShow/FilterShow'
 import { PageTitle } from '../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../common/components/Pagination/PaginationBlock'
-import {
-  selectMaxCardsCount,
-  selectMinCardsCount,
-} from '../../common/components/RangeSlider/rangeSelector'
 import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
 import { SearchInput } from '../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { useDebounce } from '../../common/hooks/useDebounce'
 
-import {
-  addPacksTC,
-  getPacksTC,
-  setIsMyAC,
-  setMaxMinAC,
-  setPageAC,
-  setPageCountAC,
-  setSearchPackNameAC,
-} from './packList-reducer'
+import { addPacksTC, getPacksTC, setUpdatePack } from './packList-reducer'
 import style from './PackList.module.css'
 import {
   selectCardPacksTotalCount,
@@ -34,6 +23,7 @@ import {
   selectPage,
   selectPageCount,
   selectSearchPack,
+  selectSortPacks,
 } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
 import { BasicTable } from './Table/BasicTable'
@@ -47,8 +37,11 @@ export const PackList = () => {
   const pageCount = useAppSelector(selectPageCount)
   const page = useAppSelector(selectPage)
   const maxPage = useAppSelector(selectCardPacksTotalCount)
+  const isMy = useAppSelector(state => state.packList.isMy)
+  const sort = useAppSelector(selectSortPacks)
   const min = useAppSelector(state => state.packList.min)
   const max = useAppSelector(state => state.packList.max)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const addNewPack = () => {
     dispatch(
@@ -57,27 +50,57 @@ export const PackList = () => {
   }
 
   useEffect(() => {
-    dispatch(getPacksTC())
-  }, [debouncedSearchPack, page, pageCount, min, max])
+    if (initialize) {
+      dispatch(getPacksTC())
+    }
+    setSearchParams(searchParams)
+  }, [debouncedSearchPack, page, pageCount, sort, min, max, isMy])
+
+  useEffect(() => {
+    if (!initialize) {
+      let isMyQuery = Boolean(searchParams.get('my') === 'true')
+      let minQuery = Number(searchParams.get('min') || -1)
+      let maxQuery = Number(searchParams.get('max') || -1)
+      let pageCountQuery = Number(searchParams.get('pageCount') || 4)
+      let pageQuery = Number(searchParams.get('page') || 1)
+      let questionQuery = searchParams.get('input') || ''
+
+      dispatch(
+        setUpdatePack({
+          isMy: isMyQuery,
+          min: minQuery !== -1 ? minQuery : null,
+          max: maxQuery !== -1 ? maxQuery : null,
+          page: pageQuery,
+          pageCount: pageCountQuery,
+          packName: questionQuery,
+        })
+      )
+      dispatch(getPacksTC())
+    }
+  }, [])
 
   const filterDefault = () => {
-    dispatch(setMaxMinAC(0, 110))
-    dispatch(setIsMyAC(false))
-    dispatch(setSearchPackNameAC(''))
+    setSearchParams('')
+    dispatch(
+      setUpdatePack({ min: null, max: null, isMy: false, packName: '', page: 1, pageCount: 4 })
+    )
   }
 
   if (!initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchPackNameAC(e.currentTarget.value))
+    dispatch(setUpdatePack({ packName: e.currentTarget.value }))
+    searchParams.set('input', e.currentTarget.value)
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setPageCountAC(+event.target.value))
+    dispatch(setUpdatePack({ pageCount: +event.target.value, page: 1 }))
+    searchParams.set('pageCount', event.target.value)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setPageAC(value))
+    dispatch(setUpdatePack({ page: value }))
+    searchParams.set('page', `${value}`)
   }
 
   return (

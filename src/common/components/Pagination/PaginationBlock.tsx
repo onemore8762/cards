@@ -23,8 +23,6 @@ export const PaginationBlock: React.FC<Props> = ({
   handleChangePage,
   handleChangePagination,
 }) => {
-  console.log(pageCount)
-
   return (
     <div className={style.pagination_block}>
       <div className={style.pagination}>

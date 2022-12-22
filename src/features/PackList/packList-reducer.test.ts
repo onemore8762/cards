@@ -1,3 +1,5 @@
+import React from 'react'
+/*
 import {
   PackListInitialStateType,
   packListReducer,
@@ -6,7 +8,6 @@ import {
   setPacksAC,
   setPageAC,
   setPageCountAC,
-  setSearchPackNameAC,
   setUpdatePack,
   sortPacksAC,
 } from './packList-reducer'
@@ -42,7 +43,6 @@ test('something should be initialized', () => {
 
   expect(endState.initialize).toBeTruthy()
 })
-/*
 test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
   const actionObj = {
     cardPacks: [
@@ -81,7 +81,7 @@ test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
   expect(endState.page).toBe(1)
   expect(endState.pageCount).toBe(4)
   expect(endState.cardPacksTotalCount).toBe(500)
-})*/ // Инициализация вырезана
+}) // Инициализация вырезана
 
 test('packs should be set to state (SET_PACKS)', () => {
   const actionObj = {
@@ -154,3 +154,4 @@ test('number of page count should be set', () => {
 //
 //   expect(endState.packName).toBe('find something')
 // })
+*/
