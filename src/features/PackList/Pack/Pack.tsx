@@ -23,13 +23,7 @@ import { selectProfileUserId } from '../../Profile/profileSelectors'
 import style from '../PackList.module.css'
 import { PackTable } from '../Table/PackTable'
 
-import {
-  addCardTC,
-  getCardsListTC,
-  setPageCardsAC,
-  setPageCountCardsAC,
-  setSearchQuestionAC,
-} from './pack-reducer'
+import { addCardTC, getCardsListTC, setUpdateCardsAC } from './pack-reducer'
 import s from './Pack.module.css'
 import {
   selectCardPackId,
@@ -41,6 +35,7 @@ import {
   selectCardsPageCount,
   selectCardsTotalCount,
   selectPackUserId,
+  sortCard,
 } from './packSelectors'
 
 export const Pack = () => {
@@ -55,6 +50,8 @@ export const Pack = () => {
   const pageCount = useAppSelector(selectCardsPageCount)
   const page = useAppSelector(selectCardsPage)
   const maxPage = useAppSelector(selectCardsTotalCount)
+
+  const sort = useAppSelector(sortCard)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const [inputValue, setInputValue] = useState<string | null>(null)
@@ -72,7 +69,8 @@ export const Pack = () => {
   }
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchQuestionAC(e.currentTarget.value))
+    //dispatch(setSearchQuestionAC(e.currentTarget.value))
+    dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
     setInputValue(e.currentTarget.value)
 
     searchParams.set('cardQuestion', e.currentTarget.value)
@@ -84,20 +82,24 @@ export const Pack = () => {
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setPageCountCardsAC(+event.target.value))
-    dispatch(getCardsListTC(cardPackId))
+    //dispatch(setPageCountCardsAC(+event.target.value))
+    dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
 
     searchParams.set('pageCount', event.target.value)
     setSearchParams(searchParams)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setPageCardsAC(value))
-    dispatch(getCardsListTC(cardPackId))
+    //dispatch(setPageCardsAC(value))
+    dispatch(setUpdateCardsAC({ page: value }))
 
     searchParams.set('page', `${value}`)
     setSearchParams(searchParams)
   }
+
+  useEffect(() => {
+    dispatch(getCardsListTC(cardPackId))
+  }, [sort, pageCount, page])
 
   useEffect(() => {
     if (inputValue !== null) {
@@ -108,9 +110,14 @@ export const Pack = () => {
   useEffect(() => {
     const object1 = Object.fromEntries(searchParams)
 
-    dispatch(setSearchQuestionAC(object1['cardQuestion'] || ''))
-    dispatch(setPageCardsAC(+object1['page']) || 1)
-    dispatch(setPageCountCardsAC(+object1['pageCount'] || 4))
+    dispatch(
+      setUpdateCardsAC({
+        cardQuestion: object1['cardQuestion'] || '',
+        page: +object1['page'] || 1,
+        pageCount: +object1['pageCount'] || 4,
+      })
+    )
+
     dispatch(getCardsListTC(cardPackId || params.packId || ''))
   }, [])
 

@@ -18,8 +18,8 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Pack/pack-api'
-import { deleteCardTC, getCardsListTC, sortCardsAC, updateCardTC } from '../Pack/pack-reducer'
-import { selectCardPackId, selectPackUserId, sortCard } from '../Pack/packSelectors'
+import { deleteCardTC, sortCardsAC, updateCardTC } from '../Pack/pack-reducer'
+import { selectPackUserId, sortCard } from '../Pack/packSelectors'
 
 type packTablePropsType = {
   cardsList: Cards[]
@@ -31,17 +31,9 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const sort = useAppSelector(sortCard)
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
-  const packId = useAppSelector(selectCardPackId)
-
-  /*  useEffect(() => {
-    if (sort) {
-      dispatch(getCardsListTC())
-    }
-  }, [sort])*/
 
   const handelSortTable = () => {
     dispatch(sortCardsAC())
-    dispatch(getCardsListTC(packId))
   }
   const handlerUpdateCard = (idCard: string) => {
     dispatch(updateCardTC({ _id: idCard, question: 'new question' }))
@@ -50,7 +42,7 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
     dispatch(deleteCardTC(idCard))
   }
 
-  console.log(isLoading)
+  //console.log(isLoading)
 
   return (
     <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>

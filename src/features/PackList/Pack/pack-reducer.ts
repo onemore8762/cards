@@ -35,20 +35,16 @@ export const packReducer = (state = initialState, action: PackActionType): PackI
         cardsTotalCount: action.data.cardsTotalCount,
         packName: action.data.packName,
       }
-    case 'PACKS/SET_SEARCH_QUESTION':
-      return { ...state, cardQuestion: action.question }
     case 'PACKS/SET_CARD-PACK-ID':
       return { ...state, packId: action.packId }
-    case 'PACKS/SET_PAGE':
-      return { ...state, page: action.page }
-    case 'PACKS/SET_PAGE_COUNT':
-      return { ...state, pageCount: action.pageCount }
     case 'PACKS/SORT_CARDS':
       if (state.sortCards === '0updated') {
         return { ...state, sortCards: '1updated' }
       } else {
         return { ...state, sortCards: '0updated' }
       }
+    case 'PACKS/UPDATE_CARDS':
+      return { ...state, ...action.payload }
     default:
       return state
   }
@@ -57,16 +53,12 @@ export const packReducer = (state = initialState, action: PackActionType): PackI
 // actions
 export const setCardsListAC = (packId: string, data: ResponseGetCardsType) =>
   ({ type: 'PACKS/GET_PACKS', data, packId } as const)
-export const setSearchQuestionAC = (question: string) =>
-  ({ type: 'PACKS/SET_SEARCH_QUESTION', question } as const)
 export const setCardPackIdAC = (packId: string) =>
   ({ type: 'PACKS/SET_CARD-PACK-ID', packId } as const)
-export const setPageCardsAC = (page: number) => ({ type: 'PACKS/SET_PAGE', page } as const)
-export const setPageCountCardsAC = (pageCount: number) =>
-  ({ type: 'PACKS/SET_PAGE_COUNT', pageCount } as const)
 export const setLoadingCardsAC = (value: boolean) => ({ type: 'PACKS/SET_LOADING', value } as const)
 export const sortCardsAC = () => ({ type: 'PACKS/SORT_CARDS' } as const)
-
+export const setUpdateCardsAC = (payload: UpdateCardsType) =>
+  ({ type: 'PACKS/UPDATE_CARDS', payload } as const)
 // thunk
 export const getCardsListTC = (packId: string): AppThunkType => {
   return (dispatch, getState) => {
@@ -126,11 +118,14 @@ export type PackInitialStateType = {
   cardsTotalCount: number
   sortCards: '0updated' | '1updated'
 }
+export type UpdateCardsType = Partial<PackInitialStateType>
+
 export type PackActionType =
   | ReturnType<typeof setCardsListAC>
-  | ReturnType<typeof setSearchQuestionAC>
+  // | ReturnType<typeof setSearchQuestionAC>
   | ReturnType<typeof setCardPackIdAC>
-  | ReturnType<typeof setPageCardsAC>
-  | ReturnType<typeof setPageCountCardsAC>
+  // | ReturnType<typeof setPageCardsAC>
+  // | ReturnType<typeof setPageCountCardsAC>
   | ReturnType<typeof setLoadingCardsAC>
   | ReturnType<typeof sortCardsAC>
+  | ReturnType<typeof setUpdateCardsAC>
