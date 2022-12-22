@@ -31,6 +31,8 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const sort = useAppSelector(sortCard)
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
+  const packId = useAppSelector(selectCardPackId)
+
 
   const handelSortTable = () => {
     dispatch(sortCardsAC())
@@ -41,8 +43,6 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const handleDeleteCard = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
   }
-
-  //console.log(isLoading)
 
   return (
     <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>

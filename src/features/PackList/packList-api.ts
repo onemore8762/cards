@@ -19,19 +19,14 @@ export const packListApi = {
 
 // types
 export type getPacksParamsType = {
-  packName?: string // не обязательно
-  min?: number | null // не обязательно
-  max?: number | null // не обязательно
-  sortPacks?: '0updated' | '1updated' // не обязательно
-  page?: number // не обязательно
-  pageCount?: number // не обязательно
+  packName?: string
+  min?: number | null
+  max?: number | null
+  sortPacks?: '0updated' | '1updated'
+  page?: number
+  pageCount?: number
   user_id?: string | null
-  // чьи колоды не обязательно, или придут все
-
-  block?: boolean // не обязательно
-  // если вас кто то забанил. То с помощью
-  // данного параметра можно увидеть свои колоды
-  // и поправить их или удалить или обжаловать 🙃
+  block?: boolean
 }
 export type newPack = {
   cardsPack: addCardsPack

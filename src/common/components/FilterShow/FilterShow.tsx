@@ -4,7 +4,7 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
 import { setUpdatePack } from '../../../features/PackList/packList-reducer'
-import { selectIsMy } from '../../../features/PackList/packListSelectors'
+import { selectPackListIsMy } from '../../../features/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
@@ -13,19 +13,19 @@ type FilterShowPropsType = {
 }
 
 export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
-  const isMy = useAppSelector(selectIsMy)
+  const isMy = useAppSelector(selectPackListIsMy)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const dispatch = useAppDispatch()
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {
     if (newAlignment !== isMy) {
       dispatch(setUpdatePack({ isMy: newAlignment, page: 1, min: null, max: null, pageCount: 4 }))
-      searchParams.set('my', `${newAlignment}`)
+      searchParams.set('isMy', `${newAlignment}`)
       searchParams.delete('min')
       searchParams.delete('max')
       searchParams.delete('page')
       searchParams.delete('pageCount')
-      searchParams.delete('input')
+      searchParams.delete('packName')
       setSearchParams(searchParams)
     }
   }

@@ -17,37 +17,34 @@ import { useDebounce } from '../../common/hooks/useDebounce'
 import { addPacksTC, getPacksTC, setUpdatePack } from './packList-reducer'
 import style from './PackList.module.css'
 import {
-  selectCardPacksTotalCount,
-  selectInitialize,
-  selectIsLoading,
-  selectPage,
-  selectPageCount,
-  selectSearchPack,
-  selectSortPacks,
+  selectPackListCardPacksTotalCount,
+  selectPackListInitialize,
+  selectPackListIsLoading,
+  selectPackListIsMy,
+  selectPackListMax,
+  selectPackListMin,
+  selectPackListPage,
+  selectPackListPageCount,
+  selectPackListSearchPack,
+  selectPackListSortPacks,
 } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
-import { BasicTable } from './Table/BasicTable'
+import { PackListTable } from './Table/PackListTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
-  const initialize = useAppSelector(selectInitialize)
-  const isLoading = useAppSelector(selectIsLoading)
-  const searchPackName = useAppSelector(selectSearchPack)
-  const debouncedSearchPack = useDebounce<string>(searchPackName, 1000)
-  const pageCount = useAppSelector(selectPageCount)
-  const page = useAppSelector(selectPage)
-  const maxPage = useAppSelector(selectCardPacksTotalCount)
-  const isMy = useAppSelector(state => state.packList.isMy)
-  const sort = useAppSelector(selectSortPacks)
-  const min = useAppSelector(state => state.packList.min)
-  const max = useAppSelector(state => state.packList.max)
+  const initialize = useAppSelector(selectPackListInitialize)
+  const isLoading = useAppSelector(selectPackListIsLoading)
+  const searchPackName = useAppSelector(selectPackListSearchPack)
+  const debouncedSearchPack = useDebounce<string>(searchPackName, 500)
+  const pageCount = useAppSelector(selectPackListPageCount)
+  const page = useAppSelector(selectPackListPage)
+  const maxPage = useAppSelector(selectPackListCardPacksTotalCount)
+  const isMy = useAppSelector(selectPackListIsMy)
+  const sort = useAppSelector(selectPackListSortPacks)
+  const min = useAppSelector(selectPackListMin)
+  const max = useAppSelector(selectPackListMax)
   const [searchParams, setSearchParams] = useSearchParams()
-
-  const addNewPack = () => {
-    dispatch(
-      addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
-    )
-  }
 
   useEffect(() => {
     if (initialize) {
@@ -63,7 +60,8 @@ export const PackList = () => {
       let maxQuery = Number(searchParams.get('max') || -1)
       let pageCountQuery = Number(searchParams.get('pageCount') || 4)
       let pageQuery = Number(searchParams.get('page') || 1)
-      let questionQuery = searchParams.get('input') || ''
+      let questionQuery = searchParams.get('packName') || ''
+      let sortPackQuery = (searchParams.get('sortPack') as '0updated' | '1updated') || '1update'
 
       dispatch(
         setUpdatePack({
@@ -73,6 +71,7 @@ export const PackList = () => {
           page: pageQuery,
           pageCount: pageCountQuery,
           packName: questionQuery,
+          sortPacks: sortPackQuery,
         })
       )
       dispatch(getPacksTC())
@@ -82,15 +81,23 @@ export const PackList = () => {
   const filterDefault = () => {
     setSearchParams('')
     dispatch(
-      setUpdatePack({ min: null, max: null, isMy: false, packName: '', page: 1, pageCount: 4 })
+      setUpdatePack({
+        min: null,
+        max: null,
+        isMy: false,
+        packName: '',
+        page: 1,
+        pageCount: 4,
+        sortPacks: '0updated',
+      })
     )
   }
 
   if (!initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUpdatePack({ packName: e.currentTarget.value }))
-    searchParams.set('input', e.currentTarget.value)
+    dispatch(setUpdatePack({ packName: e.currentTarget.value, isLoading: true }))
+    searchParams.set('packName', e.currentTarget.value)
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -101,6 +108,12 @@ export const PackList = () => {
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setUpdatePack({ page: value }))
     searchParams.set('page', `${value}`)
+  }
+
+  const addNewPack = () => {
+    dispatch(
+      addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
+    )
   }
 
   return (
@@ -128,7 +141,6 @@ export const PackList = () => {
           <div className={style.column_title}>Search</div>
           <div>
             <SearchInput
-              disabled={isLoading}
               search={searchPackName}
               searchHandler={searchHandler}
               placeholder={'find pack'}
@@ -155,7 +167,7 @@ export const PackList = () => {
         </div>
       </div>
       <div className={style.mainTable}>
-        <BasicTable />
+        <PackListTable />
       </div>
       <PaginationBlock
         disabled={isLoading}
