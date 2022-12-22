@@ -8,7 +8,7 @@ import image404 from '../../../assets/images/404.svg'
 import s from './Error404.module.css'
 
 export const Error404 = () => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <Grid container justifyContent={'center'} alignItems={'center'} style={{ marginTop: '200px' }}>
