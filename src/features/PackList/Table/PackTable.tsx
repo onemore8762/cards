@@ -19,7 +19,7 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Pack/pack-api'
 import { deleteCardTC, sortCardsAC, updateCardTC } from '../Pack/pack-reducer'
-import { selectPackUserId, sortCard } from '../Pack/packSelectors'
+import { selectCardPackId, selectPackUserId, sortCard } from '../Pack/packSelectors'
 
 type packTablePropsType = {
   cardsList: Cards[]
@@ -32,7 +32,6 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
   const packId = useAppSelector(selectCardPackId)
-
 
   const handelSortTable = () => {
     dispatch(sortCardsAC())
