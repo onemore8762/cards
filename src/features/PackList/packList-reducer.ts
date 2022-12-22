@@ -32,12 +32,6 @@ export const packListReducer = (
         minCardsCount: action.packs.minCardsCount,
         cardPacksTotalCount: action.packs.cardPacksTotalCount,
       }
-    case 'PACKLIST/SORT_PACKS':
-      if (state.sortPacks === '0updated') {
-        return { ...state, sortPacks: '1updated' }
-      } else {
-        return { ...state, sortPacks: '0updated' }
-      }
     case 'PACKLIST/UPDATE_PACK':
       return { ...state, ...action.payload }
     default:
@@ -49,14 +43,14 @@ export const packListReducer = (
 
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
-export const sortPacksAC = () => ({ type: 'PACKLIST/SORT_PACKS' } as const)
-// -------------------------------------------------------------------
 export const setUpdatePack = (payload: UpdatePack) =>
   ({ type: 'PACKLIST/UPDATE_PACK', payload } as const)
 
 // thunk
-export const getPacksTC = (isMyQuery?: boolean): AppThunkType => {
-  return (dispatch, getState) => {
+
+export const getPacksTC =
+  (isMyQuery?: boolean): AppThunkType =>
+  async (dispatch, getState) => {
     const { sortPacks, page, pageCount, packName, isMy, max, min } = getState().packList
     const { _id } = getState().profile
 
@@ -65,50 +59,55 @@ export const getPacksTC = (isMyQuery?: boolean): AppThunkType => {
     if (isMy || isMyQuery) {
       user_id = _id
     }
-    dispatch(setUpdatePack({ isLoading: true }))
-    packListApi
-      .getPacks({ sortPacks, user_id, max, min, page, pageCount, packName })
-      .then(res => {
-        dispatch(setPacksAC(res.data))
-        dispatch(
-          setUpdatePack({
-            isLoading: false,
-          })
-        )
-      })
-      .finally(() => {
-        dispatch(setUpdatePack({ initialize: true }))
-      })
-  }
-}
 
-export const addPacksTC = (cardsPack: newPack): AppThunkType => {
-  return dispatch => {
+    dispatch(setUpdatePack({ isLoading: true }))
+
+    try {
+      let promise = await packListApi.getPacks({
+        sortPacks,
+        page,
+        user_id,
+        max,
+        min,
+        pageCount,
+        packName,
+      })
+
+      dispatch(setPacksAC(promise.data))
+    } catch (error) {
+      console.log(error) // Сделать обработчик
+    } finally {
+      dispatch(setUpdatePack({ isLoading: false }))
+      dispatch(setUpdatePack({ initialize: true }))
+    }
+  }
+
+export const addPacksTC =
+  (cardsPack: newPack): AppThunkType =>
+  dispatch => {
     packListApi.addPacks(cardsPack).then(() => {
       dispatch(getPacksTC())
     })
   }
-}
-export const updatePacksTC = (cardsPack: newPack): AppThunkType => {
-  return dispatch => {
+
+export const updatePacksTC =
+  (cardsPack: newPack): AppThunkType =>
+  dispatch => {
     packListApi.update(cardsPack).then(() => {
       dispatch(getPacksTC())
     })
   }
-}
-export const deletePacksTC = (idPacks: string): AppThunkType => {
-  return dispatch => {
+
+export const deletePacksTC =
+  (idPacks: string): AppThunkType =>
+  dispatch => {
     packListApi.delete(idPacks).then(() => {
       dispatch(getPacksTC())
     })
   }
-}
 
 // types
-export type PackListActionType =
-  | ReturnType<typeof setPacksAC>
-  | ReturnType<typeof sortPacksAC>
-  | ReturnType<typeof setUpdatePack>
+export type PackListActionType = ReturnType<typeof setPacksAC> | ReturnType<typeof setUpdatePack>
 
 export type PackListInitialStateType = {
   initialize: boolean

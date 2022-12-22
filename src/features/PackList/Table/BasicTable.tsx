@@ -12,26 +12,40 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { setCardPackIdAC } from '../Pack/pack-reducer'
-import { deletePacksTC, getPacksTC, sortPacksAC, updatePacksTC } from '../packList-reducer'
-import { selectIsLoading, selectPackList, selectSortPacks } from '../packListSelectors'
+import { deletePacksTC, setUpdatePack, updatePacksTC } from '../packList-reducer'
+import {
+  selectPackListIsLoading,
+  selectPackList,
+  selectPackListSortPacks,
+} from '../packListSelectors'
 
 export const BasicTable = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const userId = useAppSelector(selectProfileUserId)
   const packList = useAppSelector(selectPackList)
-  const isLoading = useAppSelector(selectIsLoading)
-  const sort = useAppSelector(selectSortPacks)
+  const isLoading = useAppSelector(selectPackListIsLoading)
+  const sort = useAppSelector(selectPackListSortPacks)
 
   const handelSortTable = () => {
-    dispatch(sortPacksAC())
+    if (sort === '0updated') {
+      dispatch(setUpdatePack({ sortPacks: '1updated' }))
+      searchParams.set('sortPacks', '1updated')
+      setSearchParams(searchParams)
+    } else {
+      dispatch(setUpdatePack({ sortPacks: '0updated' }))
+      searchParams.set('sortPacks', '0updated')
+      setSearchParams(searchParams)
+    }
   }
 
   const handleUpdatePacks = (idPacks: string) => {
@@ -61,6 +75,7 @@ export const BasicTable = () => {
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
                 onClick={handelSortTable}
+                disabled={isLoading}
               >
                 Last Updated
               </TableSortLabel>

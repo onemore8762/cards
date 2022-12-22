@@ -27,7 +27,6 @@ export type getPacksParamsType = {
   pageCount?: number // не обязательно
   user_id?: string | null
   // чьи колоды не обязательно, или придут все
-
   block?: boolean // не обязательно
   // если вас кто то забанил. То с помощью
   // данного параметра можно увидеть свои колоды
