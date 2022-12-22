@@ -26,7 +26,7 @@ import {
   selectPackListSortPacks,
 } from '../packListSelectors'
 
-export const BasicTable = () => {
+export const PackListTable = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()

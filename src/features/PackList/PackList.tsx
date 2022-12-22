@@ -29,14 +29,14 @@ import {
   selectPackListSortPacks,
 } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
-import { BasicTable } from './Table/BasicTable'
+import { PackListTable } from './Table/PackListTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
   const initialize = useAppSelector(selectPackListInitialize)
   const isLoading = useAppSelector(selectPackListIsLoading)
   const searchPackName = useAppSelector(selectPackListSearchPack)
-  const debouncedSearchPack = useDebounce<string>(searchPackName, 1000)
+  const debouncedSearchPack = useDebounce<string>(searchPackName, 500)
   const pageCount = useAppSelector(selectPackListPageCount)
   const page = useAppSelector(selectPackListPage)
   const maxPage = useAppSelector(selectPackListCardPacksTotalCount)
@@ -96,7 +96,7 @@ export const PackList = () => {
   if (!initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUpdatePack({ packName: e.currentTarget.value }))
+    dispatch(setUpdatePack({ packName: e.currentTarget.value, isLoading: true }))
     searchParams.set('packName', e.currentTarget.value)
   }
 
@@ -141,7 +141,6 @@ export const PackList = () => {
           <div className={style.column_title}>Search</div>
           <div>
             <SearchInput
-              disabled={isLoading}
               search={searchPackName}
               searchHandler={searchHandler}
               placeholder={'find pack'}
@@ -168,7 +167,7 @@ export const PackList = () => {
         </div>
       </div>
       <div className={style.mainTable}>
-        <BasicTable />
+        <PackListTable />
       </div>
       <PaginationBlock
         disabled={isLoading}

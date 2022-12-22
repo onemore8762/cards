@@ -5,7 +5,7 @@ import { TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 
 type Props = {
-  disabled: boolean
+  disabled?: boolean
   search: string | null
   searchHandler: (e: ChangeEvent<HTMLInputElement>) => void
   placeholder?: string

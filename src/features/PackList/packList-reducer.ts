@@ -46,41 +46,36 @@ export const setPacksAC = (packs: GetPacksResponseType) =>
 export const setUpdatePack = (payload: UpdatePack) =>
   ({ type: 'PACKLIST/UPDATE_PACK', payload } as const)
 
-// thunk
+// thunks
+export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
+  const { sortPacks, page, pageCount, packName, isMy, max, min } = getState().packList
+  const { _id } = getState().profile
 
-export const getPacksTC =
-  (isMyQuery?: boolean): AppThunkType =>
-  async (dispatch, getState) => {
-    const { sortPacks, page, pageCount, packName, isMy, max, min } = getState().packList
-    const { _id } = getState().profile
+  let user_id
 
-    let user_id
+  isMy && (user_id = _id)
 
-    if (isMy || isMyQuery) {
-      user_id = _id
-    }
+  dispatch(setUpdatePack({ isLoading: true }))
 
-    dispatch(setUpdatePack({ isLoading: true }))
+  try {
+    let promise = await packListApi.getPacks({
+      sortPacks,
+      page,
+      pageCount,
+      packName,
+      max,
+      min,
+      user_id,
+    })
 
-    try {
-      let promise = await packListApi.getPacks({
-        sortPacks,
-        page,
-        user_id,
-        max,
-        min,
-        pageCount,
-        packName,
-      })
-
-      dispatch(setPacksAC(promise.data))
-    } catch (error) {
-      console.log(error) // Сделать обработчик
-    } finally {
-      dispatch(setUpdatePack({ isLoading: false }))
-      dispatch(setUpdatePack({ initialize: true }))
-    }
+    dispatch(setPacksAC(promise.data))
+  } catch (error) {
+    console.log(error) // Сделать обработчик
+  } finally {
+    dispatch(setUpdatePack({ isLoading: false }))
+    dispatch(setUpdatePack({ initialize: true }))
   }
+}
 
 export const addPacksTC =
   (cardsPack: newPack): AppThunkType =>

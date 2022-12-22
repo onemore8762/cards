@@ -60,7 +60,6 @@ export const initializeAppTC = (): AppThunkType => dispatch => {
     .catch(e => {
       const error = e.response ? e.response.data.error : e.message + ', more details in the console'
 
-      console.log(error)
       dispatch(appSetErrorAC(error))
       dispatch(appSetStatusAC('failed'))
     })
