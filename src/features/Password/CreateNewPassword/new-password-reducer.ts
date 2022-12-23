@@ -27,7 +27,7 @@ export const setPasswordSuccess = (onSuccess: boolean) =>
 export const setPasswordError = (error: string) =>
   ({ type: 'NEW_PASSWORD/SET_ERROR', error } as const)
 
-// thunk
+// thunks
 export const setNewPassword =
   (data: SetPasswordType): AppThunkType =>
   dispatch => {

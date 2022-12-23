@@ -8,20 +8,6 @@ import { loginApi, LoginParamsType } from './login-api'
 const initialState: LoginInitialStateType = {
   isLoggedIn: false,
   error: '',
-
-  // profile: {
-  //   _id: null,
-  //   email: null,
-  //   name: null,
-  //   // avatar: null,
-  //   publicCardPacksCount: 0, // количество колод
-  //
-  //   // created: null,
-  //   // updated: null,
-  //   isAdmin: false,
-  //   verified: false, // подтвердил ли почту
-  //   rememberMe: false,
-  // },
 }
 
 // reducer
@@ -39,15 +25,6 @@ export const loginReducer = (
     case 'LOGIN/SET_ERROR': {
       return { ...state, error: action.error }
     }
-    // case 'SET_USER_DATA': {
-    //   return {
-    //     ...state,
-    //     profile: { ...state.profile, _id: action._id, email: action.email, name: action.name },
-    //   }
-    // }
-    // case 'UPDATE_USER_DATA': {
-    //   return { ...state, profile: { ...state.profile, name: action.name } }
-    // }
     default:
       return state
   }
@@ -56,12 +33,8 @@ export const loginReducer = (
 // actions
 export const loginAC = (isLoggedIn: boolean) => ({ type: 'LOGIN/SET_LOGIN', isLoggedIn } as const)
 export const setErrorAC = (error: string) => ({ type: 'LOGIN/SET_ERROR', error } as const)
-// export const setUserDataAC = (_id: string | null, email: string | null, name: string | null) =>
-//   ({ type: 'SET_USER_DATA', _id, email, name } as const)
-// export const updateUserDataAC = (name: string | null) =>
-//   ({ type: 'UPDATE_USER_DATA', name } as const)
 
-// thunk
+// thunks
 export const loginTC =
   (data: LoginParamsType): AppThunkType =>
   dispatch => {
@@ -74,12 +47,6 @@ export const loginTC =
         dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
-        // const error = e.response
-        //   ? e.response.data.error
-        //   : e.message + ', more details in the console'
-        //
-        // dispatch(setErrorAC(error))
-        // dispatch(appSetStatusAC('failed'))
         handleServerNetworkError(e, dispatch)
       })
   }
@@ -93,100 +60,14 @@ export const logoutTC = (): AppThunkType => dispatch => {
       dispatch(appSetStatusAC('succeeded'))
     })
     .catch(e => {
-      // const error = e.response ? e.response.data.error : e.message + ', more details in the console'
-      //
-      // dispatch(setErrorAC(error))
-      // dispatch(appSetStatusAC('failed'))
       handleServerNetworkError(e, dispatch)
     })
 }
-
-// export const setUserDataTC = (): AppThunkType => {
-//   return (dispatch: Dispatch) => {
-//     loginApi
-//       .authMe()
-//       .then(res => {
-//         let {
-//           _id,
-//           email,
-//           name,
-//           // avatar,
-//           // publicCardPacksCount,
-//           // created,
-//           // updated,
-//           // isAdmin,
-//           // verified,
-//           // rememberMe,
-//           // error,
-//         } = res.data
-//
-//         dispatch(
-//           setUserDataAC(
-//             _id,
-//             email,
-//             name
-//             // avatar,
-//             // publicCardPacksCount,
-//             // created,
-//             // updated,
-//             // isAdmin,
-//             // verified,
-//             // rememberMe
-//             // error
-//           )
-//         )
-//         // console.log(res.data)
-//       })
-//       .catch(e => {
-//         const error = e.response
-//           ? e.response.data.error
-//           : e.message + ', more details in the console'
-//
-//         console.log(error)
-//       })
-//   }
-// }
-
-// export const updateUserDataTC = (name: string): AppThunkType => {
-//   return (dispatch: Dispatch) => {
-//     dispatch(appSetStatusAC('loading'))
-//     loginApi
-//       .updateUserData(name)
-//       .then(res => {
-//         dispatch(updateUserDataAC(name))
-//         dispatch(appSetStatusAC('succeeded'))
-//       })
-//       .catch(e => {
-//         const error = e.response
-//           ? e.response.data.error
-//           : e.message + ', more details in the console'
-//
-//         console.log(error)
-//         dispatch(setErrorAC(error))
-//         dispatch(appSetStatusAC('failed'))
-//       })
-//   }
-// }
 
 // types
 export type LoginInitialStateType = {
   isLoggedIn: boolean
   error: string
-  // profile: {
-  //   _id: null | string
-  //   email: null | string
-  //   name: null | string
-  //   // avatar?: null,
-  //   publicCardPacksCount: number // количество колод
-  //
-  //   // created: Date,
-  //   // updated: Date,
-  //   isAdmin: boolean
-  //   verified: boolean // подтвердил ли почту
-  //   rememberMe: boolean
-  // }
 }
 
 export type LoginActionType = ReturnType<typeof loginAC> | ReturnType<typeof setErrorAC>
-// | ReturnType<typeof setUserDataAC>
-// | ReturnType<typeof updateUserDataAC>

@@ -18,12 +18,12 @@ import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { deletePacksTC, setUpdatePack, updatePacksTC } from '../packList-reducer'
+import { deletePacksTC, setUpdatePack, updatePacksTC } from '../PackList/packList-reducer'
 import {
   selectPackList,
   selectPackListIsLoading,
   selectPackListSortPacks,
-} from '../packListSelectors'
+} from '../PackList/packListSelectors'
 
 export const PackListTable = () => {
   const dispatch = useAppDispatch()

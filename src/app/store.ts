@@ -2,8 +2,8 @@ import { applyMiddleware, combineReducers, legacy_createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { LoginActionType, loginReducer } from '../features/Login/login-reducer'
-import { PackActionType, packReducer } from '../features/PackList/Pack/pack-reducer'
-import { PackListActionType, packListReducer } from '../features/PackList/packList-reducer'
+import { PackActionType, packReducer } from '../features/Packs/Pack/pack-reducer'
+import { PackListActionType, packListReducer } from '../features/Packs/PackList/packList-reducer'
 import {
   NewPasswordActionType,
   newPasswordReducer,

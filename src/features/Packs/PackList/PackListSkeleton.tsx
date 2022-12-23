@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Skeleton } from '@mui/material'
 
-import { PageTitle } from '../../common/components/PageTitle/PageTitle'
+import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 
 import style from './PackList.module.css'
 

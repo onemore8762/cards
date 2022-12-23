@@ -41,7 +41,7 @@ export const setIsLoggedIn = (isLoggedIn: boolean) =>
 export const setErrors = (errors: TypeError) =>
   ({ type: 'REGISTRATION/SET_ERRORS', payload: errors } as const)
 
-// thunk
+// thunks
 export const registrationUser =
   (data: UserData): AppThunkType =>
   async dispatch => {

@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import { useSearchParams } from 'react-router-dom'
 
-import { setUpdatePack } from '../../../features/PackList/packList-reducer'
-import style from '../../../features/PackList/PackList.module.css'
+import { setUpdatePack } from '../../../features/Packs/PackList/packList-reducer'
+import style from '../../../features/Packs/PackList/PackList.module.css'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 

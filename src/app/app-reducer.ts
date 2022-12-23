@@ -1,3 +1,4 @@
+import { handleServerNetworkError } from '../common/utils/errorUtils/errorUtils'
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 import { setUserDataAC } from '../features/Profile/profile-reducer'
@@ -49,7 +50,7 @@ export const appSetInitializedAC = (isInitialized: boolean) =>
     isInitialized,
   } as const)
 
-// thunk
+// thunks
 export const initializeAppTC = (): AppThunkType => dispatch => {
   loginApi
     .authMe()
@@ -58,10 +59,7 @@ export const initializeAppTC = (): AppThunkType => dispatch => {
       dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
     })
     .catch(e => {
-      const error = e.response ? e.response.data.error : e.message + ', more details in the console'
-
-      dispatch(appSetErrorAC(error))
-      dispatch(appSetStatusAC('failed'))
+      handleServerNetworkError(e, dispatch)
     })
     .finally(() => {
       dispatch(appSetInitializedAC(true))

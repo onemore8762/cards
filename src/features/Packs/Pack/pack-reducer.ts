@@ -1,4 +1,5 @@
 import { AppThunkType } from '../../../app/store'
+import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
 
 import { AddCardType, Cards, packApi, ResponseGetCardsType, UpdateCardType } from './pack-api'
 
@@ -61,7 +62,7 @@ export const sortCardsAC = () => ({ type: 'PACKS/SORT_CARDS' } as const)
 export const setUpdateCardsAC = (payload: UpdateCardsType) =>
   ({ type: 'PACKS/UPDATE_CARDS', payload } as const)
 
-// thunk
+// thunks
 export const getCardsListTC = (): AppThunkType => {
   return (dispatch, getState) => {
     const { cardQuestion, page, pageCount, sortCards, packId } = getState().pack
@@ -82,25 +83,40 @@ export const getCardsListTC = (): AppThunkType => {
 export const addCardTC =
   (card: AddCardType): AppThunkType =>
   dispatch => {
-    packApi.addCard(card).then(() => {
-      dispatch(getCardsListTC())
-    })
+    packApi
+      .addCard(card)
+      .then(() => {
+        dispatch(getCardsListTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 export const updateCardTC =
   (card: UpdateCardType): AppThunkType =>
   dispatch => {
-    packApi.updateCard(card).then(() => {
-      dispatch(getCardsListTC())
-    })
+    packApi
+      .updateCard(card)
+      .then(() => {
+        dispatch(getCardsListTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 export const deleteCardTC =
   (idCard: string): AppThunkType =>
   dispatch => {
-    packApi.deleteCard(idCard).then(() => {
-      dispatch(getCardsListTC())
-    })
+    packApi
+      .deleteCard(idCard)
+      .then(() => {
+        dispatch(getCardsListTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 // types

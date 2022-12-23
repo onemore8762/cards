@@ -5,14 +5,15 @@ import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
-import { FilterShow } from '../../common/components/FilterShow/FilterShow'
-import { PageTitle } from '../../common/components/PageTitle/PageTitle'
-import { PaginationBlock } from '../../common/components/Pagination/PaginationBlock'
-import { RangeSlider } from '../../common/components/RangeSlider/RangeSlider'
-import { SearchInput } from '../../common/components/SearchInput/SearchInput'
-import { useAppDispatch } from '../../common/hooks/useAppDispatch'
-import { useAppSelector } from '../../common/hooks/useAppSelector'
-import { useDebounce } from '../../common/hooks/useDebounce'
+import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
+import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
+import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
+import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
+import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { useDebounce } from '../../../common/hooks/useDebounce'
+import { PackListTable } from '../Table/PackListTable'
 
 import { addPacksTC, getPacksTC, setUpdatePack } from './packList-reducer'
 import style from './PackList.module.css'
@@ -29,7 +30,6 @@ import {
   selectPackListSortPacks,
 } from './packListSelectors'
 import { PackListSkeleton } from './PackListSkeleton'
-import { PackListTable } from './Table/PackListTable'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()

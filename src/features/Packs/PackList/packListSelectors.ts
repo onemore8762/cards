@@ -1,4 +1,4 @@
-import { AppRootStateType } from '../../app/store'
+import { AppRootStateType } from '../../../app/store'
 
 type T = AppRootStateType
 export const selectPackListInitialize = (state: T) => state.packList.initialize

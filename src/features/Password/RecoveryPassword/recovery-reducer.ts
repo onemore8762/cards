@@ -21,11 +21,11 @@ export const recoveryReducer = (
   }
 }
 
-//actions
+// actions
 export const recoveryAC = (error: string, success: boolean) =>
   ({ type: 'RECOVERY/RECOVERY_PASSWORD', error, success } as const)
 
-//thunk
+// thunks
 export const recoveryTC =
   (email: string): AppThunkType =>
   dispatch => {
@@ -40,7 +40,7 @@ export const recoveryTC =
       })
   }
 
-//types
+// types
 export type RecoveryStateType = {
   error: string
   success: boolean

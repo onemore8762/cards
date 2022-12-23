@@ -3,8 +3,8 @@ import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
-import { setUpdatePack } from '../../../features/PackList/packList-reducer'
-import { selectPackListIsMy } from '../../../features/PackList/packListSelectors'
+import { setUpdatePack } from '../../../features/Packs/PackList/packList-reducer'
+import { selectPackListIsMy } from '../../../features/Packs/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 

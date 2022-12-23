@@ -1,4 +1,5 @@
-import { AppThunkType } from '../../app/store'
+import { AppThunkType } from '../../../app/store'
+import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
 
 import { GetPacksResponseType, newPack, packListApi, PacksType } from './packList-api'
 
@@ -79,25 +80,40 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
 export const addPacksTC =
   (cardsPack: newPack): AppThunkType =>
   dispatch => {
-    packListApi.addPacks(cardsPack).then(() => {
-      dispatch(getPacksTC())
-    })
+    packListApi
+      .addPacks(cardsPack)
+      .then(() => {
+        dispatch(getPacksTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 export const updatePacksTC =
   (cardsPack: newPack): AppThunkType =>
   dispatch => {
-    packListApi.update(cardsPack).then(() => {
-      dispatch(getPacksTC())
-    })
+    packListApi
+      .update(cardsPack)
+      .then(() => {
+        dispatch(getPacksTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 export const deletePacksTC =
   (idPacks: string): AppThunkType =>
   dispatch => {
-    packListApi.delete(idPacks).then(() => {
-      dispatch(getPacksTC())
-    })
+    packListApi
+      .delete(idPacks)
+      .then(() => {
+        dispatch(getPacksTC())
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 // types

@@ -20,7 +20,7 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import style from '../PackList.module.css'
+import style from '../PackList/PackList.module.css'
 import { PackTable } from '../Table/PackTable'
 
 import { addCardTC, getCardsListTC, setUpdateCardsAC } from './pack-reducer'
@@ -233,7 +233,9 @@ export const Pack = () => {
             />
           </div>
         </div>
-        <PackTable cardsList={cardList} isLoading={isLoading} />
+        <div className={s.mainTable}>
+          <PackTable cardsList={cardList} isLoading={isLoading} />
+        </div>
         <PaginationBlock
           disabled={isLoading}
           page={page}
