@@ -50,6 +50,7 @@ export const Pack = () => {
   const pageCount = useAppSelector(selectCardsPageCount)
   const page = useAppSelector(selectCardsPage)
   const maxPage = useAppSelector(selectCardsTotalCount)
+  const initialize = useAppSelector(state => state.pack.initialize)
 
   const sort = useAppSelector(sortCard)
 
@@ -69,16 +70,18 @@ export const Pack = () => {
   }
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //dispatch(setSearchQuestionAC(e.currentTarget.value))
     dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
     setInputValue(e.currentTarget.value)
-
-    searchParams.set('cardQuestion', e.currentTarget.value)
-    setSearchParams(searchParams)
+    if (e.currentTarget.value !== '') {
+      searchParams.set('cardQuestion', e.currentTarget.value)
+    } else {
+      searchParams.delete('cardQuestion')
+    }
   }
 
   const clearSearchInputValueHandler = () => {
     dispatch(setUpdateCardsAC({ cardQuestion: '' }))
+    searchParams.delete('cardQuestion')
   }
 
   const handlerAddCard = () => {
@@ -86,43 +89,43 @@ export const Pack = () => {
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    //dispatch(setPageCountCardsAC(+event.target.value))
     dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
 
     searchParams.set('pageCount', event.target.value)
-    setSearchParams(searchParams)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    //dispatch(setPageCardsAC(value))
     dispatch(setUpdateCardsAC({ page: value }))
 
     searchParams.set('page', `${value}`)
-    setSearchParams(searchParams)
   }
 
   useEffect(() => {
-    dispatch(getCardsListTC(cardPackId))
-  }, [sort, pageCount, page])
-
-  useEffect(() => {
-    if (inputValue !== null) {
-      dispatch(getCardsListTC(cardPackId))
+    if (initialize) {
+      dispatch(getCardsListTC())
+      setSearchParams(searchParams)
     }
-  }, [debouncedSearchQuestion])
+  }, [sort, pageCount, page, debouncedSearchQuestion])
 
   useEffect(() => {
-    const object1 = Object.fromEntries(searchParams)
+    if (!initialize) {
+      const cardsQuery = Object.fromEntries(searchParams)
 
-    dispatch(
-      setUpdateCardsAC({
-        cardQuestion: object1['cardQuestion'] || '',
-        page: +object1['page'] || 1,
-        pageCount: +object1['pageCount'] || 4,
-      })
-    )
+      dispatch(
+        setUpdateCardsAC({
+          cardQuestion: cardsQuery['cardQuestion'] || '',
+          page: +cardsQuery['page'] || 1,
+          pageCount: +cardsQuery['pageCount'] || 4,
+          packId: params.packId,
+        })
+      )
 
-    dispatch(getCardsListTC(cardPackId || params.packId || ''))
+      dispatch(getCardsListTC())
+    }
+
+    return () => {
+      dispatch(setUpdateCardsAC({ initialize: false }))
+    }
   }, [])
 
   return (

@@ -4,6 +4,7 @@ let startState: PackInitialStateType
 
 beforeEach(() => {
   startState = {
+    initialize: false,
     isLoading: false,
     cardList: [],
     userId: '',

@@ -3,6 +3,7 @@ import { AppThunkType } from '../../../app/store'
 import { AddCardType, Cards, packApi, ResponseGetCardsType, UpdateCardType } from './pack-api'
 
 const initialState: PackInitialStateType = {
+  initialize: false,
   isLoading: false,
   cardList: [],
   userId: '',
@@ -59,10 +60,11 @@ export const setLoadingCardsAC = (value: boolean) => ({ type: 'PACKS/SET_LOADING
 export const sortCardsAC = () => ({ type: 'PACKS/SORT_CARDS' } as const)
 export const setUpdateCardsAC = (payload: UpdateCardsType) =>
   ({ type: 'PACKS/UPDATE_CARDS', payload } as const)
+
 // thunk
-export const getCardsListTC = (packId: string): AppThunkType => {
+export const getCardsListTC = (): AppThunkType => {
   return (dispatch, getState) => {
-    const { cardQuestion, page, pageCount, sortCards } = getState().pack
+    const { cardQuestion, page, pageCount, sortCards, packId } = getState().pack
 
     dispatch(setLoadingCardsAC(true))
     packApi
@@ -71,41 +73,39 @@ export const getCardsListTC = (packId: string): AppThunkType => {
         dispatch(setCardsListAC(packId, res.data))
       })
       .finally(() => {
+        dispatch(setUpdateCardsAC({ initialize: true }))
         dispatch(setLoadingCardsAC(false))
       })
   }
 }
 
-export const addCardTC = (card: AddCardType): AppThunkType => {
-  return (dispatch, getState) => {
-    const { packId } = getState().pack
-
+export const addCardTC =
+  (card: AddCardType): AppThunkType =>
+  dispatch => {
     packApi.addCard(card).then(() => {
-      dispatch(getCardsListTC(packId))
+      dispatch(getCardsListTC())
     })
   }
-}
-export const updateCardTC = (card: UpdateCardType): AppThunkType => {
-  return (dispatch, getState) => {
-    const { packId } = getState().pack
 
+export const updateCardTC =
+  (card: UpdateCardType): AppThunkType =>
+  dispatch => {
     packApi.updateCard(card).then(() => {
-      dispatch(getCardsListTC(packId))
+      dispatch(getCardsListTC())
     })
   }
-}
-export const deleteCardTC = (idCard: string): AppThunkType => {
-  return (dispatch, getState) => {
-    const { packId } = getState().pack
 
+export const deleteCardTC =
+  (idCard: string): AppThunkType =>
+  dispatch => {
     packApi.deleteCard(idCard).then(() => {
-      dispatch(getCardsListTC(packId))
+      dispatch(getCardsListTC())
     })
   }
-}
 
 // types
 export type PackInitialStateType = {
+  initialize: boolean
   isLoading: boolean
   cardList: Array<Cards>
   userId: string
@@ -122,10 +122,7 @@ export type UpdateCardsType = Partial<PackInitialStateType>
 
 export type PackActionType =
   | ReturnType<typeof setCardsListAC>
-  // | ReturnType<typeof setSearchQuestionAC>
   | ReturnType<typeof setCardPackIdAC>
-  // | ReturnType<typeof setPageCardsAC>
-  // | ReturnType<typeof setPageCountCardsAC>
   | ReturnType<typeof setLoadingCardsAC>
   | ReturnType<typeof sortCardsAC>
   | ReturnType<typeof setUpdateCardsAC>

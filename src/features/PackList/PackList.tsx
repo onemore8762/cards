@@ -14,7 +14,6 @@ import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { useDebounce } from '../../common/hooks/useDebounce'
 
-import { setUpdateCardsAC } from './Pack/pack-reducer'
 import { addPacksTC, getPacksTC, setUpdatePack } from './packList-reducer'
 import style from './PackList.module.css'
 import {
@@ -62,7 +61,7 @@ export const PackList = () => {
       let pageCountQuery = Number(searchParams.get('pageCount') || 4)
       let pageQuery = Number(searchParams.get('page') || 1)
       let questionQuery = searchParams.get('packName') || ''
-      let sortPackQuery = (searchParams.get('sortPack') as '0updated' | '1updated') || '1update'
+      let sortPackQuery = (searchParams.get('sortPack') as '0updated' | '1updated') || '0updated'
 
       dispatch(
         setUpdatePack({
@@ -111,6 +110,7 @@ export const PackList = () => {
 
   const clearSearchInputValueHandler = () => {
     dispatch(setUpdatePack({ packName: '' }))
+    searchParams.delete('packName')
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {

@@ -5,10 +5,6 @@ import SearchIcon from '@mui/icons-material/Search'
 import { TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 
-import { setUpdateCardsAC } from '../../../features/PackList/Pack/pack-reducer'
-import { setUpdatePack } from '../../../features/PackList/packList-reducer'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
-
 type Props = {
   disabled?: boolean
   search: string | null
