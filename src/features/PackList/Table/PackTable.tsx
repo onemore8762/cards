@@ -71,11 +71,15 @@ export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
         <TableBody>
           {cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                <SkeletonComponent isLoading={isLoading}>{row.question}</SkeletonComponent>{' '}
+              <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
+                <SkeletonComponent isLoading={isLoading}>
+                  {row.question.length >= 30 ? row.question.slice(0, 29) + '...' : row.question}
+                </SkeletonComponent>{' '}
               </TableCell>
-              <TableCell>
-                <SkeletonComponent isLoading={isLoading}>{row.answer}</SkeletonComponent>
+              <TableCell sx={{ maxWidth: '250px' }}>
+                <SkeletonComponent isLoading={isLoading}>
+                  {row.answer.length >= 30 ? row.answer.slice(0, 29) + '...' : row.answer}
+                </SkeletonComponent>
               </TableCell>
               <TableCell>
                 <SkeletonComponent isLoading={isLoading}>

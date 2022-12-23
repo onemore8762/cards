@@ -90,10 +90,10 @@ export const PackListTable = () => {
           {packList.map(row => {
             return (
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                   <SkeletonComponent isLoading={isLoading}>
                     <Button onClick={() => handelGoCard(row._id)} sx={{ color: 'black' }}>
-                      {row.name}
+                      {row.name.length >= 30 ? row.name.slice(0, 29) + '...' : row.name}
                     </Button>
                   </SkeletonComponent>
                 </TableCell>
