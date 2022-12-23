@@ -25,7 +25,6 @@ export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
       searchParams.delete('max')
       searchParams.delete('page')
       searchParams.delete('pageCount')
-      searchParams.delete('packName')
       setSearchParams(searchParams)
     }
   }

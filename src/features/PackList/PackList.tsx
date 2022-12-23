@@ -80,13 +80,17 @@ export const PackList = () => {
   }, [])
 
   const filterDefault = () => {
-    setSearchParams('')
+    searchParams.delete('isMy')
+    searchParams.delete('min')
+    searchParams.delete('max')
+    searchParams.delete('page')
+    searchParams.delete('pageCount')
+    setSearchParams(searchParams)
     dispatch(
       setUpdatePack({
         min: null,
         max: null,
         isMy: false,
-        packName: '',
         page: 1,
         pageCount: 4,
         sortPacks: '0updated',
@@ -98,7 +102,11 @@ export const PackList = () => {
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setUpdatePack({ packName: e.currentTarget.value, isLoading: true }))
-    searchParams.set('packName', e.currentTarget.value)
+    if (e.currentTarget.value !== '') {
+      searchParams.set('packName', e.currentTarget.value)
+    } else {
+      searchParams.delete('packName')
+    }
   }
 
   const clearSearchInputValueHandler = () => {
