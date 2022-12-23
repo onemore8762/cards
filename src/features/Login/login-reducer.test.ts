@@ -21,3 +21,5 @@ test('error should be set', () => {
 
   expect(endState.error).toBe(newError)
 })
+
+// export default ()=> {}
