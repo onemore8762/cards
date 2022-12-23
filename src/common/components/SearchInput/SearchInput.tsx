@@ -24,10 +24,6 @@ export const SearchInput: React.FC<Props> = ({
   sx,
   clearInputValue,
 }) => {
-  const clearSearchFieldHandler = () => {
-    clearInputValue()
-  }
-
   return (
     <div>
       <TextField
@@ -49,7 +45,7 @@ export const SearchInput: React.FC<Props> = ({
           ),
           endAdornment: (
             <InputAdornment position="end" style={{ cursor: 'pointer' }}>
-              <ClearIcon onClick={clearSearchFieldHandler} />
+              <ClearIcon onClick={() => clearInputValue()} />
             </InputAdornment>
           ),
         }}

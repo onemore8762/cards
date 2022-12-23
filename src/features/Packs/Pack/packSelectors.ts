@@ -9,4 +9,5 @@ export const selectCardQuestion = (state: AppRootStateType) => state.pack.cardQu
 export const selectCardsPageCount = (state: AppRootStateType) => state.pack.pageCount
 export const selectCardsPage = (state: AppRootStateType) => state.pack.page
 export const selectCardsTotalCount = (state: AppRootStateType) => state.pack.cardsTotalCount
-export const sortCard = (state: AppRootStateType) => state.pack.sortCards
+export const selectSortCard = (state: AppRootStateType) => state.pack.sortCards
+export const selectInitialize = (state: AppRootStateType) => state.pack.initialize

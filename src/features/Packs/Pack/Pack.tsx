@@ -34,8 +34,9 @@ import {
   selectCardsPage,
   selectCardsPageCount,
   selectCardsTotalCount,
+  selectInitialize,
   selectPackUserId,
-  sortCard,
+  selectSortCard,
 } from './packSelectors'
 
 export const Pack = () => {
@@ -50,9 +51,8 @@ export const Pack = () => {
   const pageCount = useAppSelector(selectCardsPageCount)
   const page = useAppSelector(selectCardsPage)
   const maxPage = useAppSelector(selectCardsTotalCount)
-  const initialize = useAppSelector(state => state.pack.initialize)
-
-  const sort = useAppSelector(sortCard)
+  const initialize = useAppSelector(selectInitialize)
+  const sort = useAppSelector(selectSortCard)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const [inputValue, setInputValue] = useState<string | null>(null)
