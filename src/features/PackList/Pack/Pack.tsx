@@ -77,6 +77,10 @@ export const Pack = () => {
     setSearchParams(searchParams)
   }
 
+  const clearSearchInputValueHandler = () => {
+    dispatch(setUpdateCardsAC({ cardQuestion: '' }))
+  }
+
   const handlerAddCard = () => {
     dispatch(addCardTC({ cardsPack_id: cardPackId }))
   }
@@ -208,6 +212,7 @@ export const Pack = () => {
               searchHandler={searchHandler}
               placeholder={'find question'}
               sx={{ width: '100%' }}
+              clearInputValue={clearSearchInputValueHandler}
             />
           </div>
         </div>

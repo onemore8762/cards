@@ -1,8 +1,13 @@
 import React, { ChangeEvent } from 'react'
 
+import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 import { TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
+
+import { setUpdateCardsAC } from '../../../features/PackList/Pack/pack-reducer'
+import { setUpdatePack } from '../../../features/PackList/packList-reducer'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 type Props = {
   disabled?: boolean
@@ -12,6 +17,7 @@ type Props = {
   sx?: {
     width: string
   }
+  clearInputValue: () => void
 }
 
 export const SearchInput: React.FC<Props> = ({
@@ -20,7 +26,12 @@ export const SearchInput: React.FC<Props> = ({
   searchHandler,
   placeholder,
   sx,
+  clearInputValue,
 }) => {
+  const clearSearchFieldHandler = () => {
+    clearInputValue()
+  }
+
   return (
     <div>
       <TextField
@@ -38,6 +49,11 @@ export const SearchInput: React.FC<Props> = ({
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end" style={{ cursor: 'pointer' }}>
+              <ClearIcon onClick={clearSearchFieldHandler} />
             </InputAdornment>
           ),
         }}
