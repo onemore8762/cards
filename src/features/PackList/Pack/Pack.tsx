@@ -175,7 +175,7 @@ export const Pack = () => {
           <div className={style.addNewPackBtn}>
             {userId === createdId ? (
               <Button
-                // disabled={isLoading}
+                disabled={isLoading}
                 onClick={handlerAddCard}
                 type={'submit'}
                 variant={'contained'}
