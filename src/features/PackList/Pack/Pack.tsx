@@ -4,7 +4,7 @@ import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Grid, IconButton } from '@mui/material'
+import { Grid, IconButton, Skeleton } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -50,6 +50,7 @@ export const Pack = () => {
   const pageCount = useAppSelector(selectCardsPageCount)
   const page = useAppSelector(selectCardsPage)
   const maxPage = useAppSelector(selectCardsTotalCount)
+  const initialize = useAppSelector(state => state.pack.initialize)
 
   const sort = useAppSelector(sortCard)
 
@@ -69,16 +70,18 @@ export const Pack = () => {
   }
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //dispatch(setSearchQuestionAC(e.currentTarget.value))
     dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
     setInputValue(e.currentTarget.value)
-
-    searchParams.set('cardQuestion', e.currentTarget.value)
-    setSearchParams(searchParams)
+    if (e.currentTarget.value !== '') {
+      searchParams.set('cardQuestion', e.currentTarget.value)
+    } else {
+      searchParams.delete('cardQuestion')
+    }
   }
 
   const clearSearchInputValueHandler = () => {
     dispatch(setUpdateCardsAC({ cardQuestion: '' }))
+    searchParams.delete('cardQuestion')
   }
 
   const handlerAddCard = () => {
@@ -86,43 +89,43 @@ export const Pack = () => {
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    //dispatch(setPageCountCardsAC(+event.target.value))
     dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
 
     searchParams.set('pageCount', event.target.value)
-    setSearchParams(searchParams)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    //dispatch(setPageCardsAC(value))
     dispatch(setUpdateCardsAC({ page: value }))
 
     searchParams.set('page', `${value}`)
-    setSearchParams(searchParams)
   }
 
   useEffect(() => {
-    dispatch(getCardsListTC(cardPackId))
-  }, [sort, pageCount, page])
-
-  useEffect(() => {
-    if (inputValue !== null) {
-      dispatch(getCardsListTC(cardPackId))
+    if (initialize) {
+      dispatch(getCardsListTC())
+      setSearchParams(searchParams)
     }
-  }, [debouncedSearchQuestion])
+  }, [sort, pageCount, page, debouncedSearchQuestion])
 
   useEffect(() => {
-    const object1 = Object.fromEntries(searchParams)
+    if (!initialize) {
+      const cardsQuery = Object.fromEntries(searchParams)
 
-    dispatch(
-      setUpdateCardsAC({
-        cardQuestion: object1['cardQuestion'] || '',
-        page: +object1['page'] || 1,
-        pageCount: +object1['pageCount'] || 4,
-      })
-    )
+      dispatch(
+        setUpdateCardsAC({
+          cardQuestion: cardsQuery['cardQuestion'] || '',
+          page: +cardsQuery['page'] || 1,
+          pageCount: +cardsQuery['pageCount'] || 4,
+          packId: params.packId,
+        })
+      )
 
-    dispatch(getCardsListTC(cardPackId || params.packId || ''))
+      dispatch(getCardsListTC())
+    }
+
+    return () => {
+      dispatch(setUpdateCardsAC({ initialize: false }))
+    }
   }, [])
 
   return (
@@ -132,7 +135,13 @@ export const Pack = () => {
         <div className={style.header_row}>
           {userId === createdId ? (
             <Grid display="flex" alignItems="center">
-              <PageTitle title={packName} />
+              {initialize && <PageTitle title={packName} />}
+              {!initialize && (
+                <Skeleton
+                  animation="wave"
+                  sx={{ width: '200px', margin: '0', height: '40px' }}
+                ></Skeleton>
+              )}
               <IconButton onClick={handleOpenUserMenu}>
                 <MoreVertIcon
                   sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }}
@@ -169,7 +178,15 @@ export const Pack = () => {
               </Menu>
             </Grid>
           ) : (
-            <PageTitle title={packName} />
+            <>
+              {initialize && <PageTitle title={packName} />}
+              {!initialize && (
+                <Skeleton
+                  animation="wave"
+                  sx={{ width: '200px', margin: '0', height: '40px' }}
+                ></Skeleton>
+              )}
+            </>
           )}
 
           <div className={style.addNewPackBtn}>
