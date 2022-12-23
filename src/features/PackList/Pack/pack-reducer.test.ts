@@ -91,3 +91,5 @@ test('search input value (question) should be set to the state', () => {
 
   expect(endState.cardQuestion).toBe('react')
 })
+
+// export default ()=> {}
