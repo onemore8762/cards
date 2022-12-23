@@ -1,15 +1,8 @@
-import React from 'react'
-/*
 import {
   PackListInitialStateType,
   packListReducer,
-  setIsMyAC,
-  setMaxMinAC,
   setPacksAC,
-  setPageAC,
-  setPageCountAC,
   setUpdatePack,
-  sortPacksAC,
 } from './packList-reducer'
 
 let startState: PackListInitialStateType
@@ -31,57 +24,6 @@ beforeEach(() => {
     packName: '',
   }
 })
-
-test('packlist should be loaded', () => {
-  const endState = packListReducer(startState, setUpdatePack({ isLoading: false }))
-
-  expect(endState.isLoading).toBeTruthy()
-})
-
-test('something should be initialized', () => {
-  const endState = packListReducer(startState, setUpdatePack({ initialize: false }))
-
-  expect(endState.initialize).toBeTruthy()
-})
-test('packs should be initialized (SET_INITIALIZE_PACKS)', () => {
-  const actionObj = {
-    cardPacks: [
-      {
-        _id: '333',
-        user_id: '111',
-        user_name: 'Dan',
-        private: false,
-        name: 'pack name',
-        path: '/def',
-        grade: 0,
-        shots: 0,
-        cardsCount: 4,
-        type: 'pack',
-        rating: 5,
-        created: '2022-12-19T15:40:40.339Z',
-        updated: '2022-12-20T15:40:40.339Z',
-        more_id: '111',
-        __v: 1,
-      },
-    ],
-    page: 1,
-    pageCount: 4,
-    cardPacksTotalCount: 500,
-    minCardsCount: 10,
-    maxCardsCount: 20,
-    token: '00cc84e0-7fcd-11ed-b581-a36473125a03',
-    tokenDeathTime: 1672080197678,
-  }
-
-  const endState = packListReducer(startState, setInitializePacksAC(actionObj))
-
-  expect(endState.packList.length).toBe(1)
-  expect(endState.max).toBe(20)
-  expect(endState.min).toBe(10)
-  expect(endState.page).toBe(1)
-  expect(endState.pageCount).toBe(4)
-  expect(endState.cardPacksTotalCount).toBe(500)
-}) // Инициализация вырезана
 
 test('packs should be set to state (SET_PACKS)', () => {
   const actionObj = {
@@ -118,40 +60,53 @@ test('packs should be set to state (SET_PACKS)', () => {
   expect(endState.cardPacksTotalCount).toBe(200)
 })
 
-test('packs should be sorted to another', () => {
-  const endState = packListReducer(startState, sortPacksAC())
+test('pack should be updated (UPDATE_PACK)', () => {
+  const actionObj = {
+    isLoading: false,
+    initialize: true,
+    packs: {
+      cardPacks: [
+        {
+          _id: '63a219de736147000449500c',
+          cardsPack_id: '63a181a87361470004494fd5',
+          user_id: '6399d599fc64ea0004138804',
+          answer: 'no answer',
+          question: 'new question',
+          grade: 0,
+          shots: 0,
+          comments: '',
+          type: 'card',
+          rating: 0,
+          more_id: '6399d599fc64ea0004138804',
+          created: '2022-12-20T20:23:58.176Z',
+          updated: '2022-12-21T05:20:38.205Z',
+          __v: 0,
+          answerImg: '',
+          answerVideo: '',
+          questionImg: '',
+          questionVideo: '',
+        },
+      ],
+      page: 1,
+      pageCount: 4,
+      cardPacksTotalCount: 300,
+      minCardsCount: 1,
+      maxCardsCount: 100,
+      token: '486dfa30-82b2-11ed-99a9-8d13eeb74714',
+      tokenDeathTime: 1671804574931,
+    },
+    isMy: true,
+    min: 1,
+    max: 20,
+    page: 1,
+    pageCount: 4,
+    packName: 'My Pack',
+    sortPacks: '0updated',
+  }
 
-  expect(endState.sortPacks).toBe('1updated')
-})
-
-test('my packs should be loaded', () => {
-  const endState = packListReducer(startState, setIsMyAC(true))
+  const endState = packListReducer(startState, setUpdatePack({ isMy: true }))
 
   expect(endState.isMy).toBeTruthy()
 })
 
-test('number of cards should be set', () => {
-  const endState = packListReducer(startState, setMaxMinAC(10, 20))
-
-  expect(endState.min).toBe(10)
-  expect(endState.max).toBe(20)
-})
-
-test('number of page should be set', () => {
-  const endState = packListReducer(startState, setPageAC(1))
-
-  expect(endState.page).toBe(1)
-})
-
-test('number of page count should be set', () => {
-  const endState = packListReducer(startState, setPageCountAC(5))
-
-  expect(endState.pageCount).toBe(5)
-})
-
-// test('search title should be set to state', () => {
-//   const endState = packListReducer(startState, setSearchPackNameAC('find something'))
-//
-//   expect(endState.packName).toBe('find something')
-// })
-*/
+// export default ()=> {}

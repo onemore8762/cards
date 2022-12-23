@@ -40,7 +40,6 @@ export const packListReducer = (
 }
 
 // actions
-
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
 export const setUpdatePack = (payload: UpdatePack) =>
