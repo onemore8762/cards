@@ -4,7 +4,7 @@ import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Grid, IconButton } from '@mui/material'
+import { Grid, IconButton, Skeleton } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -135,7 +135,13 @@ export const Pack = () => {
         <div className={style.header_row}>
           {userId === createdId ? (
             <Grid display="flex" alignItems="center">
-              <PageTitle title={packName} />
+              {initialize && <PageTitle title={packName} />}
+              {!initialize && (
+                <Skeleton
+                  animation="wave"
+                  sx={{ width: '200px', margin: '0', height: '40px' }}
+                ></Skeleton>
+              )}
               <IconButton onClick={handleOpenUserMenu}>
                 <MoreVertIcon
                   sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }}
@@ -172,7 +178,15 @@ export const Pack = () => {
               </Menu>
             </Grid>
           ) : (
-            <PageTitle title={packName} />
+            <>
+              {initialize && <PageTitle title={packName} />}
+              {!initialize && (
+                <Skeleton
+                  animation="wave"
+                  sx={{ width: '200px', margin: '0', height: '40px' }}
+                ></Skeleton>
+              )}
+            </>
           )}
 
           <div className={style.addNewPackBtn}>
