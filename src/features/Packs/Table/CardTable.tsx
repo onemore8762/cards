@@ -16,13 +16,14 @@ import moment from 'moment'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import s from '../../../common/styles/CommonStyles.module.css'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Card/card-api'
 import { deleteCardTC, sortCardsAC, updateCardTC } from '../Card/card-reducer'
 import { selectPackUserId, selectSortCard } from '../Card/cardSelectors'
 
 type packTablePropsType = {
-  cardsList: Cards[]
+  cardsList: Array<Cards>
   isLoading: boolean
 }
 
@@ -119,21 +120,10 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
         </TableBody>
       </Table>
       {cardsList.length === 0 && !isLoading && (
-        <Box
-          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}
-        >
-          No Results For This Search
-        </Box>
+        <div className={s.tableInfo}>No Results For This Search</div>
       )}
       {cardsList.length === 0 && isLoading && (
-        <div
-          style={{
-            height: '200px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <div className={s.tableInfo}>
           <CircularProgress />
         </div>
       )}

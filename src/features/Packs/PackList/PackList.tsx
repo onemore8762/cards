@@ -15,8 +15,8 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PackListTable } from '../Table/PackListTable'
 
-import { addPacksTC, getPacksTC, setUpdatePack } from './packList-reducer'
-import style from './PackList.module.css'
+import { addPacksTC, getPacksTC, setUpdatePackAC } from './packList-reducer'
+import s from './PackList.module.css'
 import {
   selectPackListCardPacksTotalCount,
   selectPackListInitialize,
@@ -36,7 +36,6 @@ export const PackList = () => {
   const initialize = useAppSelector(selectPackListInitialize)
   const isLoading = useAppSelector(selectPackListIsLoading)
   const searchPackName = useAppSelector(selectPackListSearchPack)
-  const debouncedSearchPack = useDebounce<string>(searchPackName, 500)
   const pageCount = useAppSelector(selectPackListPageCount)
   const page = useAppSelector(selectPackListPage)
   const maxPage = useAppSelector(selectPackListCardPacksTotalCount)
@@ -44,6 +43,8 @@ export const PackList = () => {
   const sort = useAppSelector(selectPackListSortPacks)
   const min = useAppSelector(selectPackListMin)
   const max = useAppSelector(selectPackListMax)
+
+  const debouncedSearchPack = useDebounce<string>(searchPackName, 500)
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const PackList = () => {
       let sortPackQuery = (searchParams.get('sortPack') as '0updated' | '1updated') || '0updated'
 
       dispatch(
-        setUpdatePack({
+        setUpdatePackAC({
           isMy: isMyQuery,
           min: minQuery !== -1 ? minQuery : null,
           max: maxQuery !== -1 ? maxQuery : null,
@@ -86,7 +87,7 @@ export const PackList = () => {
     searchParams.delete('pageCount')
     setSearchParams(searchParams)
     dispatch(
-      setUpdatePack({
+      setUpdatePackAC({
         min: null,
         max: null,
         isMy: false,
@@ -100,7 +101,7 @@ export const PackList = () => {
   if (!initialize) return <PackListSkeleton />
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUpdatePack({ packName: e.currentTarget.value, isLoading: true }))
+    dispatch(setUpdatePackAC({ packName: e.currentTarget.value, isLoading: true }))
     if (e.currentTarget.value !== '') {
       searchParams.set('packName', e.currentTarget.value)
     } else {
@@ -109,17 +110,17 @@ export const PackList = () => {
   }
 
   const clearSearchInputValueHandler = () => {
-    dispatch(setUpdatePack({ packName: '' }))
+    dispatch(setUpdatePackAC({ packName: '' }))
     searchParams.delete('packName')
   }
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setUpdatePack({ pageCount: +event.target.value, page: 1 }))
+    dispatch(setUpdatePackAC({ pageCount: +event.target.value, page: 1 }))
     searchParams.set('pageCount', event.target.value)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setUpdatePack({ page: value }))
+    dispatch(setUpdatePackAC({ page: value }))
     searchParams.set('page', `${value}`)
   }
 
@@ -130,10 +131,10 @@ export const PackList = () => {
   }
 
   return (
-    <div className={style.packList}>
-      <div className={style.header_row}>
+    <div className={s.packList}>
+      <div className={s.header_row}>
         <PageTitle title={'Packs List'} />
-        <div className={style.addNewPackBtn}>
+        <div className={s.addNewPackBtn}>
           <Button
             disabled={isLoading}
             type={'submit'}
@@ -149,9 +150,9 @@ export const PackList = () => {
           </Button>
         </div>
       </div>
-      <div className={style.search_row}>
+      <div className={s.search_row}>
         <div>
-          <div className={style.column_title}>Search</div>
+          <div className={s.column_title}>Search</div>
           <div>
             <SearchInput
               search={searchPackName}
@@ -163,24 +164,24 @@ export const PackList = () => {
           </div>
         </div>
         <div>
-          <div className={style.column_title}>Show Packs Card</div>
+          <div className={s.column_title}>Show Packs Card</div>
           <div>
             <FilterShow disabled={isLoading} />
           </div>
         </div>
         <div>
-          <div className={style.column_title}>Number of Cards</div>
-          <div className={style.rangeSlider}>
+          <div className={s.column_title}>Number of Cards</div>
+          <div className={s.rangeSlider}>
             <RangeSlider disabled={isLoading} />
           </div>
         </div>
-        <div className={style.filter_icon}>
+        <div className={s.filter_icon}>
           <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault} disabled={isLoading}>
             <FilterAltOutlined fontSize="medium" />
           </IconButton>
         </div>
       </div>
-      <div className={style.mainTable}>
+      <div className={s.mainTable}>
         <PackListTable />
       </div>
       <PaginationBlock

@@ -3,7 +3,7 @@ import React from 'react'
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Box, Button, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
+import { Button, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -17,8 +17,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import s2 from '../../../common/styles/CommonStyles.module.css'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { deletePacksTC, setUpdatePack, updatePacksTC } from '../PackList/packList-reducer'
+import { deletePacksTC, setUpdatePackAC, updatePacksTC } from '../PackList/packList-reducer'
 import {
   selectPackList,
   selectPackListIsLoading,
@@ -37,21 +38,21 @@ export const PackListTable = () => {
 
   const handelSortTable = () => {
     if (sort === '0updated') {
-      dispatch(setUpdatePack({ sortPacks: '1updated' }))
+      dispatch(setUpdatePackAC({ sortPacks: '1updated' }))
       searchParams.set('sortPacks', '1updated')
       setSearchParams(searchParams)
     } else {
-      dispatch(setUpdatePack({ sortPacks: '0updated' }))
+      dispatch(setUpdatePackAC({ sortPacks: '0updated' }))
       searchParams.set('sortPacks', '0updated')
       setSearchParams(searchParams)
     }
   }
 
-  const handleUpdatePacks = (idPacks: string) => {
-    dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: idPacks } }))
+  const handleUpdatePacks = (packs_id: string) => {
+    dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: packs_id } }))
   }
-  const handleDeletePacks = (idPacks: string) => {
-    dispatch(deletePacksTC(idPacks))
+  const handleDeletePacks = (packs_id: string) => {
+    dispatch(deletePacksTC(packs_id))
   }
   const handelGoCard = (packId: string) => {
     navigate(`/packs/${packId}`)
@@ -131,21 +132,10 @@ export const PackListTable = () => {
         </TableBody>
       </Table>
       {packList.length === 0 && !isLoading && (
-        <Box
-          sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}
-        >
-          No Results For This Search
-        </Box>
+        <div className={s2.tableInfo}>No Results For This Search</div>
       )}
       {packList.length === 0 && isLoading && (
-        <div
-          style={{
-            height: '200px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <div className={s2.tableInfo}>
           <CircularProgress />
         </div>
       )}

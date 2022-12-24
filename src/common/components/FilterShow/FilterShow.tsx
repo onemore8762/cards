@@ -3,7 +3,7 @@ import React from 'react'
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
-import { setUpdatePack } from '../../../features/Packs/PackList/packList-reducer'
+import { setUpdatePackAC } from '../../../features/Packs/PackList/packList-reducer'
 import { selectPackListIsMy } from '../../../features/Packs/PackList/packListSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
@@ -19,7 +19,7 @@ export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
   const dispatch = useAppDispatch()
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: boolean) => {
     if (newAlignment !== isMy) {
-      dispatch(setUpdatePack({ isMy: newAlignment, page: 1, min: null, max: null, pageCount: 4 }))
+      dispatch(setUpdatePackAC({ isMy: newAlignment, page: 1, min: null, max: null, pageCount: 4 }))
       searchParams.set('isMy', `${newAlignment}`)
       searchParams.delete('min')
       searchParams.delete('max')

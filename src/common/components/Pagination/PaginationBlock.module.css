@@ -1,15 +1,13 @@
-.pagination_block {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 100px;
-}
-
 .pagination_show {
     display: flex;
     align-items: center;
+}
+.pagination_block {
+    composes: pagination_show;
 
+    justify-content: center;
+
+    margin-bottom: 100px;
 }
 .pagination_show > div {
     margin: 0 5px;

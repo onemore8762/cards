@@ -17,7 +17,7 @@ import { PATH } from '../../common/path/path'
 import { logoutTC } from '../Login/login-reducer'
 
 import { updateUserDataTC } from './profile-reducer'
-import style from './Profile.module.css'
+import s from './Profile.module.css'
 import { selectUserEmail, selectUserName } from './profileSelectors'
 
 export const Profile = () => {
@@ -48,38 +48,38 @@ export const Profile = () => {
 
   return (
     <Grid container display="flex" flexDirection={'column'}>
-      <div className={style.backBtnBlock}>
+      <div className={s.backBtnBlock}>
         <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       </div>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card className={style.cardMain}>
-          <CardContent className={style.cardContent}>
-            <div className={style.cardTitle}>Personal Information</div>
+        <Card className={s.cardMain}>
+          <CardContent className={s.cardContent}>
+            <div className={s.cardTitle}>Personal Information</div>
 
-            <div className={style.avatar}>
-              <div className={style.avatarImage}>
+            <div className={s.avatar}>
+              <div className={s.avatarImage}>
                 <img src={avatar} alt="avatar" />
               </div>
-              <div className={style.loadAvatar} onClick={loadPhotoHandler}>
-                <AddAPhoto className={style.loadAvatar_icon} />
+              <div className={s.loadAvatar} onClick={loadPhotoHandler}>
+                <AddAPhoto className={s.loadAvatar_icon} />
               </div>
             </div>
 
-            <div className={style.userName}>
+            <div className={s.userName}>
               <EditableSpan
                 title={userName ? userName : ''}
                 onChangeInput={changeTaskTitleHandler}
               />
             </div>
 
-            <div className={style.userEmail}>{userEmail}</div>
-            <div className={style.logoutButton}>
+            <div className={s.userEmail}>{userEmail}</div>
+            <div className={s.logoutButton}>
               <Button
                 startIcon={<ExitToAppOutlined sx={{ color: 'black' }} />}
                 type={'submit'}
                 variant={'contained'}
                 color={'error'}
-                // className={style.logoutButton}
+                // className={s.logoutButton}
                 sx={{
                   width: '127px',
                   borderRadius: '30px',

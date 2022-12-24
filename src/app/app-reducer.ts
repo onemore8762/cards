@@ -1,4 +1,4 @@
-import { handleServerNetworkError } from '../common/utils/errorUtils/errorUtils'
+import { handleServerNetworkError } from '../common/utils/errorUtils'
 import { loginApi } from '../features/Login/login-api'
 import { loginAC } from '../features/Login/login-reducer'
 import { setUserDataAC } from '../features/Profile/profile-reducer'

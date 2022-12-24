@@ -4,8 +4,6 @@
 .navbarLogo {
     display: flex;
     align-items: center;
-
-
 }
 .navbarLogo_icon {
     width: 50px;
@@ -21,8 +19,7 @@
 }
 
 .navbarUser {
-    display: flex;
-    align-items: center;
+    composes: navbarLogo;
 }
 
 .navbarUsername {

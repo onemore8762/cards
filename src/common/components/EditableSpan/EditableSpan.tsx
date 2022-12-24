@@ -5,7 +5,7 @@ import { TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 import InputAdornment from '@mui/material/InputAdornment'
 
-export type EditableSpanPropsType = {
+type EditableSpanPropsType = {
   title: string
   onChangeInput: (newInputValue: string) => void
 }

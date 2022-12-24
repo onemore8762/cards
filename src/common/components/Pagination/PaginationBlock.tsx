@@ -4,7 +4,7 @@ import { NativeSelect } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
-import style from './PaginationBlock.module.css'
+import s from './PaginationBlock.module.css'
 
 type Props = {
   disabled: boolean
@@ -24,8 +24,8 @@ export const PaginationBlock: React.FC<Props> = ({
   handleChangePagination,
 }) => {
   return (
-    <div className={style.pagination_block}>
-      <div className={style.pagination}>
+    <div className={s.pagination_block}>
+      <div className={s.pagination}>
         <Stack spacing={2}>
           <Pagination
             disabled={disabled}
@@ -36,9 +36,9 @@ export const PaginationBlock: React.FC<Props> = ({
           />
         </Stack>
       </div>
-      <div className={style.pagination_show}>
-        <div className={style.pagination_show_title}>Show</div>
-        <div className={style.pagination_show_select}>
+      <div className={s.pagination_show}>
+        <div className={s.pagination_show_title}>Show</div>
+        <div className={s.pagination_show_select}>
           <NativeSelect
             disabled={disabled}
             onChange={handleChangePagination}
@@ -53,7 +53,7 @@ export const PaginationBlock: React.FC<Props> = ({
             <option value={32}>{pageCount === 32 ? pageCount : 32}</option>
           </NativeSelect>
         </div>
-        <div className={style.pagination_show_text}>cards per page</div>
+        <div className={s.pagination_show_text}>cards per page</div>
       </div>
     </div>
   )

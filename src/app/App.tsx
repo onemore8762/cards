@@ -12,6 +12,7 @@ import { PrivateRoutes } from '../common/components/PrivateRoutes/PrivateRoutes'
 import { useAppDispatch } from '../common/hooks/useAppDispatch'
 import { useAppSelector } from '../common/hooks/useAppSelector'
 import { PATH } from '../common/path/path'
+import s from '../common/styles/CommonStyles.module.css'
 import { Login } from '../features/Login/Login'
 import { Card } from '../features/Packs/Card/Card'
 import { PackList } from '../features/Packs/PackList/PackList'
@@ -36,7 +37,7 @@ export const App = () => {
   // лоадер, если приложение не инициализировано
   if (!isInitialized) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '300px' }}>
+      <div className={s.circularApp}>
         <CircularProgress />
       </div>
     )

@@ -22,7 +22,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { PATH } from '../../path/path'
 
-import style from './NavBar.module.css'
+import s from './NavBar.module.css'
 
 export const NavBar = () => {
   const dispatch = useAppDispatch()
@@ -63,7 +63,7 @@ export const NavBar = () => {
   }
 
   return (
-    <div className={style.appBar}>
+    <div className={s.appBar}>
       <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
         <Container maxWidth="xl">
           <Toolbar
@@ -72,37 +72,18 @@ export const NavBar = () => {
           >
             {/*Логотип*/}
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <div className={style.navbarLogo}>
-                <div className={style.navbarLogo_icon}>
+              <div className={s.navbarLogo}>
+                <div className={s.navbarLogo_icon}>
                   <img src={icon} alt="logo" />
                 </div>
-                <div className={style.navbarLogo_title}>
-                  {/*<Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    // href="/"
-                    sx={{
-                      mr: 2,
-                      display: { xs: 'none', md: 'flex' },
-                      fontFamily: 'monospace',
-                      fontWeight: 700,
-                      letterSpacing: '.3rem',
-                      color: 'inherit',
-                      textDecoration: 'none',
-                      marginLeft: '15px',
-                    }}
-                  >*/}
-                  CARDS
-                  {/*</Typography>*/}
-                </div>
+                <div className={s.navbarLogo_title}>CARDS</div>
               </div>
             </Link>
 
             {isLoggedIn ? (
-              <div className={style.navbarUser}>
+              <div className={s.navbarUser}>
                 {/*Имя пользователя*/}
-                <div className={style.navbarUsername}>{userName}</div>
+                <div className={s.navbarUsername}>{userName}</div>
 
                 {/*Аватарка с меню*/}
                 <Box sx={{ flexGrow: 0 }}>

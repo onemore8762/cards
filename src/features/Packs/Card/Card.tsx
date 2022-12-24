@@ -20,7 +20,7 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import style from '../PackList/PackList.module.css'
+import s2 from '../PackList/PackList.module.css'
 import { CardTable } from '../Table/CardTable'
 
 import { addCardTC, getCardsListTC, setUpdateCardsAC } from './card-reducer'
@@ -54,13 +54,14 @@ export const Card = () => {
   const initialize = useAppSelector(selectInitialize)
   const sort = useAppSelector(selectSortCard)
 
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const [inputValue, setInputValue] = useState<string | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
-
-  const debouncedSearchQuestion = useDebounce<string | null>(inputValue, 1000)
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+  // const [inputValue, setInputValue] = useState<string | null>(null)
+  const debouncedSearchQuestion = useDebounce<string | null>(searchQuestion, 1000)
 
   const params = useParams() // packId достаем
+
+  // console.log(searchQuestion)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -71,7 +72,7 @@ export const Card = () => {
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
-    setInputValue(e.currentTarget.value)
+    // setInputValue(e.currentTarget.value)
     if (e.currentTarget.value !== '') {
       searchParams.set('cardQuestion', e.currentTarget.value)
     } else {
@@ -90,13 +91,11 @@ export const Card = () => {
 
   const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
-
     searchParams.set('pageCount', event.target.value)
   }
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setUpdateCardsAC({ page: value }))
-
     searchParams.set('page', `${value}`)
   }
 
@@ -129,10 +128,10 @@ export const Card = () => {
   }, [])
 
   return (
-    <Grid container justifyContent={'center'} /*style={{ position: 'relative' }}*/>
+    <Grid container justifyContent={'center'} /*s2={{ position: 'relative' }}*/>
       <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
-      <div className={style.packList}>
-        <div className={style.header_row}>
+      <div className={s2.packList}>
+        <div className={s2.header_row}>
           {userId === createdId ? (
             <Grid display="flex" alignItems="center">
               {initialize && <PageTitle title={packName} />}
@@ -189,7 +188,7 @@ export const Card = () => {
             </>
           )}
 
-          <div className={style.addNewPackBtn}>
+          <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
               <Button
                 disabled={isLoading}
@@ -206,7 +205,6 @@ export const Card = () => {
               </Button>
             ) : (
               <Button
-                // disabled={isLoading}
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
@@ -221,7 +219,7 @@ export const Card = () => {
           </div>
         </div>
         <div className={s.searchRow}>
-          <div className={style.column_title}>Search</div>
+          <div className={s2.column_title}>Search</div>
           <div>
             <SearchInput
               disabled={isLoading}

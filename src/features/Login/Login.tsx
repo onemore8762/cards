@@ -105,7 +105,7 @@ export const Login = () => {
                 {...formik.getFieldProps('email')}
                 // onBlur={formik.handleBlur}
               />
-              {formik.touched.email && authError && <div style={{ color: 'red' }}>{authError}</div>}
+              {/*{formik.touched.email && authError && <div style={{ color: 'red' }}>{authError}</div>}*/}
               <FormControl variant="standard" margin="normal">
                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                 <Input

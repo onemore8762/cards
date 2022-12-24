@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios'
 
-import { appSetStatusAC } from '../../../app/app-reducer'
-import { AppThunkDispatch } from '../../../app/store'
-import { setErrorAC } from '../../../features/Login/login-reducer'
+import { appSetStatusAC } from '../../app/app-reducer'
+import { AppThunkDispatch } from '../../app/store'
+import { setErrorAC } from '../../features/Login/login-reducer'
 
 type ErrorResponseData = {
   error: string

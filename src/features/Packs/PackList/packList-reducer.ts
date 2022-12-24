@@ -1,5 +1,5 @@
 import { AppThunkType } from '../../../app/store'
-import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
+import { handleServerNetworkError } from '../../../common/utils/errorUtils'
 
 import { GetPacksResponseType, NewPackType, packListApi, PacksType } from './packList-api'
 
@@ -43,7 +43,7 @@ export const packListReducer = (
 // actions
 export const setPacksAC = (packs: GetPacksResponseType) =>
   ({ type: 'PACKLIST/SET_PACKS', packs } as const)
-export const setUpdatePack = (payload: UpdatePack) =>
+export const setUpdatePackAC = (payload: UpdatePack) =>
   ({ type: 'PACKLIST/UPDATE_PACK', payload } as const)
 
 // thunks
@@ -55,7 +55,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
 
   isMy && (user_id = _id)
 
-  dispatch(setUpdatePack({ isLoading: true }))
+  dispatch(setUpdatePackAC({ isLoading: true }))
 
   try {
     let promise = await packListApi.getPacks({
@@ -73,8 +73,8 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     // handleServerNetworkError(e, dispatch)
     console.log(e)
   } finally {
-    dispatch(setUpdatePack({ isLoading: false }))
-    dispatch(setUpdatePack({ initialize: true }))
+    dispatch(setUpdatePackAC({ isLoading: false }))
+    dispatch(setUpdatePackAC({ initialize: true }))
   }
 }
 
@@ -105,10 +105,10 @@ export const updatePacksTC =
   }
 
 export const deletePacksTC =
-  (idPacks: string): AppThunkType =>
+  (packs_id: string): AppThunkType =>
   dispatch => {
     packListApi
-      .delete(idPacks)
+      .delete(packs_id)
       .then(() => {
         dispatch(getPacksTC())
       })
@@ -118,7 +118,7 @@ export const deletePacksTC =
   }
 
 // types
-export type PackListActionType = ReturnType<typeof setPacksAC> | ReturnType<typeof setUpdatePack>
+export type PackListActionType = ReturnType<typeof setPacksAC> | ReturnType<typeof setUpdatePackAC>
 
 export type PackListInitialStateType = {
   initialize: boolean

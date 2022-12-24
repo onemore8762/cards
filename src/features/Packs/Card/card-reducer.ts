@@ -1,5 +1,5 @@
 import { AppThunkType } from '../../../app/store'
-import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
+import { handleServerNetworkError } from '../../../common/utils/errorUtils'
 
 import { AddCardType, Cards, cardApi, ResponseGetCardsType, UpdateCardType } from './card-api'
 

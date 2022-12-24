@@ -3,7 +3,7 @@ import React from 'react'
 import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
 import { useNavigate } from 'react-router-dom'
 
-import style from './BackToPacksListButton.module.css'
+import s from './BackToPacksListButton.module.css'
 
 type propsType = {
   title: string
@@ -18,9 +18,9 @@ export const BackToPacksListButton = (props: propsType) => {
   }
 
   return (
-    <div className={style.backButton} onClick={backButtonHandler}>
+    <div className={s.backButton} onClick={backButtonHandler}>
       <KeyboardBackspace />
-      <div className={style.backButton_title}>{props.title}</div>
+      <div className={s.backButton_title}>{props.title}</div>
     </div>
   )
 }

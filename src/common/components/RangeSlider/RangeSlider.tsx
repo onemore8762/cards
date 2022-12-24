@@ -4,12 +4,12 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import { useSearchParams } from 'react-router-dom'
 
-import { setUpdatePack } from '../../../features/Packs/PackList/packList-reducer'
-import style from '../../../features/Packs/PackList/PackList.module.css'
+import { setUpdatePackAC } from '../../../features/Packs/PackList/packList-reducer'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { selectMaxCardsCount, selectMinCardsCount } from './rangeSelector'
+import s from './RangeSlider.module.css'
 
 function valuetext(value: number) {
   return `${value}`
@@ -39,7 +39,7 @@ export const RangeSlider: React.FC<RangeSliderPropsType> = memo(({ disabled }) =
   }
 
   const onChangeCommitted = (event: Event | React.SyntheticEvent, newValue: number[] | number) => {
-    dispatch(setUpdatePack({ min: (newValue as number[])[0], max: (newValue as number[])[1] }))
+    dispatch(setUpdatePackAC({ min: (newValue as number[])[0], max: (newValue as number[])[1] }))
     searchParams.set('min', `${(newValue as number[])[0]}`)
     searchParams.set('max', `${(newValue as number[])[1]}`)
     setSearchParams(searchParams)
@@ -47,8 +47,8 @@ export const RangeSlider: React.FC<RangeSliderPropsType> = memo(({ disabled }) =
 
   return (
     <>
-      <div className={style.values}>{value[0]}</div>
-      <div className={style.slider}>
+      <div className={s.values}>{value[0]}</div>
+      <div className={s.slider}>
         <Box sx={{ width: 150 }}>
           <Slider
             disabled={disabled}
@@ -63,7 +63,7 @@ export const RangeSlider: React.FC<RangeSliderPropsType> = memo(({ disabled }) =
           />
         </Box>
       </div>
-      <div className={style.values}>{value[1]}</div>
+      <div className={s.values}>{value[1]}</div>
     </>
   )
 })

@@ -2,7 +2,7 @@ import {
   PackListInitialStateType,
   packListReducer,
   setPacksAC,
-  setUpdatePack,
+  setUpdatePackAC,
 } from './packList-reducer'
 
 let startState: PackListInitialStateType
@@ -104,7 +104,7 @@ test('pack should be updated (UPDATE_PACK)', () => {
     sortPacks: '0updated',
   }
 
-  const endState = packListReducer(startState, setUpdatePack({ isMy: true }))
+  const endState = packListReducer(startState, setUpdatePackAC({ isMy: true }))
 
   expect(endState.isMy).toBeTruthy()
 })
