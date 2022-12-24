@@ -8,7 +8,7 @@ export const passwordApi = {
   },
 }
 
-//type
+// types
 export type ResponseType = {
   info: string
   error: string

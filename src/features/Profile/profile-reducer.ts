@@ -47,7 +47,7 @@ export const setUserDataAC = (_id: string | null, email: string | null, name: st
 export const updateUserDataAC = (name: string | null) =>
   ({ type: 'PROFILE/UPDATE_USER_DATA', name } as const)
 
-// thunk
+// thunks
 export const updateUserDataTC =
   (name: string): AppThunkType =>
   dispatch => {

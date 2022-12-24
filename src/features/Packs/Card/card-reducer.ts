@@ -1,9 +1,9 @@
 import { AppThunkType } from '../../../app/store'
 import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
 
-import { AddCardType, Cards, packApi, ResponseGetCardsType, UpdateCardType } from './pack-api'
+import { AddCardType, Cards, cardApi, ResponseGetCardsType, UpdateCardType } from './card-api'
 
-const initialState: PackInitialStateType = {
+const initialState: CardInitialStateType = {
   initialize: false,
   isLoading: false,
   cardList: [],
@@ -19,12 +19,15 @@ const initialState: PackInitialStateType = {
 }
 
 // reducer
-export const packReducer = (state = initialState, action: PackActionType): PackInitialStateType => {
+export const cardReducer = (
+  state: CardInitialStateType = initialState,
+  action: PackActionType
+): CardInitialStateType => {
   switch (action.type) {
     case 'PACKS/SET_LOADING':
       return {
         ...state,
-        isLoading: action.value,
+        isLoading: action.isLoading,
       }
     case 'PACKS/GET_PACKS':
       return {
@@ -57,7 +60,8 @@ export const setCardsListAC = (packId: string, data: ResponseGetCardsType) =>
   ({ type: 'PACKS/GET_PACKS', data, packId } as const)
 export const setCardPackIdAC = (packId: string) =>
   ({ type: 'PACKS/SET_CARD-PACK-ID', packId } as const)
-export const setLoadingCardsAC = (value: boolean) => ({ type: 'PACKS/SET_LOADING', value } as const)
+export const setLoadingCardsAC = (isLoading: boolean) =>
+  ({ type: 'PACKS/SET_LOADING', isLoading } as const)
 export const sortCardsAC = () => ({ type: 'PACKS/SORT_CARDS' } as const)
 export const setUpdateCardsAC = (payload: UpdateCardsType) =>
   ({ type: 'PACKS/UPDATE_CARDS', payload } as const)
@@ -68,7 +72,7 @@ export const getCardsListTC = (): AppThunkType => {
     const { cardQuestion, page, pageCount, sortCards, packId } = getState().pack
 
     dispatch(setLoadingCardsAC(true))
-    packApi
+    cardApi
       .getCardsList({ cardsPack_id: packId, cardQuestion, page, pageCount, sortCards })
       .then(res => {
         dispatch(setCardsListAC(packId, res.data))
@@ -83,7 +87,7 @@ export const getCardsListTC = (): AppThunkType => {
 export const addCardTC =
   (card: AddCardType): AppThunkType =>
   dispatch => {
-    packApi
+    cardApi
       .addCard(card)
       .then(() => {
         dispatch(getCardsListTC())
@@ -96,7 +100,7 @@ export const addCardTC =
 export const updateCardTC =
   (card: UpdateCardType): AppThunkType =>
   dispatch => {
-    packApi
+    cardApi
       .updateCard(card)
       .then(() => {
         dispatch(getCardsListTC())
@@ -109,7 +113,7 @@ export const updateCardTC =
 export const deleteCardTC =
   (idCard: string): AppThunkType =>
   dispatch => {
-    packApi
+    cardApi
       .deleteCard(idCard)
       .then(() => {
         dispatch(getCardsListTC())
@@ -120,7 +124,7 @@ export const deleteCardTC =
   }
 
 // types
-export type PackInitialStateType = {
+export type CardInitialStateType = {
   initialize: boolean
   isLoading: boolean
   cardList: Array<Cards>
@@ -134,7 +138,7 @@ export type PackInitialStateType = {
   cardsTotalCount: number
   sortCards: '0updated' | '1updated'
 }
-export type UpdateCardsType = Partial<PackInitialStateType>
+export type UpdateCardsType = Partial<CardInitialStateType>
 
 export type PackActionType =
   | ReturnType<typeof setCardsListAC>

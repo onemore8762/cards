@@ -1,13 +1,13 @@
 import {
-  PackInitialStateType,
-  packReducer,
+  CardInitialStateType,
+  cardReducer,
   setCardPackIdAC,
   setCardsListAC,
   setLoadingCardsAC,
   setUpdateCardsAC,
-} from './pack-reducer'
+} from './card-reducer'
 
-let startState: PackInitialStateType
+let startState: CardInitialStateType
 
 beforeEach(() => {
   startState = {
@@ -67,7 +67,7 @@ test('cards should be set to the state', () => {
 
   const userId = '6399d599fc64ea0004138804'
 
-  const endState = packReducer(startState, setCardsListAC(userId, actionObj))
+  const endState = cardReducer(startState, setCardsListAC(userId, actionObj))
 
   expect(endState.cardList[0].answer).toBe('no answer')
   expect(endState.cardList[0].user_id).toBe('6399d599fc64ea0004138804')
@@ -75,19 +75,19 @@ test('cards should be set to the state', () => {
 })
 
 test('cardId should be set to the state', () => {
-  const endState = packReducer(startState, setCardPackIdAC('63a181a87361470004494fd5'))
+  const endState = cardReducer(startState, setCardPackIdAC('63a181a87361470004494fd5'))
 
   expect(endState.packId).toBe('63a181a87361470004494fd5')
 })
 
 test('cards should be loaded', () => {
-  const endState = packReducer(startState, setLoadingCardsAC(true))
+  const endState = cardReducer(startState, setLoadingCardsAC(true))
 
   expect(endState.isLoading).toBeTruthy()
 })
 
 test('search input value (question) should be set to the state', () => {
-  const endState = packReducer(startState, setUpdateCardsAC({ cardQuestion: 'react' }))
+  const endState = cardReducer(startState, setUpdateCardsAC({ cardQuestion: 'react' }))
 
   expect(endState.cardQuestion).toBe('react')
 })

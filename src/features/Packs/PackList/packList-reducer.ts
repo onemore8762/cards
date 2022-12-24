@@ -1,7 +1,7 @@
 import { AppThunkType } from '../../../app/store'
 import { handleServerNetworkError } from '../../../common/utils/errorUtils/errorUtils'
 
-import { GetPacksResponseType, newPack, packListApi, PacksType } from './packList-api'
+import { GetPacksResponseType, NewPackType, packListApi, PacksType } from './packList-api'
 
 const initialState: PackListInitialStateType = {
   initialize: false,
@@ -69,8 +69,9 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     })
 
     dispatch(setPacksAC(promise.data))
-  } catch (error) {
-    console.log(error) // Сделать обработчик
+  } catch (e) {
+    // handleServerNetworkError(e, dispatch)
+    console.log(e)
   } finally {
     dispatch(setUpdatePack({ isLoading: false }))
     dispatch(setUpdatePack({ initialize: true }))
@@ -78,7 +79,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
 }
 
 export const addPacksTC =
-  (cardsPack: newPack): AppThunkType =>
+  (cardsPack: NewPackType): AppThunkType =>
   dispatch => {
     packListApi
       .addPacks(cardsPack)
@@ -91,7 +92,7 @@ export const addPacksTC =
   }
 
 export const updatePacksTC =
-  (cardsPack: newPack): AppThunkType =>
+  (cardsPack: NewPackType): AppThunkType =>
   dispatch => {
     packListApi
       .update(cardsPack)

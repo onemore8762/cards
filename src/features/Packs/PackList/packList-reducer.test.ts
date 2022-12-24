@@ -100,7 +100,7 @@ test('pack should be updated (UPDATE_PACK)', () => {
     max: 20,
     page: 1,
     pageCount: 4,
-    packName: 'My Pack',
+    packName: 'My Card',
     sortPacks: '0updated',
   }
 

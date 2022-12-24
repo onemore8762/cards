@@ -13,7 +13,7 @@ import { useAppDispatch } from '../common/hooks/useAppDispatch'
 import { useAppSelector } from '../common/hooks/useAppSelector'
 import { PATH } from '../common/path/path'
 import { Login } from '../features/Login/Login'
-import { Pack } from '../features/Packs/Pack/Pack'
+import { Card } from '../features/Packs/Card/Card'
 import { PackList } from '../features/Packs/PackList/PackList'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
 import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
@@ -52,7 +52,7 @@ export const App = () => {
             <Route path={'/'} element={<Profile />} />
             <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
             <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
-            <Route path={PATH.PROFILE.PACK} element={<Pack />} />
+            <Route path={PATH.PROFILE.PACK} element={<Card />} />
           </Route>
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />

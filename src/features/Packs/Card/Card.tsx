@@ -21,10 +21,10 @@ import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import style from '../PackList/PackList.module.css'
-import { PackTable } from '../Table/PackTable'
+import { CardTable } from '../Table/CardTable'
 
-import { addCardTC, getCardsListTC, setUpdateCardsAC } from './pack-reducer'
-import s from './Pack.module.css'
+import { addCardTC, getCardsListTC, setUpdateCardsAC } from './card-reducer'
+import s from './Card.module.css'
 import {
   selectCardPackId,
   selectCardQuestion,
@@ -37,9 +37,9 @@ import {
   selectInitialize,
   selectPackUserId,
   selectSortCard,
-} from './packSelectors'
+} from './cardSelectors'
 
-export const Pack = () => {
+export const Card = () => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
@@ -234,7 +234,7 @@ export const Pack = () => {
           </div>
         </div>
         <div className={s.mainTable}>
-          <PackTable cardsList={cardList} isLoading={isLoading} />
+          <CardTable cardsList={cardList} isLoading={isLoading} />
         </div>
         <PaginationBlock
           disabled={isLoading}

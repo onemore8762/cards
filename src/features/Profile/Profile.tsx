@@ -15,10 +15,10 @@ import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
 import { logoutTC } from '../Login/login-reducer'
-import { selectUserEmail, selectUserName } from '../Login/profileSelectors'
 
 import { updateUserDataTC } from './profile-reducer'
 import style from './Profile.module.css'
+import { selectUserEmail, selectUserName } from './profileSelectors'
 
 export const Profile = () => {
   const navigate = useNavigate()

@@ -17,21 +17,20 @@ import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { Cards } from '../Pack/pack-api'
-import { deleteCardTC, sortCardsAC, updateCardTC } from '../Pack/pack-reducer'
-import { selectCardPackId, selectPackUserId, selectSortCard } from '../Pack/packSelectors'
+import { Cards } from '../Card/card-api'
+import { deleteCardTC, sortCardsAC, updateCardTC } from '../Card/card-reducer'
+import { selectPackUserId, selectSortCard } from '../Card/cardSelectors'
 
 type packTablePropsType = {
   cardsList: Cards[]
   isLoading: boolean
 }
 
-export const PackTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }) => {
+export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }) => {
   const dispatch = useAppDispatch()
   const sort = useAppSelector(selectSortCard)
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
-  // const packId = useAppSelector(selectCardPackId)
 
   const handelSortTable = () => {
     dispatch(sortCardsAC())

@@ -1,8 +1,8 @@
 import { instance } from '../../../common/api/cards-api'
 
-export const packApi = {
-  getCardsList<ResponseGetCardsType>(params: GetCardsParamsType) {
-    return instance.get('/cards/card', {
+export const cardApi = {
+  getCardsList(params: GetCardsParamsType) {
+    return instance.get<ResponseGetCardsType>('/cards/card', {
       params,
     })
   },
@@ -86,7 +86,7 @@ export type AddCardType = {
   cardsPack_id: string
   question?: string // если не отправить будет таким
   answer?: string // если не отправить будет таким
-  grade?: number // 0..5, не обязателен
+  grade?: number // 0...5, не обязателен
   shots?: number // не обязателен
   answerImg?: string // не обязателен
   questionImg?: string // не обязателен

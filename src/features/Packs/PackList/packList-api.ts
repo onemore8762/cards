@@ -1,15 +1,15 @@
 import { instance } from '../../../common/api/cards-api'
 
 export const packListApi = {
-  getPacks(params: getPacksParamsType = {}) {
+  getPacks(params: GetPacksParamsType = {}) {
     return instance.get<GetPacksResponseType>('/cards/pack', {
       params,
     })
   },
-  addPacks(cardsPack: newPack) {
+  addPacks(cardsPack: NewPackType) {
     return instance.post('/cards/pack', cardsPack)
   },
-  update(cardsPack: newPack) {
+  update(cardsPack: NewPackType) {
     return instance.put('/cards/pack', cardsPack)
   },
   delete(idPack: string) {
@@ -18,7 +18,7 @@ export const packListApi = {
 }
 
 // types
-export type getPacksParamsType = {
+export type GetPacksParamsType = {
   packName?: string
   min?: number | null
   max?: number | null
@@ -28,10 +28,10 @@ export type getPacksParamsType = {
   user_id?: string | null
   block?: boolean
 }
-export type newPack = {
-  cardsPack: addCardsPack
+export type NewPackType = {
+  cardsPack: AddCardsType
 }
-export type addCardsPack = {
+export type AddCardsType = {
   name?: string // если не отправить будет 'no Name'
   deckCover?: 'url or base64' // не обязателен
   private?: boolean // если не отправить будет false
