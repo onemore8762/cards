@@ -6,7 +6,9 @@ import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
+import { AddNewPackModal } from '../../../common/components/Modals/AddNewPackModal/AddNewPackModal'
 import { BasicModal } from '../../../common/components/Modals/BasicModal/BasicModal'
+import { EditPackModal } from '../../../common/components/Modals/EditPackModal/EditPackModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
@@ -150,7 +152,10 @@ export const PackList = () => {
             Add New Pack
           </Button>
           <div>
-            <BasicModal />
+            <AddNewPackModal />
+          </div>
+          <div>
+            <EditPackModal />
           </div>
         </div>
       </div>
