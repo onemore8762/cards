@@ -6,8 +6,12 @@ import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
+import { AddNewCardModal } from '../../../common/components/Modals/AddNewCardModal/AddNewCardModal'
 import { AddNewPackModal } from '../../../common/components/Modals/AddNewPackModal/AddNewPackModal'
 import { BasicModal } from '../../../common/components/Modals/BasicModal/BasicModal'
+import { DeleteCardModal } from '../../../common/components/Modals/DeleteCardModal/DeleteCardModal'
+import { DeletePackModal } from '../../../common/components/Modals/DeletePackModal/DeletePackModal'
+import { EditCardModal } from '../../../common/components/Modals/EditCardModal/EditCardModal'
 import { EditPackModal } from '../../../common/components/Modals/EditPackModal/EditPackModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
@@ -156,6 +160,18 @@ export const PackList = () => {
           </div>
           <div>
             <EditPackModal />
+          </div>
+          <div>
+            <AddNewCardModal />
+          </div>
+          <div>
+            <EditCardModal />
+          </div>
+          <div>
+            <DeletePackModal />
+          </div>
+          <div>
+            <DeleteCardModal />
           </div>
         </div>
       </div>

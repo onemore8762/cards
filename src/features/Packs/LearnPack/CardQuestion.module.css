@@ -1,0 +1,18 @@
+.cardQuestion_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardQuestion_question {
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+.cardQuestion_attempt {
+    margin-bottom: 10px;
+
+    opacity: 0.5;
+}
+.cardQuestion_button {
+
+}

@@ -52,7 +52,6 @@ export const BasicModal: React.FC<ModalPropsType> = ({ children, titleChildren }
                 <ClearIcon onClick={handleClose} />
               </div>
             </div>
-            {/*<hr />*/}
             <div className={s.modalContent}>{children}</div>
           </Box>
         </Fade>

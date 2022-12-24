@@ -15,6 +15,8 @@ import { PATH } from '../common/path/path'
 import s from '../common/styles/CommonStyles.module.css'
 import { Login } from '../features/Login/Login'
 import { Card } from '../features/Packs/Card/Card'
+import { CardAnswer } from '../features/Packs/LearnPack/CardAnswer'
+import { CardQuestion } from '../features/Packs/LearnPack/CardQuestion'
 import { PackList } from '../features/Packs/PackList/PackList'
 import { CreateNewPassword } from '../features/Password/CreateNewPassword/CreateNewPassword'
 import { CheckEmail } from '../features/Password/RecoveryPassword/CheckEmail'
@@ -54,6 +56,8 @@ export const App = () => {
             <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
             <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
             <Route path={PATH.PROFILE.CARD} element={<Card />} />
+            <Route path={PATH.LEARN.QUESTION} element={<CardQuestion />} />
+            <Route path={PATH.LEARN.ANSWER} element={<CardAnswer />} />
           </Route>
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />

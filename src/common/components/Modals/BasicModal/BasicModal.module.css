@@ -14,10 +14,12 @@
 
 .modalHeader {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 10px;
-    padding: 10px;
+    height: 40px;
+    /*margin-bottom: 20px;*/
+    padding: 10px 20px;
 
     border-bottom: 1px solid #c7c7c7;
 }
@@ -29,5 +31,22 @@
     cursor: pointer;
 }
 .modalContent {
-    padding: 10px;
+    padding: 10px 20px;
+}
+
+
+.packModal_main > div {
+    margin-bottom: 20px;
+}
+.packModal_buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.newCardModal_textField_select {
+    margin-top: 20px;
+}
+.newCardModal_textField > div {
+    margin-bottom: 20px;
 }

@@ -11,6 +11,10 @@ export const PATH = {
     PACKLIST: '/packs',
     CARD: '/packs/:packId',
   },
+  LEARN: {
+    QUESTION: '/question',
+    ANSWER: '/answer',
+  },
   COMMON: {
     ERROR404: '/error404',
   },
