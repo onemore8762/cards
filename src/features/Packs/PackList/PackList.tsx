@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
+import { BasicModal } from '../../../common/components/Modals/BasicModal/BasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
@@ -148,6 +149,9 @@ export const PackList = () => {
           >
             Add New Pack
           </Button>
+          <div>
+            <BasicModal />
+          </div>
         </div>
       </div>
       <div className={s.search_row}>
