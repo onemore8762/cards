@@ -49,10 +49,10 @@ export const App = () => {
       <div>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path={'/'} element={<Profile />} />
+            <Route path={'/'} element={<PackList />} />
             <Route path={PATH.PROFILE.PROFILE} element={<Profile />} />
             <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
-            <Route path={PATH.PROFILE.PACK} element={<Card />} />
+            <Route path={PATH.PROFILE.CARD} element={<Card />} />
           </Route>
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />

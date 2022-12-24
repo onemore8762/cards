@@ -54,7 +54,7 @@ export const PackListTable = () => {
     dispatch(deletePacksTC(idPacks))
   }
   const handelGoCard = (packId: string) => {
-    navigate(`/pack/${packId}`)
+    navigate(`/packs/${packId}`)
   }
 
   return (

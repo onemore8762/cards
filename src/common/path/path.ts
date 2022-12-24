@@ -8,8 +8,8 @@ export const PATH = {
   },
   PROFILE: {
     PROFILE: '/profile',
-    PACKLIST: '/Packs',
-    PACK: '/Card/:packId',
+    PACKLIST: '/packs',
+    CARD: '/packs/:packId',
   },
   COMMON: {
     ERROR404: '/error404',
