@@ -5,13 +5,13 @@ import Button from '@mui/material/Button'
 import { BasicModal } from '../BasicModal/BasicModal'
 import s from '../BasicModal/BasicModal.module.css'
 
-export const DeletePackModal = () => {
+export const DeleteCardModal = () => {
   return (
-    <BasicModal titleChildren={'Delete Pack'}>
+    <BasicModal headerTitle={'Delete Card'}>
       <div className={s.packModal_main}>
         <div>
           <p>
-            Do you really want to remove <b>Pack Name</b>?
+            Do you really want to remove <b>Card Name</b>?
           </p>
           <p>All cards will be deleted.</p>
         </div>

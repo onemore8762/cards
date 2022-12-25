@@ -3,13 +3,13 @@ import React from 'react'
 import { TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 
-import { SelectInput } from '../../SelectInput/SelectInput'
+import { SelectInput } from '../../../SelectInput/SelectInput'
 import { BasicModal } from '../BasicModal/BasicModal'
 import s from '../BasicModal/BasicModal.module.css'
 
 export const EditCardModal = () => {
   return (
-    <BasicModal titleChildren={'Edit Card'}>
+    <BasicModal headerTitle={'Edit Card'}>
       <div className={s.packModal_main}>
         <div className={s.newCardModal_textField_select}>
           <SelectInput />

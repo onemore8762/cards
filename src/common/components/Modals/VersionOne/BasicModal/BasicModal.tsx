@@ -24,17 +24,35 @@ const style = {
 
 type ModalPropsType = {
   children: ReactNode
-  titleChildren: ReactNode
+  headerTitle: ReactNode
+  buttonTitle?: ReactNode
+  // modalButton?: ReactNode
 }
 
-export const BasicModal: React.FC<ModalPropsType> = ({ children, titleChildren }) => {
+export const BasicModal: React.FC<ModalPropsType> = ({
+  children,
+  headerTitle,
+  buttonTitle,
+  // modalButton,
+}) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button
+        onClick={handleOpen}
+        type={'submit'}
+        variant={'contained'}
+        color={'primary'}
+        sx={{
+          width: '175px',
+          borderRadius: '30px',
+        }}
+      >
+        {buttonTitle}
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -47,7 +65,7 @@ export const BasicModal: React.FC<ModalPropsType> = ({ children, titleChildren }
         <Fade in={open}>
           <Box sx={style}>
             <div className={s.modalHeader}>
-              <div className={s.headerName}>{titleChildren}</div>
+              <div className={s.headerName}>{headerTitle}</div>
               <div className={s.headerCloseBtn}>
                 <ClearIcon onClick={handleClose} />
               </div>

@@ -6,9 +6,13 @@ import Button from '@mui/material/Button'
 import { BasicModal } from '../BasicModal/BasicModal'
 import s from '../BasicModal/BasicModal.module.css'
 
-export const AddNewPackModal = () => {
+type AddNewPackModalType = {
+  saveBtn: () => void
+}
+
+export const AddNewPackModal: React.FC<AddNewPackModalType> = ({ saveBtn }) => {
   return (
-    <BasicModal titleChildren={'Add New Pack'}>
+    <BasicModal headerTitle={'Add New Pack'} buttonTitle={'Add New Pack'}>
       <div className={s.packModal_main}>
         <div>
           <TextField id="standard-basic" label="Pack Name" variant="standard" sx={{ width: 360 }} />
@@ -42,7 +46,7 @@ export const AddNewPackModal = () => {
                 width: '170px',
                 borderRadius: '30px',
               }}
-              onClick={() => {}}
+              onClick={saveBtn}
             >
               Save
             </Button>

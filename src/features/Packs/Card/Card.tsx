@@ -61,8 +61,6 @@ export const Card = () => {
 
   const params = useParams() // packId достаем
 
-  // console.log(searchQuestion)
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }

@@ -1,18 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
-import { AddNewCardModal } from '../../../common/components/Modals/AddNewCardModal/AddNewCardModal'
-import { AddNewPackModal } from '../../../common/components/Modals/AddNewPackModal/AddNewPackModal'
-import { BasicModal } from '../../../common/components/Modals/BasicModal/BasicModal'
-import { DeleteCardModal } from '../../../common/components/Modals/DeleteCardModal/DeleteCardModal'
-import { DeletePackModal } from '../../../common/components/Modals/DeletePackModal/DeletePackModal'
-import { EditCardModal } from '../../../common/components/Modals/EditCardModal/EditCardModal'
-import { EditPackModal } from '../../../common/components/Modals/EditPackModal/EditPackModal'
+import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo/DeleteBasicModal/DeleteBasicModal'
+import { PackBasicModal } from '../../../common/components/Modals/VersionTwo/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
@@ -142,7 +138,8 @@ export const PackList = () => {
       <div className={s.header_row}>
         <PageTitle title={'Packs List'} />
         <div className={s.addNewPackBtn}>
-          <Button
+          {/*изначальный вариант*/}
+          {/*<Button
             disabled={isLoading}
             type={'submit'}
             variant={'contained'}
@@ -154,24 +151,43 @@ export const PackList = () => {
             onClick={addNewPack}
           >
             Add New Pack
-          </Button>
-          <div>
-            <AddNewPackModal />
-          </div>
-          <div>
+          </Button>*/}
+
+          {/*первый вариант*/}
+          {/*<div>
+            <AddNewPackModal saveBtn={addNewPack} />
+          </div>*/}
+          {/*      <div>
             <EditPackModal />
           </div>
           <div>
             <AddNewCardModal />
           </div>
           <div>
-            <EditCardModal />
+            <PackEditModal />
           </div>
           <div>
             <DeletePackModal />
           </div>
           <div>
             <DeleteCardModal />
+          </div>*/}
+
+          {/*второй вариант - действующий*/}
+          <div>
+            <PackBasicModal headerTitle={'Add New Pack'} saveItem={addNewPack}>
+              <Button
+                type={'submit'}
+                variant={'contained'}
+                color={'primary'}
+                sx={{
+                  width: '175px',
+                  borderRadius: '30px',
+                }}
+              >
+                Add !New! Pack
+              </Button>
+            </PackBasicModal>
           </div>
         </div>
       </div>

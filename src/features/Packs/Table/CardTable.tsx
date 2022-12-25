@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 
+import { DeleteCardModal } from '../../../common/components/Modals/VersionTwo/DeleteCardModal/DeleteCardModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -108,9 +109,12 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                       <IconButton onClick={() => handlerUpdateCard(row._id)}>
                         <BorderColorOutlined />
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteCard(row._id)}>
+
+                      <DeleteCardModal deleteItem={() => handleDeleteCard(row._id)} />
+
+                      {/*<IconButton onClick={() => handleDeleteCard(row._id)}>
                         <DeleteOutlineIcon />
-                      </IconButton>
+                      </IconButton>*/}
                     </span>
                   ) : null}
                 </SkeletonComponent>

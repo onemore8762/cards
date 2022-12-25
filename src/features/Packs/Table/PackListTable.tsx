@@ -14,6 +14,8 @@ import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
+import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo/DeleteBasicModal/DeleteBasicModal'
+import { PackEditModal } from '../../../common/components/Modals/VersionTwo/PackEditModal/PackEditModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -116,12 +118,25 @@ export const PackListTable = () => {
                     </IconButton>
                     {row.user_id === userId ? (
                       <span>
-                        <IconButton onClick={() => handleUpdatePacks(row._id)}>
+                        <PackEditModal saveItem={() => handleUpdatePacks(row._id)} />
+
+                        {/*<IconButton onClick={() => handleUpdatePacks(row._id)}>
                           <BorderColorOutlined />
-                        </IconButton>
-                        <IconButton onClick={() => handleDeletePacks(row._id)}>
+                        </IconButton>*/}
+
+                        <DeleteBasicModal
+                          headerTitle={'Delete Pack'}
+                          packName={'Pack Name'}
+                          deleteItem={() => handleDeletePacks(row._id)}
+                        >
+                          <IconButton>
+                            <DeleteOutlineIcon />
+                          </IconButton>
+                        </DeleteBasicModal>
+
+                        {/*<IconButton onClick={() => handleDeletePacks(row._id)}>
                           <DeleteOutlineIcon />
-                        </IconButton>
+                        </IconButton>*/}
                       </span>
                     ) : null}
                   </SkeletonComponent>

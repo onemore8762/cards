@@ -1,22 +1,37 @@
 import React from 'react'
 
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 
+import { SelectInput } from '../../../SelectInput/SelectInput'
 import { BasicModal } from '../BasicModal/BasicModal'
 import s from '../BasicModal/BasicModal.module.css'
 
-export const EditPackModal = () => {
+export const AddNewCardModal = () => {
   return (
-    <BasicModal titleChildren={'Edit Pack'}>
+    <BasicModal headerTitle={'Add New Card'}>
       <div className={s.packModal_main}>
-        <div>
-          <TextField id="standard-basic" label="Pack Name" variant="standard" sx={{ width: 360 }} />
+        <div className={s.newCardModal_textField_select}>
+          <SelectInput />
         </div>
-        <div className={s.packModal_checkbox}>
-          <FormGroup>
-            <FormControlLabel label={'Private Pack'} control={<Checkbox />} />
-          </FormGroup>
+        <div className={s.newCardModal_textField}>
+          <div>
+            <TextField
+              id="standard-basic"
+              label="Question"
+              variant="standard"
+              sx={{ width: 360 }}
+            />
+          </div>
+          <div>
+            <TextField
+              id="standard-basic"
+              label="Answer"
+              variant="standard"
+              sx={{ width: 360 }}
+              style={{ marginBottom: '25px' }}
+            />
+          </div>
         </div>
         <div className={s.packModal_buttons}>
           <div>
