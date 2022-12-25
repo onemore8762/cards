@@ -2,10 +2,19 @@ import React from 'react'
 
 import { Button, Card } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
+import { useNavigate } from 'react-router-dom'
+
+import { PATH } from '../../../common/path/path'
 
 import s from './CardQuestion.module.css'
 
 export const CardQuestion = () => {
+  const navigate = useNavigate()
+
+  const goToAnswerHandler = () => {
+    navigate(PATH.LEARN.ANSWER)
+  }
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
@@ -19,7 +28,7 @@ export const CardQuestion = () => {
               <Button
                 variant={'contained'}
                 color={'primary'}
-                onClick={() => {}}
+                onClick={goToAnswerHandler}
                 sx={{ borderRadius: '30px', mt: 3 }}
                 style={{ width: 335 }}
               >

@@ -28,7 +28,7 @@ import { deletePacksTC } from '../PackList/packList-reducer'
 import s2 from '../PackList/PackList.module.css'
 import { CardTable } from '../Table/CardTable'
 
-import { addCardTC, getCardsListTC, setUpdateCardsAC } from './card-reducer'
+import { addCardTC, getCardsListTC, setUpdateCardsAC, updateCardTC } from './card-reducer'
 import s from './Card.module.css'
 import {
   selectCardPackId,
@@ -94,6 +94,9 @@ export const Card = () => {
   const deletePackHandler = (packs_id: string) => {
     dispatch(deletePacksTC(packs_id))
     navigate(PATH.PROFILE.PACKLIST)
+  }
+  const goToLearnHandler = () => {
+    navigate(PATH.LEARN.QUESTION)
   }
 
   const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -171,7 +174,7 @@ export const Card = () => {
                 <PackBasicModal
                   headerTitle={'Edit Pack'}
                   saveItem={() => {
-                    alert('edit')
+                    alert('edit pack name')
                   }}
                 >
                   <MenuItem>
@@ -199,7 +202,7 @@ export const Card = () => {
                   <Typography textAlign="center">Delete</Typography>
                 </MenuItem>*/}
 
-                <MenuItem disabled={cardList.length === 0}>
+                <MenuItem disabled={cardList.length === 0} onClick={goToLearnHandler}>
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
                 </MenuItem>

@@ -19,6 +19,7 @@ import { PackEditModal } from '../../../common/components/Modals/VersionTwo-Work
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { PATH } from '../../../common/path/path'
 import s2 from '../../../common/styles/CommonStyles.module.css'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, setUpdatePackAC, updatePacksTC } from '../PackList/packList-reducer'
@@ -58,6 +59,9 @@ export const PackListTable = () => {
   }
   const goCardHandler = (packId: string) => {
     navigate(`/packs/${packId}`)
+  }
+  const goToLearnHandler = () => {
+    navigate(PATH.LEARN.QUESTION)
   }
 
   return (
@@ -113,7 +117,7 @@ export const PackListTable = () => {
                 </TableCell>
                 <TableCell>
                   <SkeletonComponent isLoading={isLoading}>
-                    <IconButton disabled={row.cardsCount === 0}>
+                    <IconButton disabled={row.cardsCount === 0} onClick={goToLearnHandler}>
                       <SchoolOutlinedIcon />
                     </IconButton>
                     {row.user_id === userId ? (
