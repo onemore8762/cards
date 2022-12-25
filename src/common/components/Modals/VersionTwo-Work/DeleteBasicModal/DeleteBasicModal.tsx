@@ -20,14 +20,14 @@ const style = {
   // p: 4,
 }
 
-type ModalPropsType = {
+type DeletePackModalPropsType = {
   children: JSX.Element
   headerTitle: ReactNode
   packName: ReactNode
   deleteItem: () => void
 }
 
-export const DeleteBasicModal: React.FC<ModalPropsType> = ({
+export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
   children,
   headerTitle,
   deleteItem,

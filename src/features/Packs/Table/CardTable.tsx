@@ -13,7 +13,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 
-import { DeleteCardModal } from '../../../common/components/Modals/VersionTwo/DeleteCardModal/DeleteCardModal'
+import { CardEditModal } from '../../../common/components/Modals/VersionTwo-Work/CardEditModal/CardEditModal'
+import { DeleteCardModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteCardModal/DeleteCardModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -34,13 +35,13 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
 
-  const handelSortTable = () => {
+  const sortTableHandler = () => {
     dispatch(sortCardsAC())
   }
-  const handlerUpdateCard = (idCard: string) => {
+  const updateCardHandler = (idCard: string) => {
     dispatch(updateCardTC({ _id: idCard, question: 'new question' }))
   }
-  const handleDeleteCard = (idCard: string) => {
+  const deleteCardHandler = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
   }
 
@@ -59,7 +60,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
-                onClick={handelSortTable}
+                onClick={sortTableHandler}
               >
                 Last Updated
               </TableSortLabel>
@@ -106,11 +107,12 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                   </IconButton>
                   {userId === createdId ? (
                     <span>
-                      <IconButton onClick={() => handlerUpdateCard(row._id)}>
+                      <CardEditModal saveItem={() => updateCardHandler(row._id)} />
+                      {/*<IconButton onClick={() => updateCardHandler(row._id)}>
                         <BorderColorOutlined />
-                      </IconButton>
+                      </IconButton>*/}
 
-                      <DeleteCardModal deleteItem={() => handleDeleteCard(row._id)} />
+                      <DeleteCardModal deleteItem={() => deleteCardHandler(row._id)} />
 
                       {/*<IconButton onClick={() => handleDeleteCard(row._id)}>
                         <DeleteOutlineIcon />

@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
+import { CardBasicModal } from '../../../common/components/Modals/VersionTwo-Work/CardBasicModal/CardBasicModal'
+import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -83,7 +85,7 @@ export const Card = () => {
     searchParams.delete('cardQuestion')
   }
 
-  const handlerAddCard = () => {
+  const addCardHandler = () => {
     dispatch(addCardTC({ cardsPack_id: cardPackId }))
   }
 
@@ -188,9 +190,9 @@ export const Card = () => {
 
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
-              <Button
+              /* <Button
                 disabled={isLoading}
-                onClick={handlerAddCard}
+                onClick={addCardHandler}
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
@@ -200,7 +202,21 @@ export const Card = () => {
                 }}
               >
                 Add new card
-              </Button>
+              </Button>*/
+
+              <CardBasicModal headerTitle={'Add New Card'} saveItem={addCardHandler}>
+                <Button
+                  type={'submit'}
+                  variant={'contained'}
+                  color={'primary'}
+                  sx={{
+                    width: '175px',
+                    borderRadius: '30px',
+                  }}
+                >
+                  Add New Card
+                </Button>
+              </CardBasicModal>
             ) : (
               <Button
                 type={'submit'}

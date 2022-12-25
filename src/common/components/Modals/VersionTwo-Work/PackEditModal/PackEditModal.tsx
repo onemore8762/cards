@@ -5,11 +5,11 @@ import { IconButton } from '@mui/material'
 
 import { PackBasicModal } from '../PackBasicModal/PackBasicModal'
 
-type EditPackPropsType = {
+type EditPackModalPropsType = {
   saveItem: () => void
 }
 
-export const PackEditModal: React.FC<EditPackPropsType> = ({ saveItem }) => {
+export const PackEditModal: React.FC<EditPackModalPropsType> = ({ saveItem }) => {
   return (
     <PackBasicModal headerTitle={'Edit Pack'} saveItem={saveItem}>
       <IconButton>

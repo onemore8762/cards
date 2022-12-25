@@ -7,8 +7,8 @@ import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
-import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo/DeleteBasicModal/DeleteBasicModal'
-import { PackBasicModal } from '../../../common/components/Modals/VersionTwo/PackBasicModal/PackBasicModal'
+import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
+import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
@@ -185,7 +185,7 @@ export const PackList = () => {
                   borderRadius: '30px',
                 }}
               >
-                Add !New! Pack
+                Add New Pack
               </Button>
             </PackBasicModal>
           </div>

@@ -1,12 +1,13 @@
 import React, { cloneElement, ReactNode, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 
+import { SelectInput } from '../../../SelectInput/SelectInput'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -27,7 +28,7 @@ type ModalPropsType = {
   saveItem: () => void
 }
 
-export const PackBasicModal: React.FC<ModalPropsType> = ({ children, headerTitle, saveItem }) => {
+export const CardBasicModal: React.FC<ModalPropsType> = ({ children, headerTitle, saveItem }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -55,18 +56,27 @@ export const PackBasicModal: React.FC<ModalPropsType> = ({ children, headerTitle
             </div>
             <div className={s.modalContent}>
               <div className={s.packModal_main}>
-                <div>
-                  <TextField
-                    id="standard-basic"
-                    label="Pack Name"
-                    variant="standard"
-                    sx={{ width: 360 }}
-                  />
+                <div className={s.newCardModal_textField_select}>
+                  <SelectInput />
                 </div>
-                <div className={s.packModal_checkbox}>
-                  <FormGroup>
-                    <FormControlLabel label={'Private Pack'} control={<Checkbox />} />
-                  </FormGroup>
+                <div className={s.newCardModal_textField}>
+                  <div>
+                    <TextField
+                      id="standard-basic"
+                      label="Question"
+                      variant="standard"
+                      sx={{ width: 360 }}
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      id="standard-basic"
+                      label="Answer"
+                      variant="standard"
+                      sx={{ width: 360 }}
+                      style={{ marginBottom: '25px' }}
+                    />
+                  </div>
                 </div>
                 <div className={s.packModal_buttons}>
                   <div>
