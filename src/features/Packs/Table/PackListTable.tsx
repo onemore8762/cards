@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -38,7 +38,7 @@ export const PackListTable = () => {
   const isLoading = useAppSelector(selectPackListIsLoading)
   const sort = useAppSelector(selectPackListSortPacks)
 
-  const handelSortTable = () => {
+  const sortTableHandler = () => {
     if (sort === '0updated') {
       dispatch(setUpdatePackAC({ sortPacks: '1updated' }))
       searchParams.set('sortPacks', '1updated')
@@ -50,13 +50,13 @@ export const PackListTable = () => {
     }
   }
 
-  const handleUpdatePacks = (packs_id: string) => {
+  const updatePackHandler = (packs_id: string) => {
     dispatch(updatePacksTC({ cardsPack: { name: 'Update Packs2', _id: packs_id } }))
   }
-  const handleDeletePacks = (packs_id: string) => {
+  const deletePackHandler = (packs_id: string) => {
     dispatch(deletePacksTC(packs_id))
   }
-  const handelGoCard = (packId: string) => {
+  const goCardHandler = (packId: string) => {
     navigate(`/packs/${packId}`)
   }
 
@@ -75,7 +75,7 @@ export const PackListTable = () => {
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
-                onClick={handelSortTable}
+                onClick={sortTableHandler}
                 disabled={isLoading}
               >
                 Last Updated
@@ -95,7 +95,7 @@ export const PackListTable = () => {
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                   <SkeletonComponent isLoading={isLoading}>
-                    <Button onClick={() => handelGoCard(row._id)} sx={{ color: 'black' }}>
+                    <Button onClick={() => goCardHandler(row._id)} sx={{ color: 'black' }}>
                       {row.name.length >= 30 ? row.name.slice(0, 29) + '...' : row.name}
                     </Button>
                   </SkeletonComponent>
@@ -118,8 +118,7 @@ export const PackListTable = () => {
                     </IconButton>
                     {row.user_id === userId ? (
                       <span>
-                        <PackEditModal saveItem={() => handleUpdatePacks(row._id)} />
-
+                        <PackEditModal saveItem={() => updatePackHandler(row._id)} />
                         {/*<IconButton onClick={() => handleUpdatePacks(row._id)}>
                           <BorderColorOutlined />
                         </IconButton>*/}
@@ -127,13 +126,12 @@ export const PackListTable = () => {
                         <DeleteBasicModal
                           headerTitle={'Delete Pack'}
                           packName={'Pack Name'}
-                          deleteItem={() => handleDeletePacks(row._id)}
+                          deleteItem={() => deletePackHandler(row._id)}
                         >
                           <IconButton>
                             <DeleteOutlineIcon />
                           </IconButton>
                         </DeleteBasicModal>
-
                         {/*<IconButton onClick={() => handleDeletePacks(row._id)}>
                           <DeleteOutlineIcon />
                         </IconButton>*/}

@@ -117,17 +117,17 @@ export const PackList = () => {
     searchParams.delete('packName')
   }
 
-  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
+  const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setUpdatePackAC({ pageCount: +event.target.value, page: 1 }))
     searchParams.set('pageCount', event.target.value)
   }
 
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
+  const changePageHandler = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setUpdatePackAC({ page: value }))
     searchParams.set('page', `${value}`)
   }
 
-  const addNewPack = () => {
+  const addNewPackHandler = () => {
     dispatch(
       addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
     )
@@ -175,7 +175,7 @@ export const PackList = () => {
 
           {/*второй вариант - действующий*/}
           <div>
-            <PackBasicModal headerTitle={'Add New Pack'} saveItem={addNewPack}>
+            <PackBasicModal headerTitle={'Add New Pack'} saveItem={addNewPackHandler}>
               <Button
                 type={'submit'}
                 variant={'contained'}
@@ -230,8 +230,8 @@ export const PackList = () => {
         page={page}
         maxPage={maxPage}
         pageCount={pageCount}
-        handleChangePage={handleChangePage}
-        handleChangePagination={handleChangePagination}
+        handleChangePage={changePageHandler}
+        handleChangePagination={changePaginationHandler}
       />
     </div>
   )

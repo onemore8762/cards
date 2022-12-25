@@ -9,11 +9,13 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { CardBasicModal } from '../../../common/components/Modals/VersionTwo-Work/CardBasicModal/CardBasicModal'
+import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
 import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
+import { PackEditModal } from '../../../common/components/Modals/VersionTwo-Work/PackEditModal/PackEditModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -22,6 +24,7 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
+import { deletePacksTC } from '../PackList/packList-reducer'
 import s2 from '../PackList/PackList.module.css'
 import { CardTable } from '../Table/CardTable'
 
@@ -42,6 +45,7 @@ import {
 } from './cardSelectors'
 
 export const Card = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
@@ -79,7 +83,6 @@ export const Card = () => {
       searchParams.delete('cardQuestion')
     }
   }
-
   const clearSearchInputValueHandler = () => {
     dispatch(setUpdateCardsAC({ cardQuestion: '' }))
     searchParams.delete('cardQuestion')
@@ -88,13 +91,16 @@ export const Card = () => {
   const addCardHandler = () => {
     dispatch(addCardTC({ cardsPack_id: cardPackId }))
   }
+  const deletePackHandler = (packs_id: string) => {
+    dispatch(deletePacksTC(packs_id))
+    navigate(PATH.PROFILE.PACKLIST)
+  }
 
-  const handleChangePagination = (event: ChangeEvent<HTMLSelectElement>) => {
+  const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
     searchParams.set('pageCount', event.target.value)
   }
-
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
+  const changePageHandler = (event: ChangeEvent<unknown>, value: number) => {
     dispatch(setUpdateCardsAC({ page: value }))
     searchParams.set('page', `${value}`)
   }
@@ -162,14 +168,37 @@ export const Card = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem>
+                <PackBasicModal
+                  headerTitle={'Edit Pack'}
+                  saveItem={() => {
+                    alert('edit')
+                  }}
+                >
+                  <MenuItem>
+                    <BorderColorOutlined sx={{ mr: 1 }} />
+                    <Typography textAlign="center">Edit</Typography>
+                  </MenuItem>
+                </PackBasicModal>
+                {/*<MenuItem>
                   <BorderColorOutlined sx={{ mr: 1 }} />
                   <Typography textAlign="center">Edit</Typography>
-                </MenuItem>
-                <MenuItem>
+                </MenuItem>*/}
+
+                <DeleteBasicModal
+                  headerTitle={'Delete Pack'}
+                  packName={'Pack Name'}
+                  deleteItem={() => deletePackHandler(cardPackId)}
+                >
+                  <MenuItem>
+                    <DeleteOutlineIcon sx={{ mr: 1 }} />
+                    <Typography textAlign="center">Delete</Typography>
+                  </MenuItem>
+                </DeleteBasicModal>
+                {/*<MenuItem>
                   <DeleteOutlineIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Delete</Typography>
-                </MenuItem>
+                </MenuItem>*/}
+
                 <MenuItem disabled={cardList.length === 0}>
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
@@ -253,8 +282,8 @@ export const Card = () => {
           page={page}
           maxPage={maxPage}
           pageCount={pageCount}
-          handleChangePage={handleChangePage}
-          handleChangePagination={handleChangePagination}
+          handleChangePage={changePageHandler}
+          handleChangePagination={changePaginationHandler}
         />
       </div>
     </Grid>
