@@ -258,8 +258,9 @@ export const Card = () => {
                   width: '175px',
                   borderRadius: '30px',
                 }}
+                onClick={goToLearnHandler}
               >
-                Learn to pack
+                Learn Pack
               </Button>
             )}
           </div>
