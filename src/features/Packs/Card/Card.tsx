@@ -28,7 +28,7 @@ import s2 from '../PackList/PackList.module.css'
 import { selectPackList } from '../PackList/packListSelectors'
 import { CardTable } from '../Table/CardTable'
 
-import { addCardTC, getCardsListTC, setUpdateCardsAC, updateCardTC } from './card-reducer'
+import { addCardTC, getCardsListTC, setUpdateCardsAC } from './card-reducer'
 import s from './Card.module.css'
 import {
   selectCardPackId,
@@ -110,8 +110,8 @@ export const Card = () => {
     dispatch(deletePacksTC(packs_id))
     navigate(PATH.PROFILE.PACKLIST)
   }
-  const goToLearnHandler = () => {
-    navigate(PATH.LEARN.QUESTION)
+  const goToLearnHandler = (packId: string) => {
+    navigate(`/question/${packId}`)
   }
   const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
     dispatch(
@@ -216,7 +216,10 @@ export const Card = () => {
                   </MenuItem>
                 </DeleteBasicModal>
 
-                <MenuItem disabled={cardList.length === 0} onClick={goToLearnHandler}>
+                <MenuItem
+                  disabled={cardList.length === 0}
+                  onClick={() => goToLearnHandler(cardPackId)}
+                >
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
                 </MenuItem>
@@ -266,7 +269,7 @@ export const Card = () => {
                   width: '175px',
                   borderRadius: '30px',
                 }}
-                onClick={goToLearnHandler}
+                onClick={() => goToLearnHandler(cardPackId)}
               >
                 Learn Pack
               </Button>

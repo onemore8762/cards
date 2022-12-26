@@ -12,7 +12,7 @@ export const PATH = {
     CARD: '/packs/:packId',
   },
   LEARN: {
-    QUESTION: '/question',
+    QUESTION: '/question/:packId',
     ANSWER: '/answer',
   },
   COMMON: {
