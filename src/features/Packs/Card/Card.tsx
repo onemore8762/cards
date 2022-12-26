@@ -23,8 +23,9 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
-import { deletePacksTC } from '../PackList/packList-reducer'
+import { deletePacksTC, updatePacksTC } from '../PackList/packList-reducer'
 import s2 from '../PackList/PackList.module.css'
+import { selectPackList } from '../PackList/packListSelectors'
 import { CardTable } from '../Table/CardTable'
 
 import { addCardTC, getCardsListTC, setUpdateCardsAC, updateCardTC } from './card-reducer'
@@ -46,6 +47,7 @@ import {
 export const Card = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const packList = useAppSelector(selectPackList)
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
   const packName = useAppSelector(selectCardsPackName)
@@ -66,6 +68,7 @@ export const Card = () => {
 
   const params = useParams() // packId достаем
 
+  // menu
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
@@ -73,6 +76,7 @@ export const Card = () => {
     setAnchorElUser(null)
   }
 
+  // search
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
     // setInputValue(e.currentTarget.value)
@@ -87,8 +91,20 @@ export const Card = () => {
     searchParams.delete('cardQuestion')
   }
 
-  const addCardHandler = () => {
-    dispatch(addCardTC({ cardsPack_id: cardPackId }))
+  // pack flow
+  const addCardHandler = (
+    questionInputValue: string,
+    answerInputValue: string
+    // questionType: string
+  ) => {
+    // dispatch(addCardTC({ cardsPack_id: cardPackId }))
+    dispatch(
+      addCardTC({
+        cardsPack_id: cardPackId,
+        question: questionInputValue,
+        answer: answerInputValue,
+      })
+    )
   }
   const deletePackHandler = (packs_id: string) => {
     dispatch(deletePacksTC(packs_id))
@@ -97,7 +113,13 @@ export const Card = () => {
   const goToLearnHandler = () => {
     navigate(PATH.LEARN.QUESTION)
   }
+  const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
+    dispatch(
+      updatePacksTC({ cardsPack: { _id: packs_id, name: inputValue, private: privateCheckbox } })
+    )
+  }
 
+  // pagination
   const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setUpdateCardsAC({ pageCount: +event.target.value }))
     searchParams.set('pageCount', event.target.value)
@@ -107,12 +129,13 @@ export const Card = () => {
     searchParams.set('page', `${value}`)
   }
 
+  // render
   useEffect(() => {
     if (initialize) {
       dispatch(getCardsListTC())
       setSearchParams(searchParams)
     }
-  }, [sort, pageCount, page, debouncedSearchQuestion])
+  }, [sort, pageCount, page, debouncedSearchQuestion, packList])
 
   useEffect(() => {
     if (!initialize) {
@@ -172,9 +195,9 @@ export const Card = () => {
               >
                 <PackBasicModal
                   headerTitle={'Edit Pack'}
-                  saveItem={() => {
-                    alert('edit pack name')
-                  }}
+                  saveItem={(inputValue: string, privateCheckbox: boolean) =>
+                    updatePackHandler(cardPackId, inputValue, privateCheckbox)
+                  }
                 >
                   <MenuItem>
                     <BorderColorOutlined sx={{ mr: 1 }} />
@@ -184,7 +207,7 @@ export const Card = () => {
 
                 <DeleteBasicModal
                   headerTitle={'Delete Pack'}
-                  packName={'Pack Name'}
+                  packName={packName}
                   deleteItem={() => deletePackHandler(cardPackId)}
                 >
                   <MenuItem>
@@ -213,7 +236,14 @@ export const Card = () => {
 
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
-              <CardBasicModal headerTitle={'Add New Card'} saveItem={addCardHandler}>
+              <CardBasicModal
+                headerTitle={'Add New Card'}
+                saveItem={(
+                  questionInputValue: string,
+                  answerInputValue: string
+                  // questionType: string
+                ) => addCardHandler(questionInputValue, answerInputValue /*, questionType*/)}
+              >
                 <Button
                   disabled={isLoading}
                   type={'submit'}
