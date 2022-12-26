@@ -22,13 +22,13 @@ const style = {
   // p: 4,
 }
 
-type AddPackModalPropsType = {
+type AddCardModalPropsType = {
   children: JSX.Element
   headerTitle: ReactNode
   saveItem: () => void
 }
 
-export const CardBasicModal: React.FC<AddPackModalPropsType> = ({
+export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   children,
   headerTitle,
   saveItem,

@@ -125,9 +125,11 @@ export const PackList = () => {
     searchParams.set('page', `${value}`)
   }
 
-  const addNewPackHandler = () => {
+  const addNewPackHandler = (inputValue: string, privateCheckbox: boolean) => {
     dispatch(
-      addPacksTC({ cardsPack: { name: 'no Name', deckCover: 'url or base64', private: false } })
+      addPacksTC({
+        cardsPack: { name: inputValue, deckCover: 'url or base64', private: privateCheckbox },
+      })
     )
   }
 

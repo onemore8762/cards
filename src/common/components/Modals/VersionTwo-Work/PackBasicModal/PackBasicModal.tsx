@@ -1,4 +1,11 @@
-import React, { cloneElement, ReactNode, useState } from 'react'
+import React, {
+  ChangeEvent,
+  cloneElement,
+  KeyboardEvent,
+  ReactNode,
+  useCallback,
+  useState,
+} from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
@@ -24,7 +31,7 @@ const style = {
 type AddPackModalPropsType = {
   children: JSX.Element
   headerTitle: ReactNode
-  saveItem: () => void
+  saveItem: (inputValue: string, privateCheckbox: boolean) => void
 }
 
 export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
@@ -32,15 +39,54 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   headerTitle,
   saveItem,
 }) => {
+  // text field flow
+  const [inputValue, setInputValue] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
+  const [privateCheckbox, setPrivateCheckbox] = useState<boolean>(false)
+
+  const MESSAGE_INPUT_VALUE_REQUIRED = 'The length of name must be minimum 1 character'
+
+  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.currentTarget.value)
+  }
+
+  const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (error !== null) {
+      setError('')
+    }
+
+    return event.key === 'Enter' ? saveBtnHandler() : ''
+  }
+
+  const saveBtnHandler = () => {
+    const trimValue = inputValue.trim()
+
+    if (trimValue) {
+      saveItem(trimValue, privateCheckbox)
+      setInputValue('')
+      handleClose()
+    } else {
+      setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    }
+  }
+
+  const changePrivateHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let newPrivateValue = event.currentTarget.checked
+
+    setPrivateCheckbox(newPrivateValue)
+  }
+
+  // const saveBtnHandler = () => {
+  //   saveItem()
+  //   handleClose()
+  // }
+
+  // menu
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const saveBtnHandler = () => {
-    saveItem()
-    handleClose()
-  }
-
+  // button for props
   const clonedChildren = cloneElement(children, {
     onClick: handleOpen,
   })
@@ -61,6 +107,11 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
               <div className={s.packModal_main}>
                 <div>
                   <TextField
+                    value={inputValue}
+                    error={!!error}
+                    onChange={onChangeInputHandler}
+                    onKeyDown={onKeyDownHandler}
+                    helperText={error}
                     id="standard-basic"
                     label="Pack Name"
                     variant="standard"
@@ -69,7 +120,12 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                 </div>
                 <div className={s.packModal_checkbox}>
                   <FormGroup>
-                    <FormControlLabel label={'Private Pack'} control={<Checkbox />} />
+                    <FormControlLabel
+                      label={'Private Pack'}
+                      control={
+                        <Checkbox checked={privateCheckbox} onChange={changePrivateHandler} />
+                      }
+                    />
                   </FormGroup>
                 </div>
                 <div className={s.packModal_buttons}>
