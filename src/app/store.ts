@@ -3,6 +3,7 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { LoginActionType, loginReducer } from '../features/Login/login-reducer'
 import { PackActionType, cardReducer } from '../features/Packs/Card/card-reducer'
+import { learnPackReducer } from '../features/Packs/LearnPack/learn-pack-reducer'
 import { PackListActionType, packListReducer } from '../features/Packs/PackList/packList-reducer'
 import {
   NewPasswordActionType,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   packList: packListReducer,
   pack: cardReducer,
+  learnPack: learnPackReducer,
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
