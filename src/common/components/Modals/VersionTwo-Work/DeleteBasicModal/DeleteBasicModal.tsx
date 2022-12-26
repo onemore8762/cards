@@ -33,10 +33,12 @@ export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
   deleteItem,
   packName,
 }) => {
+  // menu
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  // func flow
   const deleteBtnHandler = () => {
     deleteItem()
     handleClose()
