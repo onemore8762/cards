@@ -1,13 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
 import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
-import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
 import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
@@ -153,30 +151,11 @@ export const PackList = () => {
             Add New Pack
           </Button>*/}
 
-          {/*первый вариант*/}
-          {/*<div>
-            <AddNewPackModal saveBtn={addNewPack} />
-          </div>*/}
-          {/*      <div>
-            <EditPackModal />
-          </div>
-          <div>
-            <AddNewCardModal />
-          </div>
-          <div>
-            <PackEditModal />
-          </div>
-          <div>
-            <DeletePackModal />
-          </div>
-          <div>
-            <DeleteCardModal />
-          </div>*/}
-
           {/*второй вариант - действующий*/}
           <div>
             <PackBasicModal headerTitle={'Add New Pack'} saveItem={addNewPackHandler}>
               <Button
+                disabled={isLoading}
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}

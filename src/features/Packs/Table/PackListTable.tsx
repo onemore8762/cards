@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { Button, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
@@ -123,9 +122,6 @@ export const PackListTable = () => {
                     {row.user_id === userId ? (
                       <span>
                         <PackEditModal saveItem={() => updatePackHandler(row._id)} />
-                        {/*<IconButton onClick={() => handleUpdatePacks(row._id)}>
-                          <BorderColorOutlined />
-                        </IconButton>*/}
 
                         <DeleteBasicModal
                           headerTitle={'Delete Pack'}
@@ -136,9 +132,6 @@ export const PackListTable = () => {
                             <DeleteOutlineIcon />
                           </IconButton>
                         </DeleteBasicModal>
-                        {/*<IconButton onClick={() => handleDeletePacks(row._id)}>
-                          <DeleteOutlineIcon />
-                        </IconButton>*/}
                       </span>
                     ) : null}
                   </SkeletonComponent>

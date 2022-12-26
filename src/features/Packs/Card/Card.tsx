@@ -15,7 +15,6 @@ import { BackToPacksListButton } from '../../../common/components/BackToPacksLis
 import { CardBasicModal } from '../../../common/components/Modals/VersionTwo-Work/CardBasicModal/CardBasicModal'
 import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
 import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
-import { PackEditModal } from '../../../common/components/Modals/VersionTwo-Work/PackEditModal/PackEditModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -182,10 +181,6 @@ export const Card = () => {
                     <Typography textAlign="center">Edit</Typography>
                   </MenuItem>
                 </PackBasicModal>
-                {/*<MenuItem>
-                  <BorderColorOutlined sx={{ mr: 1 }} />
-                  <Typography textAlign="center">Edit</Typography>
-                </MenuItem>*/}
 
                 <DeleteBasicModal
                   headerTitle={'Delete Pack'}
@@ -197,10 +192,6 @@ export const Card = () => {
                     <Typography textAlign="center">Delete</Typography>
                   </MenuItem>
                 </DeleteBasicModal>
-                {/*<MenuItem>
-                  <DeleteOutlineIcon sx={{ mr: 1 }} />
-                  <Typography textAlign="center">Delete</Typography>
-                </MenuItem>*/}
 
                 <MenuItem disabled={cardList.length === 0} onClick={goToLearnHandler}>
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
@@ -222,22 +213,9 @@ export const Card = () => {
 
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
-              /* <Button
-                disabled={isLoading}
-                onClick={addCardHandler}
-                type={'submit'}
-                variant={'contained'}
-                color={'primary'}
-                sx={{
-                  width: '175px',
-                  borderRadius: '30px',
-                }}
-              >
-                Add new card
-              </Button>*/
-
               <CardBasicModal headerTitle={'Add New Card'} saveItem={addCardHandler}>
                 <Button
+                  disabled={isLoading}
                   type={'submit'}
                   variant={'contained'}
                   color={'primary'}

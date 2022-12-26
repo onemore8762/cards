@@ -1,9 +1,7 @@
 import React from 'react'
 
-import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import StarOutlineIcon from '@mui/icons-material/StarOutline'
-import { Box, CircularProgress, IconButton, TableSortLabel } from '@mui/material'
+import { CircularProgress, IconButton, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -23,6 +21,8 @@ import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Card/card-api'
 import { deleteCardTC, sortCardsAC, updateCardTC } from '../Card/card-reducer'
 import { selectPackUserId, selectSortCard } from '../Card/cardSelectors'
+
+import style from './CardTable.module.css'
 
 type packTablePropsType = {
   cardsList: Array<Cards>
@@ -90,34 +90,31 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
               </TableCell>
               <TableCell>
                 <SkeletonComponent isLoading={isLoading}>
-                  <IconButton>
-                    <StarOutlineIcon />
-                  </IconButton>
-                  <IconButton>
-                    <StarOutlineIcon />
-                  </IconButton>
-                  <IconButton>
-                    <StarOutlineIcon />
-                  </IconButton>
-                  <IconButton>
-                    <StarOutlineIcon />
-                  </IconButton>
-                  <IconButton>
-                    <StarOutlineIcon />
-                  </IconButton>
+                  <div className={style.starsRow}>
+                    <IconButton>
+                      <StarOutlineIcon />
+                    </IconButton>
+                    <IconButton>
+                      <StarOutlineIcon />
+                    </IconButton>
+                    <IconButton>
+                      <StarOutlineIcon />
+                    </IconButton>
+                    <IconButton>
+                      <StarOutlineIcon />
+                    </IconButton>
+                    <IconButton>
+                      <StarOutlineIcon />
+                    </IconButton>
+                  </div>
+
                   {userId === createdId ? (
-                    <span>
-                      <CardEditModal saveItem={() => updateCardHandler(row._id)} />
-                      {/*<IconButton onClick={() => updateCardHandler(row._id)}>
-                        <BorderColorOutlined />
-                      </IconButton>*/}
-
-                      <DeleteCardModal deleteItem={() => deleteCardHandler(row._id)} />
-
-                      {/*<IconButton onClick={() => handleDeleteCard(row._id)}>
-                        <DeleteOutlineIcon />
-                      </IconButton>*/}
-                    </span>
+                    <div className={style.editRow}>
+                      <span>
+                        <CardEditModal saveItem={() => updateCardHandler(row._id)} />
+                        <DeleteCardModal deleteItem={() => deleteCardHandler(row._id)} />
+                      </span>
+                    </div>
                   ) : null}
                 </SkeletonComponent>
               </TableCell>

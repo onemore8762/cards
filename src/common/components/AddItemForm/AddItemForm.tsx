@@ -7,7 +7,7 @@ export type TextFieldInputPropsType = {
   disabled?: boolean
 }
 
-export const TextFieldInput: React.FC<TextFieldInputPropsType> = React.memo(
+export const AddItemForm: React.FC<TextFieldInputPropsType> = React.memo(
   ({ addItem, disabled = false }) => {
     const [inputValue, setInputValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)

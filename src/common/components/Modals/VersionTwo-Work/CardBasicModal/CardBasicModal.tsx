@@ -22,13 +22,17 @@ const style = {
   // p: 4,
 }
 
-type ModalPropsType = {
+type AddPackModalPropsType = {
   children: JSX.Element
   headerTitle: ReactNode
   saveItem: () => void
 }
 
-export const CardBasicModal: React.FC<ModalPropsType> = ({ children, headerTitle, saveItem }) => {
+export const CardBasicModal: React.FC<AddPackModalPropsType> = ({
+  children,
+  headerTitle,
+  saveItem,
+}) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
