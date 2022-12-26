@@ -19,7 +19,11 @@ export const CardQuestion = () => {
   const [isClickButton, setIsClickButton] = useState(false)
   const { packId } = useParams()
   const packName = useAppSelector(state => state.learnPack.packName)
-  const randomQuestion = useAppSelector(state => state.learnPack.cardList)
+  const listQuestion = useAppSelector(state => state.learnPack.cardList)
+  // заглушка пока нет функции рандом
+  let randomQuestion = { question: 'error', answer: 'error' }
+
+  if (listQuestion && listQuestion.length) randomQuestion = listQuestion[0]
 
   useEffect(() => {
     if (packId) dispatch(getCardListTC(packId))
@@ -35,7 +39,7 @@ export const CardQuestion = () => {
         <Card sx={{ width: 440, minHeight: 200 }}>
           <div className={s.cardQuestion_main}>
             <div className={s.cardQuestion_question}>
-              <b>Question:</b> {randomQuestion[0].question}
+              <b>Question:</b> {randomQuestion.question}
             </div>
             <div className={s.cardQuestion_attempt}>Number of attempts for this question: 10</div>
             <div className={s.cardQuestion_button}>

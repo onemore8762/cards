@@ -1,9 +1,10 @@
 import { instance } from '../../../common/api/cards-api'
 
 export const learnPackApi = {
-  updateCardGrade(cardData: CardDataType) {
+  updateCardGrade(grade: number, card_id: string) {
     return instance.put('/cards/grade', {
-      cardData,
+      grade,
+      card_id,
     })
   },
 }

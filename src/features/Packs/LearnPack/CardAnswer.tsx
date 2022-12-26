@@ -4,13 +4,12 @@ import { Button } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 
 import { RadioGroupSelect } from '../../../common/components/RadioGroupSelect/RadioGroupSelect'
-import { Cards } from '../Card/card-api'
 
 import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
 
 type PropsType = {
-  randomQuestion: Array<Cards>
+  randomQuestion: any
 }
 
 export const CardAnswer = (props: PropsType) => {
@@ -19,7 +18,7 @@ export const CardAnswer = (props: PropsType) => {
       <Grid display="flex" justifyContent="center" alignItems="center">
         <div className={s.cardQuestion_main}>
           <div className={style.cardAnswer_answer}>
-            <b>Answer:</b> {props.randomQuestion[0].answer}
+            <b>Answer:</b> {props.randomQuestion.answer}
           </div>
           <div className={style.cardAnswer_rateYourself}>
             <RadioGroupSelect />
