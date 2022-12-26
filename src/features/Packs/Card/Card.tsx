@@ -92,8 +92,19 @@ export const Card = () => {
   }
 
   // pack flow
-  const addCardHandler = () => {
-    dispatch(addCardTC({ cardsPack_id: cardPackId }))
+  const addCardHandler = (
+    questionInputValue: string,
+    answerInputValue: string
+    // questionType: string
+  ) => {
+    // dispatch(addCardTC({ cardsPack_id: cardPackId }))
+    dispatch(
+      addCardTC({
+        cardsPack_id: cardPackId,
+        question: questionInputValue,
+        answer: answerInputValue,
+      })
+    )
   }
   const deletePackHandler = (packs_id: string) => {
     dispatch(deletePacksTC(packs_id))
@@ -225,7 +236,14 @@ export const Card = () => {
 
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
-              <CardBasicModal headerTitle={'Add New Card'} saveItem={addCardHandler}>
+              <CardBasicModal
+                headerTitle={'Add New Card'}
+                saveItem={(
+                  questionInputValue: string,
+                  answerInputValue: string
+                  // questionType: string
+                ) => addCardHandler(questionInputValue, answerInputValue /*, questionType*/)}
+              >
                 <Button
                   disabled={isLoading}
                   type={'submit'}

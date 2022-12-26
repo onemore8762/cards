@@ -7,10 +7,10 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 export const SelectInput = () => {
-  const [age, setAge] = useState('')
+  const [questionType, setQuestionType] = useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string)
+    setQuestionType(event.target.value as string)
   }
 
   return (
@@ -20,12 +20,12 @@ export const SelectInput = () => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={questionType}
           label="Choose a Question Format"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Text</MenuItem>
-          <MenuItem value={20}>Image</MenuItem>
+          <MenuItem value={'text'}>Text</MenuItem>
+          <MenuItem value={'image'}>Image</MenuItem>
         </Select>
       </FormControl>
     </Box>
