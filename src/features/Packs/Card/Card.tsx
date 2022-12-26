@@ -198,6 +198,7 @@ export const Card = () => {
                   saveItem={(inputValue: string, privateCheckbox: boolean) =>
                     updatePackHandler(cardPackId, inputValue, privateCheckbox)
                   }
+                  handleCloseUserMenu={handleCloseUserMenu}
                 >
                   <MenuItem>
                     <BorderColorOutlined sx={{ mr: 1 }} />
@@ -209,6 +210,7 @@ export const Card = () => {
                   headerTitle={'Delete Pack'}
                   packName={packName}
                   deleteItem={() => deletePackHandler(cardPackId)}
+                  handleCloseUserMenu={handleCloseUserMenu}
                 >
                   <MenuItem>
                     <DeleteOutlineIcon sx={{ mr: 1 }} />

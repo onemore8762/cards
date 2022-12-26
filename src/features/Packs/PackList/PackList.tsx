@@ -138,22 +138,6 @@ export const PackList = () => {
       <div className={s.header_row}>
         <PageTitle title={'Packs List'} />
         <div className={s.addNewPackBtn}>
-          {/*изначальный вариант*/}
-          {/*<Button
-            disabled={isLoading}
-            type={'submit'}
-            variant={'contained'}
-            color={'primary'}
-            sx={{
-              width: '175px',
-              borderRadius: '30px',
-            }}
-            onClick={addNewPack}
-          >
-            Add New Pack
-          </Button>*/}
-
-          {/*второй вариант - действующий*/}
           <div>
             <PackBasicModal headerTitle={'Add New Pack'} saveItem={addNewPackHandler}>
               <Button

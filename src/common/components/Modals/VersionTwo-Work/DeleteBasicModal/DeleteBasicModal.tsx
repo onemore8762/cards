@@ -25,6 +25,7 @@ type DeletePackModalPropsType = {
   headerTitle: ReactNode
   packName: ReactNode
   deleteItem: () => void
+  handleCloseUserMenu?: () => void
 }
 
 export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
@@ -32,10 +33,14 @@ export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
   headerTitle,
   deleteItem,
   packName,
+  handleCloseUserMenu,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true)
+    handleCloseUserMenu?.()
+  }
   const handleClose = () => setOpen(false)
 
   // func flow
