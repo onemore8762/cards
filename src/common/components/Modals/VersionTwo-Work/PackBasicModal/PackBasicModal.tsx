@@ -32,16 +32,21 @@ type AddPackModalPropsType = {
   children: JSX.Element
   headerTitle: ReactNode
   saveItem: (inputValue: string, privateCheckbox: boolean) => void
+  handleCloseUserMenu?: () => void
 }
 
 export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   children,
   headerTitle,
   saveItem,
+  handleCloseUserMenu,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true)
+    handleCloseUserMenu?.()
+  }
   const handleClose = () => setOpen(false)
 
   // text field flow
