@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined'
+import FilterAltOffTwoToneIcon from '@mui/icons-material/FilterAltOffTwoTone'
 import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
@@ -199,7 +199,7 @@ export const PackList = () => {
         </div>
         <div className={s.filter_icon}>
           <IconButton sx={{ borderRadius: '0' }} onClick={filterDefault} disabled={isLoading}>
-            <FilterAltOutlined fontSize="medium" />
+            <FilterAltOffTwoToneIcon fontSize="medium" />
           </IconButton>
         </div>
       </div>

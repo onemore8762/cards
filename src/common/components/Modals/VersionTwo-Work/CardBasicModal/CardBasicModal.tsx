@@ -47,7 +47,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [questionType, setQuestionType] = useState<string>('')
   const [questionInputValue, setQuestionInputValue] = useState<string>('')
   const [answerInputValue, setAnswerInputValue] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
+  // const [error, setError] = useState<string | null>(null)
   const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
 
@@ -63,8 +63,9 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   }
 
   const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (error !== null) {
-      setError('')
+    if (questionInputValue !== null || answerInputValue !== null) {
+      setErrorQuestion('')
+      setErrorAnswer('')
     }
 
     return event.key === 'Enter' ? saveBtnHandler() : ''
@@ -82,27 +83,23 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       saveItem(trimQuestionValue, trimAnswerValue /*, questionType*/)
       setQuestionInputValue('')
       setAnswerInputValue('')
-      setQuestionType('')
+      // setQuestionType('')
       handleClose()
     } else {
-      setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+      setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+      setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
     }
   }
 
-  // const saveBtnHandler = () => {
-  //   saveItem()
-  //   handleClose()
-  // }
-
   // render
-  // useEffect(() => {
-  //   if (questionInputValue.length > INPUT_MAX_LENGTH) {
-  //     setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-  //   }
-  //   if (answerInputValue.length > INPUT_MAX_LENGTH) {
-  //     setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-  //   }
-  // }, [questionInputValue, answerInputValue])
+  useEffect(() => {
+    if (questionInputValue.length > INPUT_MAX_LENGTH) {
+      setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+    if (answerInputValue.length > INPUT_MAX_LENGTH) {
+      setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+  }, [questionInputValue, answerInputValue])
 
   // menu
   const [open, setOpen] = useState(false)
@@ -153,10 +150,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                   <div>
                     <TextField
                       value={questionInputValue}
-                      error={!!error}
+                      error={!!errorQuestion}
                       onChange={onChangeQuestionHandler}
                       onKeyDown={onKeyDownHandler}
-                      helperText={error}
+                      helperText={errorQuestion}
                       id="standard-basic"
                       label="Question"
                       variant="standard"
@@ -166,10 +163,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                   <div>
                     <TextField
                       value={answerInputValue}
-                      error={!!error}
+                      error={!!errorAnswer}
                       onChange={onChangeAnswerHandler}
                       onKeyDown={onKeyDownHandler}
-                      helperText={error}
+                      helperText={errorAnswer}
                       id="standard-basic"
                       label="Answer"
                       variant="standard"
