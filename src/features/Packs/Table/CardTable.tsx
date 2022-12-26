@@ -112,7 +112,10 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                     <div className={style.editRow}>
                       <span>
                         <CardEditModal saveItem={() => updateCardHandler(row._id)} />
-                        <DeleteCardModal deleteItem={() => deleteCardHandler(row._id)} />
+                        <DeleteCardModal
+                          packName={row.question}
+                          deleteItem={() => deleteCardHandler(row._id)}
+                        />
                       </span>
                     </div>
                   ) : null}

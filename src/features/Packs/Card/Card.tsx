@@ -184,7 +184,7 @@ export const Card = () => {
 
                 <DeleteBasicModal
                   headerTitle={'Delete Pack'}
-                  packName={'Pack Name'}
+                  packName={packName}
                   deleteItem={() => deletePackHandler(cardPackId)}
                 >
                   <MenuItem>

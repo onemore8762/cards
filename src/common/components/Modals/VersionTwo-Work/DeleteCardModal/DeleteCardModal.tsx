@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
@@ -6,12 +6,13 @@ import { IconButton } from '@mui/material'
 import { DeleteBasicModal } from '../DeleteBasicModal/DeleteBasicModal'
 
 type DeleteCardModalPropsType = {
+  packName: ReactNode
   deleteItem: () => void
 }
 
-export const DeleteCardModal: React.FC<DeleteCardModalPropsType> = ({ deleteItem }) => {
+export const DeleteCardModal: React.FC<DeleteCardModalPropsType> = ({ packName, deleteItem }) => {
   return (
-    <DeleteBasicModal headerTitle={'Delete Card'} packName={'Card Name'} deleteItem={deleteItem}>
+    <DeleteBasicModal headerTitle={'Delete Card'} packName={packName} deleteItem={deleteItem}>
       <IconButton>
         <DeleteOutlineIcon />
       </IconButton>

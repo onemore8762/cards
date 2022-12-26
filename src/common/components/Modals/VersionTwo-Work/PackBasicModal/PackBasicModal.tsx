@@ -3,7 +3,7 @@ import React, {
   cloneElement,
   KeyboardEvent,
   ReactNode,
-  useCallback,
+  useEffect,
   useState,
 } from 'react'
 
@@ -44,7 +44,9 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   const [error, setError] = useState<string | null>(null)
   const [privateCheckbox, setPrivateCheckbox] = useState<boolean>(false)
 
-  const MESSAGE_INPUT_VALUE_REQUIRED = 'The length of name must be minimum 1 character'
+  const INPUT_MAX_LENGTH = 40
+  const MESSAGE_INPUT_VALUE_REQUIRED = 'Name length must be minimum 1 symbol'
+  const MESSAGE_INPUT_VALUE_LENGTH = `Name length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.currentTarget.value)
@@ -81,6 +83,12 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   //   handleClose()
   // }
 
+  useEffect(() => {
+    if (inputValue.length > INPUT_MAX_LENGTH) {
+      setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+  }, [inputValue])
+
   // menu
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -113,9 +121,9 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     onKeyDown={onKeyDownHandler}
                     helperText={error}
                     id="standard-basic"
-                    label="Pack Name"
+                    label="New Pack Name"
                     variant="standard"
-                    sx={{ width: 360 }}
+                    sx={{ width: 360, height: 50 }}
                   />
                 </div>
                 <div className={s.packModal_checkbox}>
@@ -153,6 +161,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                         borderRadius: '30px',
                       }}
                       onClick={saveBtnHandler}
+                      disabled={inputValue.length > INPUT_MAX_LENGTH}
                     >
                       Save
                     </Button>

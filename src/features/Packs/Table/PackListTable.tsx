@@ -51,7 +51,6 @@ export const PackListTable = () => {
   }
 
   const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
-    console.log(inputValue, privateCheckbox)
     dispatch(
       updatePacksTC({ cardsPack: { _id: packs_id, name: inputValue, private: privateCheckbox } })
     )
@@ -132,7 +131,7 @@ export const PackListTable = () => {
 
                         <DeleteBasicModal
                           headerTitle={'Delete Pack'}
-                          packName={'Pack Name'}
+                          packName={row.name}
                           deleteItem={() => deletePackHandler(row._id)}
                         >
                           <IconButton>
