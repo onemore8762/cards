@@ -43,6 +43,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   headerTitle,
   saveItem,
 }) => {
+  // menu
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   // text field flow
   const [questionType, setQuestionType] = useState<string>('')
   const [questionInputValue, setQuestionInputValue] = useState<string>('')
@@ -100,11 +105,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
     }
   }, [questionInputValue, answerInputValue])
-
-  // menu
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
 
   // button for props
   const clonedChildren = cloneElement(children, {

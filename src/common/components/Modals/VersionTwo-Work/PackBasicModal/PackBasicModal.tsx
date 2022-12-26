@@ -39,6 +39,11 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   headerTitle,
   saveItem,
 }) => {
+  // menu
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   // text field flow
   const [inputValue, setInputValue] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
@@ -57,7 +62,9 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
       setError('')
     }
 
-    return event.key === 'Enter' ? saveBtnHandler() : ''
+    if (event.key === 'Enter') {
+      saveBtnHandler()
+    }
   }
 
   const saveBtnHandler = () => {
@@ -77,11 +84,6 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
 
     setPrivateCheckbox(newPrivateValue)
   }
-
-  // menu
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
 
   // button for props
   const clonedChildren = cloneElement(children, {
