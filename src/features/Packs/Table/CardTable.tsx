@@ -1,7 +1,6 @@
 import React from 'react'
 
-import StarOutlineIcon from '@mui/icons-material/StarOutline'
-import { CircularProgress, IconButton, TableSortLabel } from '@mui/material'
+import { CircularProgress, Rating, TableSortLabel } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -95,21 +94,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
               <TableCell>
                 <SkeletonComponent isLoading={isLoading}>
                   <div className={style.starsRow}>
-                    <IconButton>
-                      <StarOutlineIcon />
-                    </IconButton>
-                    <IconButton>
-                      <StarOutlineIcon />
-                    </IconButton>
-                    <IconButton>
-                      <StarOutlineIcon />
-                    </IconButton>
-                    <IconButton>
-                      <StarOutlineIcon />
-                    </IconButton>
-                    <IconButton>
-                      <StarOutlineIcon />
-                    </IconButton>
+                    <Rating name="read-only" value={row.grade} readOnly />
                   </div>
 
                   {userId === createdId ? (
