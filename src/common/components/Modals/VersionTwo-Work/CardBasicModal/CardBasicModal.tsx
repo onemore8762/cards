@@ -18,7 +18,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
-import { SelectInput } from '../../../SelectInput/SelectInput'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -49,6 +48,8 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [questionInputValue, setQuestionInputValue] = useState<string>('')
   const [answerInputValue, setAnswerInputValue] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
+  const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
+  const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
 
   const INPUT_MAX_LENGTH = 40
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
@@ -95,8 +96,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
 
   // render
   // useEffect(() => {
-  //   if (questionInputValue.length > INPUT_MAX_LENGTH || answerInputValue.length > INPUT_MAX_LENGTH) {
-  //     setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+  //   if (questionInputValue.length > INPUT_MAX_LENGTH) {
+  //     setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+  //   }
+  //   if (answerInputValue.length > INPUT_MAX_LENGTH) {
+  //     setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
   //   }
   // }, [questionInputValue, answerInputValue])
 
@@ -156,7 +160,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       id="standard-basic"
                       label="Question"
                       variant="standard"
-                      sx={{ width: 360 }}
+                      sx={{ width: 360, height: 50 }}
                     />
                   </div>
                   <div>
@@ -169,7 +173,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       id="standard-basic"
                       label="Answer"
                       variant="standard"
-                      sx={{ width: 360 }}
+                      sx={{ width: 360, height: 50 }}
                       style={{ marginBottom: '25px' }}
                     />
                   </div>
@@ -199,6 +203,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                         borderRadius: '30px',
                       }}
                       onClick={saveBtnHandler}
+                      disabled={
+                        questionInputValue.length > INPUT_MAX_LENGTH ||
+                        answerInputValue.length > INPUT_MAX_LENGTH
+                      }
                     >
                       Save
                     </Button>

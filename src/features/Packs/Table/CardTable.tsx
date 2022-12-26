@@ -38,8 +38,12 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const sortTableHandler = () => {
     dispatch(sortCardsAC())
   }
-  const updateCardHandler = (idCard: string) => {
-    dispatch(updateCardTC({ _id: idCard, question: 'new question' }))
+  const updateCardHandler = (
+    idCard: string,
+    questionInputValue: string,
+    answerInputValue: string
+  ) => {
+    dispatch(updateCardTC({ _id: idCard, question: questionInputValue, answer: answerInputValue }))
   }
   const deleteCardHandler = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
@@ -111,7 +115,12 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                   {userId === createdId ? (
                     <div className={style.editRow}>
                       <span>
-                        <CardEditModal saveItem={() => updateCardHandler(row._id)} />
+                        <CardEditModal
+                          saveItem={(
+                            questionInputValue: string,
+                            answerInputValue: string /*questionType: string*/
+                          ) => updateCardHandler(row._id, questionInputValue, answerInputValue)}
+                        />
                         <DeleteCardModal
                           packName={row.question}
                           deleteItem={() => deleteCardHandler(row._id)}

@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material'
 import { CardBasicModal } from '../CardBasicModal/CardBasicModal'
 
 type CardEditModalPropsType = {
-  saveItem: () => void
+  saveItem: (questionInputValue: string, answerInputValue: string /*questionType: string*/) => void
 }
 
 export const CardEditModal: React.FC<CardEditModalPropsType> = ({ saveItem }) => {
