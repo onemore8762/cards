@@ -195,6 +195,7 @@ export const Card = () => {
               >
                 <PackBasicModal
                   headerTitle={'Edit Pack'}
+                  packName={packName}
                   saveItem={(inputValue: string, privateCheckbox: boolean) =>
                     updatePackHandler(cardPackId, inputValue, privateCheckbox)
                   }
