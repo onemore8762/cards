@@ -34,7 +34,9 @@ const style = {
 
 type AddCardModalPropsType = {
   children: JSX.Element
-  headerTitle: ReactNode
+  headerTitle: string
+  questionDomainValue?: string
+  answerDomainValue?: string
   saveItem: (questionInputValue: string, answerInputValue: string /*questionType: string*/) => void
 }
 
@@ -42,6 +44,8 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   children,
   headerTitle,
   saveItem,
+  questionDomainValue,
+  answerDomainValue,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
@@ -105,6 +109,13 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
     }
   }, [questionInputValue, answerInputValue])
+
+  useEffect(() => {
+    if (questionDomainValue && answerDomainValue) {
+      setQuestionInputValue(questionDomainValue)
+      setAnswerInputValue(answerDomainValue)
+    }
+  }, [questionDomainValue, answerDomainValue])
 
   // button for props
   const clonedChildren = cloneElement(children, {

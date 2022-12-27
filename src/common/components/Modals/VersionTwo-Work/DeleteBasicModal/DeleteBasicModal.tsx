@@ -22,8 +22,8 @@ const style = {
 
 type DeletePackModalPropsType = {
   children: JSX.Element
-  headerTitle: ReactNode
-  packName: ReactNode
+  headerTitle: string
+  packName: string
   deleteItem: () => void
   handleCloseUserMenu?: () => void
 }
