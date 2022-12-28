@@ -30,7 +30,7 @@ export const CardAnswer = (props: PropsType) => {
             <b>Answer:</b> {props.randomQuestion.answer}
           </div>
           <div className={style.cardAnswer_rateYourself}>
-            <RadioGroupSelect randomQuestion={props.randomQuestion} />
+            <RadioGroupSelect />
           </div>
           <div className={s.cardQuestion_button}>
             <Button

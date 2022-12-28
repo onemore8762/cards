@@ -9,7 +9,6 @@ export const RadioGroupSelect = () => {
   const dispatch = useAppDispatch()
 
   const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value)
     dispatch(setGradeAC(e.currentTarget.value))
   }
 
