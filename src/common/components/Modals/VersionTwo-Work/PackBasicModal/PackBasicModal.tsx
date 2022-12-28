@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  cloneElement,
-  KeyboardEvent,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react'
+import React, { ChangeEvent, cloneElement, KeyboardEvent, useEffect, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
@@ -30,7 +23,8 @@ const style = {
 
 type AddPackModalPropsType = {
   children: JSX.Element
-  headerTitle: ReactNode
+  headerTitle: string
+  packName?: string
   saveItem: (inputValue: string, privateCheckbox: boolean) => void
   handleCloseUserMenu?: () => void
 }
@@ -38,6 +32,7 @@ type AddPackModalPropsType = {
 export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   children,
   headerTitle,
+  packName,
   saveItem,
   handleCloseUserMenu,
 }) => {
@@ -62,15 +57,13 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setInputValue(event.currentTarget.value)
   }
 
-  const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (error !== null) {
-      setError('')
-    }
-
-    if (event.key === 'Enter') {
-      saveBtnHandler()
-    }
-  }
+  // const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+  //   if (error !== null) {
+  //     setError('')
+  //   }
+  //
+  //   return event.key === 'Enter' ? saveBtnHandler() : ''
+  // }
 
   const saveBtnHandler = () => {
     const trimValue = inputValue.trim()
@@ -97,7 +90,13 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
 
   // render
   useEffect(() => {
-    if (inputValue.length > INPUT_MAX_LENGTH) {
+    if (packName) {
+      setInputValue(packName)
+    }
+  }, [packName])
+
+  useEffect(() => {
+    if (inputValue && inputValue.length > INPUT_MAX_LENGTH) {
       setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
     }
   }, [inputValue])
@@ -121,7 +120,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     value={inputValue}
                     error={!!error}
                     onChange={onChangeInputHandler}
-                    onKeyDown={onKeyDownHandler}
+                    // onKeyDown={onKeyDownHandler}
                     helperText={error}
                     id="standard-basic"
                     label="New Pack Name"

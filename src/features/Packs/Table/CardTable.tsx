@@ -101,6 +101,8 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                     <div className={style.editRow}>
                       <span>
                         <CardEditModal
+                          questionDomainValue={row.question}
+                          answerDomainValue={row.answer}
                           saveItem={(
                             questionInputValue: string,
                             answerInputValue: string /*questionType: string*/

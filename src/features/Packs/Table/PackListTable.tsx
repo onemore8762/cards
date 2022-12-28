@@ -126,6 +126,7 @@ export const PackListTable = () => {
                     {row.user_id === userId ? (
                       <span>
                         <PackEditModal
+                          packName={row.name}
                           saveItem={(inputValue: string, privateCheckbox: boolean) =>
                             updatePackHandler(row._id, inputValue, privateCheckbox)
                           }

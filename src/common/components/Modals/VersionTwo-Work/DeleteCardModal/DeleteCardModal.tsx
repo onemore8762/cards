@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material'
 import { DeleteBasicModal } from '../DeleteBasicModal/DeleteBasicModal'
 
 type DeleteCardModalPropsType = {
-  packName: ReactNode
+  packName: string
   deleteItem: () => void
 }
 

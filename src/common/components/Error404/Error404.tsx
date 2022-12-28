@@ -4,6 +4,7 @@ import { Box, Button, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import image404 from '../../../assets/images/404.svg'
+import { PATH } from '../../path/path'
 
 import s from './Error404.module.css'
 
@@ -23,7 +24,7 @@ export const Error404 = () => {
             variant="contained"
             sx={{ borderRadius: '30px' }}
             onClick={() => {
-              navigate('/profile')
+              navigate(PATH.PROFILE.PACKLIST)
             }}
           >
             Back to home page

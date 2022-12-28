@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactNode, useState } from 'react'
+import React, { cloneElement, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import Box from '@mui/material/Box'
@@ -22,8 +22,8 @@ const style = {
 
 type DeletePackModalPropsType = {
   children: JSX.Element
-  headerTitle: ReactNode
-  packName: ReactNode
+  headerTitle: string
+  packName: string
   deleteItem: () => void
   handleCloseUserMenu?: () => void
 }
