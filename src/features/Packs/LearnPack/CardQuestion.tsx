@@ -68,7 +68,7 @@ export const CardQuestion = () => {
                         <b>Answer:</b> {randomCard.answer}
                       </div>
                       <div className={style.cardAnswer_rateYourself}>
-                        <RadioGroupSelect randomQuestion={randomCard} />
+                        <RadioGroupSelect />
                       </div>
                       <div className={s.cardQuestion_button}>
                         <Button
