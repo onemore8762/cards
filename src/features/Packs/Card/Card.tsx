@@ -61,7 +61,7 @@ export const Card = () => {
   const initialize = useAppSelector(selectInitialize)
   const sort = useAppSelector(selectSortCard)
 
-  const randomCard = cardList[Math.floor(Math.random() * cardList.length)]
+  //const randomCard = cardList[Math.floor(Math.random() * cardList.length)]
   const [searchParams, setSearchParams] = useSearchParams()
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   // const [inputValue, setInputValue] = useState<string | null>(null)
@@ -111,8 +111,8 @@ export const Card = () => {
     dispatch(deletePacksTC(packs_id))
     navigate(PATH.PROFILE.PACKLIST)
   }
-  const goToLearnHandler = (packId: string) => {
-    navigate(`/question/${packId}`)
+  const goToLearnHandler = () => {
+    if (params.packId) navigate(`/question/${params.packId}`)
   }
   const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
     dispatch(
@@ -220,10 +220,7 @@ export const Card = () => {
                   </MenuItem>
                 </DeleteBasicModal>
 
-                <MenuItem
-                  disabled={cardList.length === 0}
-                  onClick={() => goToLearnHandler(randomCard._id)}
-                >
+                <MenuItem disabled={cardList.length === 0} onClick={goToLearnHandler}>
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
                 </MenuItem>
@@ -273,7 +270,7 @@ export const Card = () => {
                   width: '175px',
                   borderRadius: '30px',
                 }}
-                onClick={() => goToLearnHandler(randomCard._id)}
+                onClick={goToLearnHandler}
               >
                 Learn Pack
               </Button>
