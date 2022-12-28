@@ -61,6 +61,7 @@ export const Card = () => {
   const initialize = useAppSelector(selectInitialize)
   const sort = useAppSelector(selectSortCard)
 
+  const randomCard = cardList[Math.floor(Math.random() * cardList.length)]
   const [searchParams, setSearchParams] = useSearchParams()
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   // const [inputValue, setInputValue] = useState<string | null>(null)
@@ -220,7 +221,7 @@ export const Card = () => {
 
                 <MenuItem
                   disabled={cardList.length === 0}
-                  onClick={() => goToLearnHandler(cardPackId)}
+                  onClick={() => goToLearnHandler(randomCard._id)}
                 >
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
@@ -271,7 +272,7 @@ export const Card = () => {
                   width: '175px',
                   borderRadius: '30px',
                 }}
-                onClick={() => goToLearnHandler(cardPackId)}
+                onClick={() => goToLearnHandler(randomCard._id)}
               >
                 Learn Pack
               </Button>

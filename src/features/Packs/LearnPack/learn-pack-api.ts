@@ -10,8 +10,3 @@ export const learnPackApi = {
 }
 
 //type
-
-export type CardDataType = {
-  grade: number
-  card_id: string
-}

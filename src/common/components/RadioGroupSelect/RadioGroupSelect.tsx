@@ -1,17 +1,16 @@
 import { ChangeEvent } from 'react'
 
-import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 
-import { updateGradeTC } from '../../../features/Packs/LearnPack/learn-pack-reducer'
+import { setGradeAC } from '../../../features/Packs/LearnPack/learn-pack-reducer'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 export const RadioGroupSelect = () => {
   const dispatch = useAppDispatch()
-  const { packId } = useParams()
 
   const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (packId) dispatch(updateGradeTC(packId, e.currentTarget.value))
+    // console.log(e.currentTarget.value)
+    dispatch(setGradeAC(e.currentTarget.value))
   }
 
   return (

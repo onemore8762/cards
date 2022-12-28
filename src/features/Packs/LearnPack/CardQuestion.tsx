@@ -6,28 +6,32 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { useParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
+import { RadioGroupSelect } from '../../../common/components/RadioGroupSelect/RadioGroupSelect'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 
-import { CardAnswer } from './CardAnswer'
+import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
-import { getCardListTC } from './learn-pack-reducer'
+import { getRandomCardTC, updateGradeTC } from './learn-pack-reducer'
 
 export const CardQuestion = () => {
   const dispatch = useAppDispatch()
   const [isClickButton, setIsClickButton] = useState(false)
   const { packId } = useParams()
   const packName = useAppSelector(state => state.learnPack.packName)
-  const listQuestion = useAppSelector(state => state.learnPack.cardList)
-  // заглушка пока нет функции рандом
-  let randomQuestion = { question: 'error', answer: 'error' }
-
-  if (listQuestion && listQuestion.length) randomQuestion = listQuestion[0]
+  const grade = useAppSelector(state => state.learnPack.grade)
+  const randomCard = useAppSelector(state => state.learnPack.randomCard)
 
   useEffect(() => {
-    if (packId) dispatch(getCardListTC(packId))
+    if (packId) dispatch(getRandomCardTC(packId))
   }, [])
+
+  const setAnswerHandler = () => {
+    dispatch(updateGradeTC(randomCard._id, grade))
+    if (packId) dispatch(getRandomCardTC(packId))
+    setIsClickButton(false)
+  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -39,9 +43,11 @@ export const CardQuestion = () => {
         <Card sx={{ width: 440, minHeight: 200 }}>
           <div className={s.cardQuestion_main}>
             <div className={s.cardQuestion_question}>
-              <b>Question:</b> {randomQuestion.question}
+              <b>Question:</b> {randomCard.question}
             </div>
-            <div className={s.cardQuestion_attempt}>Number of attempts for this question: 10</div>
+            <div className={s.cardQuestion_attempt}>
+              Number of attempts for this question: {randomCard.shots}
+            </div>
             <div className={s.cardQuestion_button}>
               {!isClickButton && (
                 <Button
@@ -54,7 +60,31 @@ export const CardQuestion = () => {
                   Show Answer
                 </Button>
               )}
-              {isClickButton && <CardAnswer randomQuestion={randomQuestion} />}
+              {isClickButton && (
+                <Grid container justifyContent={'center'}>
+                  <Grid display="flex" justifyContent="center" alignItems="center">
+                    <div className={s.cardQuestion_main}>
+                      <div className={style.cardAnswer_answer}>
+                        <b>Answer:</b> {randomCard.answer}
+                      </div>
+                      <div className={style.cardAnswer_rateYourself}>
+                        <RadioGroupSelect randomQuestion={randomCard} />
+                      </div>
+                      <div className={s.cardQuestion_button}>
+                        <Button
+                          variant={'contained'}
+                          color={'primary'}
+                          onClick={setAnswerHandler}
+                          sx={{ borderRadius: '30px', mt: 3 }}
+                          style={{ width: 335 }}
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </div>
+                  </Grid>
+                </Grid>
+              )}
             </div>
           </div>
         </Card>
