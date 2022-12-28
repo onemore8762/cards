@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  cloneElement,
-  KeyboardEvent,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react'
+import React, { ChangeEvent, cloneElement, KeyboardEvent, useEffect, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import { TextField } from '@mui/material'
@@ -71,14 +64,14 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setAnswerInputValue(event.currentTarget.value)
   }
 
-  const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (questionInputValue !== null || answerInputValue !== null) {
-      setErrorQuestion('')
-      setErrorAnswer('')
-    }
-
-    return event.key === 'Enter' ? saveBtnHandler() : ''
-  }
+  // const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+  //   if (questionInputValue !== null || answerInputValue !== null) {
+  //     setErrorQuestion('')
+  //     setErrorAnswer('')
+  //   }
+  //
+  //   return event.key === 'Enter' ? saveBtnHandler() : ''
+  // }
 
   const changeSelectHandler = (event: SelectChangeEvent) => {
     setQuestionType(event.target.value as string)
@@ -163,7 +156,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       value={questionInputValue}
                       error={!!errorQuestion}
                       onChange={onChangeQuestionHandler}
-                      onKeyDown={onKeyDownHandler}
+                      // onKeyDown={onKeyDownHandler}
                       helperText={errorQuestion}
                       id="standard-basic"
                       label="Question"
@@ -176,7 +169,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       value={answerInputValue}
                       error={!!errorAnswer}
                       onChange={onChangeAnswerHandler}
-                      onKeyDown={onKeyDownHandler}
+                      // onKeyDown={onKeyDownHandler}
                       helperText={errorAnswer}
                       id="standard-basic"
                       label="Answer"

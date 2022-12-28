@@ -57,13 +57,13 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setInputValue(event.currentTarget.value)
   }
 
-  const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (error !== null) {
-      setError('')
-    }
-
-    return event.key === 'Enter' ? saveBtnHandler() : ''
-  }
+  // const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+  //   if (error !== null) {
+  //     setError('')
+  //   }
+  //
+  //   return event.key === 'Enter' ? saveBtnHandler() : ''
+  // }
 
   const saveBtnHandler = () => {
     const trimValue = inputValue.trim()
@@ -120,7 +120,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     value={inputValue}
                     error={!!error}
                     onChange={onChangeInputHandler}
-                    onKeyDown={onKeyDownHandler}
+                    // onKeyDown={onKeyDownHandler}
                     helperText={error}
                     id="standard-basic"
                     label="New Pack Name"
