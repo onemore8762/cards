@@ -30,6 +30,7 @@ import { CardTable } from '../Table/CardTable'
 
 import { addCardTC, getCardsListTC, setUpdateCardsAC } from './card-reducer'
 import s from './Card.module.css'
+import { CardDottedMenu } from './CardDottedMenu'
 import {
   selectCardPackId,
   selectCardQuestion,
@@ -61,26 +62,23 @@ export const Card = () => {
   const initialize = useAppSelector(selectInitialize)
   const sort = useAppSelector(selectSortCard)
 
-  //const randomCard = cardList[Math.floor(Math.random() * cardList.length)]
   const [searchParams, setSearchParams] = useSearchParams()
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  // const [inputValue, setInputValue] = useState<string | null>(null)
+  // const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const debouncedSearchQuestion = useDebounce<string | null>(searchQuestion, 1000)
 
-  const params = useParams() // packId достаем
+  const params = useParams() // packId
 
   // menu
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  /*const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
-  }
+  }*/
 
   // search
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setUpdateCardsAC({ cardQuestion: e.currentTarget.value }))
-    // setInputValue(e.currentTarget.value)
     if (e.currentTarget.value !== '') {
       searchParams.set('cardQuestion', e.currentTarget.value)
     } else {
@@ -98,7 +96,6 @@ export const Card = () => {
     answerInputValue: string
     // questionType: string
   ) => {
-    // dispatch(addCardTC({ cardsPack_id: cardPackId }))
     dispatch(
       addCardTC({
         cardsPack_id: cardPackId,
@@ -111,13 +108,13 @@ export const Card = () => {
     dispatch(deletePacksTC(packs_id))
     navigate(PATH.PROFILE.PACKLIST)
   }
-  const goToLearnHandler = () => {
-    if (params.packId) navigate(`/question/${params.packId}`)
-  }
   const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
     dispatch(
       updatePacksTC({ cardsPack: { _id: packs_id, name: inputValue, private: privateCheckbox } })
     )
+  }
+  const goToLearnHandler = () => {
+    if (params.packId) navigate(`/question/${params.packId}`)
   }
 
   // pagination
@@ -173,7 +170,7 @@ export const Card = () => {
                   sx={{ width: '200px', margin: '0', height: '40px' }}
                 ></Skeleton>
               )}
-              <IconButton onClick={handleOpenUserMenu}>
+              {/*<IconButton onClick={handleOpenUserMenu}>
                 <MoreVertIcon
                   sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }}
                 />
@@ -224,7 +221,12 @@ export const Card = () => {
                   <SchoolOutlinedIcon sx={{ mr: 1 }} />
                   <Typography textAlign="center">Learn</Typography>
                 </MenuItem>
-              </Menu>
+              </Menu>*/}
+              <CardDottedMenu
+                deletePackHandler={deletePackHandler}
+                updatePackHandler={updatePackHandler}
+                goToLearnHandler={goToLearnHandler}
+              />
             </Grid>
           ) : (
             <>

@@ -1,10 +1,10 @@
 import { appSetStatusAC } from '../../../app/app-reducer'
 import { AppThunkType } from '../../../app/store'
 import { handleServerNetworkError } from '../../../common/utils/errorUtils'
+import { getCard } from '../../../common/utils/randomFunction'
 import { cardApi, Cards } from '../Card/card-api'
 
-import { learnPackApi } from './learn-pack-api'
-import { getCard } from './randomFunction'
+import { learnPackApi } from './learnPack-api'
 
 const initialState: LearnPackInitialStateType = {
   cardList: [],
@@ -33,7 +33,7 @@ const initialState: LearnPackInitialStateType = {
   },
 }
 
-export const learnPackReducer = (state = initialState, action: LearnActionType) => {
+export const learnPackReducer = (state = initialState, action: LearnPackActionType) => {
   switch (action.type) {
     case 'LEARN_PACKS/SET_CARD_LIST':
       return { ...state, cardList: action.cardList, packName: action.packName }
@@ -46,7 +46,7 @@ export const learnPackReducer = (state = initialState, action: LearnActionType) 
   }
 }
 
-//action
+// actions
 const setCardListAC = (cardList: Cards[], packName: string) =>
   ({ type: 'LEARN_PACKS/SET_CARD_LIST', cardList, packName } as const)
 
@@ -55,7 +55,7 @@ export const setGradeAC = (grade: string) => ({ type: 'LEARN_PACKS/SET_GRADE', g
 export const setCardAC = (randomCard: Cards) =>
   ({ type: 'LEARN_PACKS/SET_CARD', randomCard } as const)
 
-//thunk
+// thunks
 export const getRandomCardTC = (packId: string): AppThunkType => {
   return dispatch => {
     dispatch(appSetStatusAC('loading'))
@@ -80,14 +80,15 @@ export const updateGradeTC = (card_id: string, grade: string): AppThunkType => {
     })
   }
 }
-//type
+
+// types
 export type LearnPackInitialStateType = {
   cardList: Array<Cards>
   packName: string
   grade: string
   randomCard: Cards
 }
-export type LearnActionType =
+export type LearnPackActionType =
   | ReturnType<typeof setCardListAC>
   | ReturnType<typeof setGradeAC>
   | ReturnType<typeof setCardAC>

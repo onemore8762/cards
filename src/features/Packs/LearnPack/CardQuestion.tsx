@@ -11,21 +11,19 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 
+import { CardAnswer } from './CardAnswer'
 import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
-import { getRandomCardTC, updateGradeTC } from './learn-pack-reducer'
+import { getRandomCardTC, updateGradeTC } from './learnPack-reducer'
+import { selectLearnGrade, selectLearnPackName, selectLearnRandomCard } from './learnPackSelectors'
 
 export const CardQuestion = () => {
   const dispatch = useAppDispatch()
   const [isClickButton, setIsClickButton] = useState(false)
   const { packId } = useParams()
-  const packName = useAppSelector(state => state.learnPack.packName)
-  const grade = useAppSelector(state => state.learnPack.grade)
-  const randomCard = useAppSelector(state => state.learnPack.randomCard)
-
-  useEffect(() => {
-    if (packId) dispatch(getRandomCardTC(packId))
-  }, [packId])
+  const packName = useAppSelector(selectLearnPackName)
+  const grade = useAppSelector(selectLearnGrade)
+  const randomCard = useAppSelector(selectLearnRandomCard)
 
   const setAnswerHandler = () => {
     dispatch(updateGradeTC(randomCard._id, grade))
@@ -33,11 +31,15 @@ export const CardQuestion = () => {
     setIsClickButton(false)
   }
 
+  useEffect(() => {
+    if (packId) dispatch(getRandomCardTC(packId))
+  }, [packId])
+
   return (
     <Grid container justifyContent={'center'}>
       <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       <Grid display="flex" flexDirection={'column'} justifyContent="center" alignItems="center">
-        <Typography component="legend" variant="h5" sx={{ mt: 9, mb: 2 }}>
+        <Typography component="legend" variant="h5" sx={{ mt: 5, mb: 2 }}>
           {packName}
         </Typography>
         <Card sx={{ width: 440, minHeight: 200 }}>
@@ -61,7 +63,7 @@ export const CardQuestion = () => {
                 </Button>
               )}
               {isClickButton && (
-                <Grid container justifyContent={'center'}>
+                /*<Grid container justifyContent={'center'}>
                   <Grid display="flex" justifyContent="center" alignItems="center">
                     <div className={s.cardQuestion_main}>
                       <div className={style.cardAnswer_answer}>
@@ -83,7 +85,12 @@ export const CardQuestion = () => {
                       </div>
                     </div>
                   </Grid>
-                </Grid>
+                </Grid>*/
+                <CardAnswer
+                  packId={packId}
+                  setIsClickButton={setIsClickButton}
+                  setAnswerHandler={setAnswerHandler}
+                />
               )}
             </div>
           </div>

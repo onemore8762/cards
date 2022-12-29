@@ -9,4 +9,4 @@ export const learnPackApi = {
   },
 }
 
-//type
+// types

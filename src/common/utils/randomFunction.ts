@@ -1,4 +1,4 @@
-import { Cards } from '../Card/card-api'
+import { Cards } from '../../features/Packs/Card/card-api'
 
 export const getCard = (cards: Array<Cards>) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)

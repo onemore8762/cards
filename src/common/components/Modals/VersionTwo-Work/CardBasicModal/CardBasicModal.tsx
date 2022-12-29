@@ -43,7 +43,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   // menu
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    setErrorQuestion('')
+    setErrorAnswer('')
+  }
 
   // text field flow
   const [questionType, setQuestionType] = useState<string>('')

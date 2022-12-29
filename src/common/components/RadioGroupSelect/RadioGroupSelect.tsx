@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 
-import { setGradeAC } from '../../../features/Packs/LearnPack/learn-pack-reducer'
+import { setGradeAC } from '../../../features/Packs/LearnPack/learnPack-reducer'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 export const RadioGroupSelect = () => {

@@ -42,7 +42,10 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setOpen(true)
     handleCloseUserMenu?.()
   }
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    setError('')
+  }
 
   // text field flow
   const [inputValue, setInputValue] = useState<string>('')

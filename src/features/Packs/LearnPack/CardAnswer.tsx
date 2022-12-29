@@ -9,25 +9,36 @@ import { useAppSelector } from '../../../common/hooks/useAppSelector'
 
 import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
-import { updateGradeTC } from './learn-pack-reducer'
+import { getRandomCardTC, updateGradeTC } from './learnPack-reducer'
+import { selectLearnGrade, selectLearnRandomCard } from './learnPackSelectors'
 
-type PropsType = {
-  randomQuestion: any
+type CardAnswerPropsType = {
+  packId?: string
+  setIsClickButton: (isClicked: boolean) => void
+  setAnswerHandler: () => void
 }
 
-export const CardAnswer = (props: PropsType) => {
-  const dispatch = useAppDispatch()
-  const grade = useAppSelector(state => state.learnPack.grade)
-  const setAnswerHandler = () => {
-    dispatch(updateGradeTC(props.randomQuestion._id, grade))
-  }
+export const CardAnswer: React.FC<CardAnswerPropsType> = ({
+  // packId,
+  // setIsClickButton,
+  setAnswerHandler,
+}) => {
+  // const dispatch = useAppDispatch()
+  const randomCard = useAppSelector(selectLearnRandomCard)
+  // const grade = useAppSelector(selectLearnGrade)
+
+  // const setAnswerHandler = () => {
+  //   dispatch(updateGradeTC(randomCard._id, grade))
+  //   if (packId) dispatch(getRandomCardTC(packId))
+  //   setIsClickButton(false)
+  // }
 
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
         <div className={s.cardQuestion_main}>
           <div className={style.cardAnswer_answer}>
-            <b>Answer:</b> {props.randomQuestion.answer}
+            <b>Answer:</b> {randomCard.answer}
           </div>
           <div className={style.cardAnswer_rateYourself}>
             <RadioGroupSelect />
