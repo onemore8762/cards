@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 
-import { CardAnswer } from './CardAnswer'
+// import { CardAnswer } from './CardAnswer'
 import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
 import { getRandomCardTC, updateGradeTC } from './learnPack-reducer'
@@ -63,7 +63,7 @@ export const CardQuestion = () => {
                 </Button>
               )}
               {isClickButton && (
-                /*<Grid container justifyContent={'center'}>
+                <Grid container justifyContent={'center'}>
                   <Grid display="flex" justifyContent="center" alignItems="center">
                     <div className={s.cardQuestion_main}>
                       <div className={style.cardAnswer_answer}>
@@ -85,12 +85,12 @@ export const CardQuestion = () => {
                       </div>
                     </div>
                   </Grid>
-                </Grid>*/
-                <CardAnswer
+                </Grid>
+                /*<CardAnswer
                   packId={packId}
                   setIsClickButton={setIsClickButton}
                   setAnswerHandler={setAnswerHandler}
-                />
+                />*/
               )}
             </div>
           </div>
