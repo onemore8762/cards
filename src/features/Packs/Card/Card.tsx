@@ -170,58 +170,7 @@ export const Card = () => {
                   sx={{ width: '200px', margin: '0', height: '40px' }}
                 ></Skeleton>
               )}
-              {/*<IconButton onClick={handleOpenUserMenu}>
-                <MoreVertIcon
-                  sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }}
-                />
-              </IconButton>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <PackBasicModal
-                  headerTitle={'Edit Pack'}
-                  packName={packName}
-                  saveItem={(inputValue: string, privateCheckbox: boolean) =>
-                    updatePackHandler(cardPackId, inputValue, privateCheckbox)
-                  }
-                  handleCloseUserMenu={handleCloseUserMenu}
-                >
-                  <MenuItem>
-                    <BorderColorOutlined sx={{ mr: 1 }} />
-                    <Typography textAlign="center">Edit</Typography>
-                  </MenuItem>
-                </PackBasicModal>
 
-                <DeleteBasicModal
-                  headerTitle={'Delete Pack'}
-                  packName={packName}
-                  deleteItem={() => deletePackHandler(cardPackId)}
-                  handleCloseUserMenu={handleCloseUserMenu}
-                >
-                  <MenuItem>
-                    <DeleteOutlineIcon sx={{ mr: 1 }} />
-                    <Typography textAlign="center">Delete</Typography>
-                  </MenuItem>
-                </DeleteBasicModal>
-
-                <MenuItem disabled={cardList.length === 0} onClick={goToLearnHandler}>
-                  <SchoolOutlinedIcon sx={{ mr: 1 }} />
-                  <Typography textAlign="center">Learn</Typography>
-                </MenuItem>
-              </Menu>*/}
               <CardDottedMenu
                 deletePackHandler={deletePackHandler}
                 updatePackHandler={updatePackHandler}
@@ -239,7 +188,6 @@ export const Card = () => {
               )}
             </>
           )}
-
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
               <CardBasicModal
