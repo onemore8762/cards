@@ -73,10 +73,11 @@ export const getRandomCardTC = (packId: string): AppThunkType => {
       })
   }
 }
-export const updateGradeTC = (card_id: string, grade: string): AppThunkType => {
-  return () => {
+export const updateGradeTC = (packId: string, card_id: string, grade: string): AppThunkType => {
+  return dispatch => {
     learnPackApi.updateCardGrade(+grade, card_id).then(res => {
-      console.log(res.data)
+      // console.log(res.data)
+      dispatch(getRandomCardTC(packId))
     })
   }
 }

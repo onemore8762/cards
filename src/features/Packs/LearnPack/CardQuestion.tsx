@@ -11,7 +11,6 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 
-// import { CardAnswer } from './CardAnswer'
 import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
 import { getRandomCardTC, updateGradeTC } from './learnPack-reducer'
@@ -26,8 +25,7 @@ export const CardQuestion = () => {
   const randomCard = useAppSelector(selectLearnRandomCard)
 
   const setAnswerHandler = () => {
-    dispatch(updateGradeTC(randomCard._id, grade))
-    if (packId) dispatch(getRandomCardTC(packId))
+    if (packId) dispatch(updateGradeTC(packId, randomCard._id, grade))
     setIsClickButton(false)
   }
 

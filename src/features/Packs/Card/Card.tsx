@@ -1,20 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 
-import BorderColorOutlined from '@mui/icons-material/BorderColorOutlined'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Grid, IconButton, Skeleton } from '@mui/material'
+import { Grid, Skeleton } from '@mui/material'
 import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Typography from '@mui/material/Typography'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { CardBasicModal } from '../../../common/components/Modals/VersionTwo-Work/CardBasicModal/CardBasicModal'
-import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
-import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -63,18 +54,9 @@ export const Card = () => {
   const sort = useAppSelector(selectSortCard)
 
   const [searchParams, setSearchParams] = useSearchParams()
-  // const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const debouncedSearchQuestion = useDebounce<string | null>(searchQuestion, 1000)
 
   const params = useParams() // packId
-
-  // menu
-  /*const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
-  }
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
-  }*/
 
   // search
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +71,6 @@ export const Card = () => {
     dispatch(setUpdateCardsAC({ cardQuestion: '' }))
     searchParams.delete('cardQuestion')
   }
-
   // pack flow
   const addCardHandler = (
     questionInputValue: string,
