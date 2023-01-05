@@ -1,7 +1,7 @@
 import React, { ChangeEvent, cloneElement, KeyboardEvent, useEffect, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, FormGroup, Input, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Fade from '@mui/material/Fade'
@@ -60,14 +60,6 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setInputValue(event.currentTarget.value)
   }
 
-  // const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-  //   if (error !== null) {
-  //     setError('')
-  //   }
-  //
-  //   return event.key === 'Enter' ? saveBtnHandler() : ''
-  // }
-
   const saveBtnHandler = () => {
     const trimValue = inputValue.trim()
 
@@ -123,13 +115,18 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     value={inputValue}
                     error={!!error}
                     onChange={onChangeInputHandler}
-                    // onKeyDown={onKeyDownHandler}
                     helperText={error}
                     id="standard-basic"
                     label="New Pack Name"
                     variant="standard"
                     sx={{ width: 360, height: 50 }}
                   />
+                </div>
+                <div>
+                  <Button variant="contained" component="label" style={{ width: '100%' }}>
+                    Upload pack cover
+                    <input hidden accept="image/*" type="file" />
+                  </Button>
                 </div>
                 <div className={s.packModal_checkbox}>
                   <FormGroup>

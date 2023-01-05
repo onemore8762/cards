@@ -54,6 +54,7 @@ export type PacksType = {
   updated: string
   more_id: string
   __v: number
+  deckCover?: string // добавил
 }
 
 export type GetPacksResponseType = {

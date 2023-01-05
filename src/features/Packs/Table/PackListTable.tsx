@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
+import PackCover from '../../../assets/images/card-file-box.svg'
 import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
 import { PackEditModal } from '../../../common/components/Modals/VersionTwo-Work/PackEditModal/PackEditModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
@@ -26,6 +27,8 @@ import {
   selectPackListIsLoading,
   selectPackListSortPacks,
 } from '../PackList/packListSelectors'
+
+import s from './PackListTable.module.css'
 
 export const PackListTable = () => {
   const dispatch = useAppDispatch()
@@ -69,13 +72,16 @@ export const PackListTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
+            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
+              Cover
+            </TableCell>
             <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Name
             </TableCell>
-            <TableCell style={{ width: '10%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={{ width: '5%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Cards
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -88,7 +94,7 @@ export const PackListTable = () => {
             <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Created by
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Actions
             </TableCell>
           </TableRow>
@@ -97,6 +103,13 @@ export const PackListTable = () => {
           {packList.map(row => {
             return (
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
+                  <SkeletonComponent isLoading={isLoading}>
+                    <div className={s.packCoverImg}>
+                      <img src={row.deckCover ? row.deckCover : PackCover} alt="PackCover" />
+                    </div>
+                  </SkeletonComponent>
+                </TableCell>
                 <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                   <SkeletonComponent isLoading={isLoading}>
                     <Button onClick={() => goCardHandler(row._id)} sx={{ color: 'black' }}>

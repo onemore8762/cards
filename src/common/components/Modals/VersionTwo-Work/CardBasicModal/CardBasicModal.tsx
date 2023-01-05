@@ -61,21 +61,17 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
+  // button for props
+  const clonedChildren = cloneElement(children, {
+    onClick: handleOpen,
+  })
+
   const onChangeQuestionHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setQuestionInputValue(event.currentTarget.value)
   }
   const onChangeAnswerHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setAnswerInputValue(event.currentTarget.value)
   }
-
-  // const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-  //   if (questionInputValue !== null || answerInputValue !== null) {
-  //     setErrorQuestion('')
-  //     setErrorAnswer('')
-  //   }
-  //
-  //   return event.key === 'Enter' ? saveBtnHandler() : ''
-  // }
 
   const changeSelectHandler = (event: SelectChangeEvent) => {
     setQuestionType(event.target.value as string)
@@ -113,11 +109,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       setAnswerInputValue(answerDomainValue)
     }
   }, [questionDomainValue, answerDomainValue])
-
-  // button for props
-  const clonedChildren = cloneElement(children, {
-    onClick: handleOpen,
-  })
 
   return (
     <>
@@ -160,7 +151,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       value={questionInputValue}
                       error={!!errorQuestion}
                       onChange={onChangeQuestionHandler}
-                      // onKeyDown={onKeyDownHandler}
                       helperText={errorQuestion}
                       id="standard-basic"
                       label="Question"
@@ -173,7 +163,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                       value={answerInputValue}
                       error={!!errorAnswer}
                       onChange={onChangeAnswerHandler}
-                      // onKeyDown={onKeyDownHandler}
                       helperText={errorAnswer}
                       id="standard-basic"
                       label="Answer"
