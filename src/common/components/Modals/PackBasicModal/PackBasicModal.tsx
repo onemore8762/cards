@@ -1,12 +1,13 @@
-import React, { ChangeEvent, cloneElement, KeyboardEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, cloneElement, useEffect, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
-import { Checkbox, FormControlLabel, FormGroup, Input, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 
+import DefaultPackCover from '../../../../assets/images/card-file-box.svg'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -25,7 +26,8 @@ type AddPackModalPropsType = {
   children: JSX.Element
   headerTitle: string
   packName?: string
-  saveItem: (inputValue: string, privateCheckbox: boolean) => void
+  packCover?: string
+  saveItem: (inputValue: string, packCoverState: string, privateCheckbox: boolean) => void
   handleCloseUserMenu?: () => void
 }
 
@@ -33,6 +35,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   children,
   headerTitle,
   packName,
+  packCover,
   saveItem,
   handleCloseUserMenu,
 }) => {
@@ -51,11 +54,47 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   const [inputValue, setInputValue] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [privateCheckbox, setPrivateCheckbox] = useState<boolean>(false)
+  const [packCoverState, setPackCoverState] = useState(DefaultPackCover)
+  const [isPackCoverBroken, setIsPackCoverBroken] = useState<boolean>(false)
 
   const INPUT_MAX_LENGTH = 40
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
+  // convert file
+  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      // console.log('file: ', file)
+
+      if (file.size < 4000000) {
+        convertFileToBase64(file, (file64: string) => {
+          setPackCoverState(file64)
+          // console.log('file64: ', file64)
+        })
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
+  }
+  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    const reader = new FileReader()
+
+    reader.onloadend = () => {
+      const file64 = reader.result as string
+
+      callBack(file64)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const errorHandler = () => {
+    setIsPackCoverBroken(true)
+    alert('Кривая картинка')
+  }
+
+  // handlers
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.currentTarget.value)
   }
@@ -64,7 +103,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     const trimValue = inputValue.trim()
 
     if (trimValue) {
-      saveItem(trimValue, privateCheckbox)
+      saveItem(trimValue, packCoverState, privateCheckbox)
       setInputValue('')
       handleClose()
     } else {
@@ -122,10 +161,24 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     sx={{ width: 360, height: 50 }}
                   />
                 </div>
+                <div className={s.packCoverImage}>
+                  <img
+                    src={
+                      // eslint-disable-next-line no-nested-ternary
+                      packCover
+                        ? packCoverState === DefaultPackCover
+                          ? packCover
+                          : packCoverState
+                        : packCoverState
+                    }
+                    alt="PackCover"
+                    onError={errorHandler}
+                  />
+                </div>
                 <div>
                   <Button variant="contained" component="label" style={{ width: '100%' }}>
                     Upload pack cover
-                    <input hidden accept="image/*" type="file" />
+                    <input hidden accept="image/*" type="file" onChange={uploadHandler} />
                   </Button>
                 </div>
                 <div className={s.packModal_checkbox}>

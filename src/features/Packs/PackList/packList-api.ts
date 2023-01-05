@@ -33,7 +33,7 @@ export type NewPackType = {
 }
 export type AddCardsType = {
   name?: string // если не отправить будет 'no Name'
-  deckCover?: 'url or base64' // не обязателен
+  deckCover?: string // не обязателен
   private?: boolean // если не отправить будет false
   _id?: string // для обновления
 }

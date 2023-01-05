@@ -16,6 +16,7 @@ const initialState: CardInitialStateType = {
   packUserId: '',
   cardsTotalCount: 0,
   sortCards: '0updated',
+  packDeckCover: '',
 }
 
 // reducer
@@ -39,6 +40,7 @@ export const cardReducer = (
         pageCount: action.data.pageCount,
         cardsTotalCount: action.data.cardsTotalCount,
         packName: action.data.packName,
+        packDeckCover: action.data.packDeckCover,
       }
     case 'PACKS/SET_CARD-PACK-ID':
       return { ...state, packId: action.packId }
@@ -137,6 +139,7 @@ export type CardInitialStateType = {
   packUserId: string
   cardsTotalCount: number
   sortCards: '0updated' | '1updated'
+  packDeckCover: string
 }
 export type UpdateCardsType = Partial<CardInitialStateType>
 

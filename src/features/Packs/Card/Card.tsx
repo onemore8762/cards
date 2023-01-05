@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
-import { CardBasicModal } from '../../../common/components/Modals/VersionTwo-Work/CardBasicModal/CardBasicModal'
+import { CardBasicModal } from '../../../common/components/Modals/CardBasicModal/CardBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -71,6 +71,7 @@ export const Card = () => {
     dispatch(setUpdateCardsAC({ cardQuestion: '' }))
     searchParams.delete('cardQuestion')
   }
+
   // pack flow
   const addCardHandler = (
     questionInputValue: string,
@@ -89,9 +90,21 @@ export const Card = () => {
     dispatch(deletePacksTC(packs_id))
     navigate(PATH.PROFILE.PACKLIST)
   }
-  const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
+  const updatePackHandler = (
+    packs_id: string,
+    inputValue: string,
+    packCoverState: string,
+    privateCheckbox: boolean
+  ) => {
     dispatch(
-      updatePacksTC({ cardsPack: { _id: packs_id, name: inputValue, private: privateCheckbox } })
+      updatePacksTC({
+        cardsPack: {
+          _id: packs_id,
+          name: inputValue,
+          deckCover: packCoverState,
+          private: privateCheckbox,
+        },
+      })
     )
   }
   const goToLearnHandler = () => {
@@ -153,8 +166,8 @@ export const Card = () => {
               )}
 
               <CardDottedMenu
-                deletePackHandler={deletePackHandler}
                 updatePackHandler={updatePackHandler}
+                deletePackHandler={deletePackHandler}
                 goToLearnHandler={goToLearnHandler}
               />
             </Grid>

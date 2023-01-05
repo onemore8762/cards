@@ -23,6 +23,7 @@ beforeEach(() => {
     packUserId: '',
     cardsTotalCount: 0,
     sortCards: '0updated',
+    packDeckCover: '',
   }
 })
 

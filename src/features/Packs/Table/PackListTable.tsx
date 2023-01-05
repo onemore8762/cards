@@ -13,9 +13,9 @@ import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import PackCover from '../../../assets/images/card-file-box.svg'
-import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
-import { PackEditModal } from '../../../common/components/Modals/VersionTwo-Work/PackEditModal/PackEditModal'
+import DefaultPackCover from '../../../assets/images/card-file-box.svg'
+import { DeleteBasicModal } from '../../../common/components/Modals/DeleteBasicModal/DeleteBasicModal'
+import { PackEditModal } from '../../../common/components/Modals/PackEditModal/PackEditModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
@@ -33,12 +33,13 @@ import s from './PackListTable.module.css'
 export const PackListTable = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const userId = useAppSelector(selectProfileUserId)
   const packList = useAppSelector(selectPackList)
   const isLoading = useAppSelector(selectPackListIsLoading)
   const sort = useAppSelector(selectPackListSortPacks)
+
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const sortTableHandler = () => {
     if (sort === '0updated') {
@@ -52,9 +53,21 @@ export const PackListTable = () => {
     }
   }
 
-  const updatePackHandler = (packs_id: string, inputValue: string, privateCheckbox: boolean) => {
+  const updatePackHandler = (
+    packs_id: string,
+    inputValue: string,
+    packCoverState: string,
+    privateCheckbox: boolean
+  ) => {
     dispatch(
-      updatePacksTC({ cardsPack: { _id: packs_id, name: inputValue, private: privateCheckbox } })
+      updatePacksTC({
+        cardsPack: {
+          _id: packs_id,
+          name: inputValue,
+          deckCover: packCoverState,
+          private: privateCheckbox,
+        },
+      })
     )
   }
   const deletePackHandler = (packs_id: string) => {
@@ -106,7 +119,7 @@ export const PackListTable = () => {
                 <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                   <SkeletonComponent isLoading={isLoading}>
                     <div className={s.packCoverImg}>
-                      <img src={row.deckCover ? row.deckCover : PackCover} alt="PackCover" />
+                      <img src={row.deckCover ? row.deckCover : DefaultPackCover} alt="PackCover" />
                     </div>
                   </SkeletonComponent>
                 </TableCell>
@@ -140,8 +153,13 @@ export const PackListTable = () => {
                       <span>
                         <PackEditModal
                           packName={row.name}
-                          saveItem={(inputValue: string, privateCheckbox: boolean) =>
-                            updatePackHandler(row._id, inputValue, privateCheckbox)
+                          packCover={row.deckCover}
+                          saveItem={(
+                            inputValue: string,
+                            packCoverState: string,
+                            privateCheckbox: boolean
+                          ) =>
+                            updatePackHandler(row._id, inputValue, packCoverState, privateCheckbox)
                           }
                         />
 

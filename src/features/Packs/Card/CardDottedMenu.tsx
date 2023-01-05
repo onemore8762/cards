@@ -9,26 +9,37 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 
-import { DeleteBasicModal } from '../../../common/components/Modals/VersionTwo-Work/DeleteBasicModal/DeleteBasicModal'
-import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
+import { DeleteBasicModal } from '../../../common/components/Modals/DeleteBasicModal/DeleteBasicModal'
+import { PackBasicModal } from '../../../common/components/Modals/PackBasicModal/PackBasicModal'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 
-import { selectCardPackId, selectCardsList, selectCardsPackName } from './cardSelectors'
+import {
+  selectCardPackId,
+  selectCardsList,
+  selectCardsPackCover,
+  selectCardsPackName,
+} from './cardSelectors'
 
 type CardDottedMenuPropsType = {
+  updatePackHandler: (
+    packs_id: string,
+    inputValue: string,
+    packCoverState: string,
+    privateCheckbox: boolean
+  ) => void
   deletePackHandler: (packs_id: string) => void
-  updatePackHandler: (packs_id: string, inputValue: string, privateCheckbox: boolean) => void
   goToLearnHandler: () => void
 }
 
 export const CardDottedMenu: React.FC<CardDottedMenuPropsType> = ({
-  deletePackHandler,
   updatePackHandler,
+  deletePackHandler,
   goToLearnHandler,
 }) => {
   const packName = useAppSelector(selectCardsPackName)
   const cardPackId = useAppSelector(selectCardPackId)
   const cardList = useAppSelector(selectCardsList)
+  const packCover = useAppSelector(selectCardsPackCover)
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
@@ -63,8 +74,9 @@ export const CardDottedMenu: React.FC<CardDottedMenuPropsType> = ({
         <PackBasicModal
           headerTitle={'Edit Pack'}
           packName={packName}
-          saveItem={(inputValue: string, privateCheckbox: boolean) =>
-            updatePackHandler(cardPackId, inputValue, privateCheckbox)
+          packCover={packCover || ''}
+          saveItem={(inputValue: string, packCoverState: string, privateCheckbox: boolean) =>
+            updatePackHandler(cardPackId, inputValue, packCoverState, privateCheckbox)
           }
           handleCloseUserMenu={handleCloseUserMenu}
         >

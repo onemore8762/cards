@@ -5,8 +5,9 @@ import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
+import DefaultPackCover from '../../../assets/images/card-file-box.svg'
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
-import { PackBasicModal } from '../../../common/components/Modals/VersionTwo-Work/PackBasicModal/PackBasicModal'
+import { PackBasicModal } from '../../../common/components/Modals/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { RangeSlider } from '../../../common/components/RangeSlider/RangeSlider'
@@ -125,10 +126,14 @@ export const PackList = () => {
     searchParams.set('page', `${value}`)
   }
 
-  const addNewPackHandler = (inputValue: string, privateCheckbox: boolean) => {
+  const addNewPackHandler = (
+    inputValue: string,
+    packCoverState: string,
+    privateCheckbox: boolean
+  ) => {
     dispatch(
       addPacksTC({
-        cardsPack: { name: inputValue, deckCover: 'url or base64', private: privateCheckbox },
+        cardsPack: { name: inputValue, deckCover: packCoverState, private: privateCheckbox },
       })
     )
   }

@@ -7,12 +7,22 @@ import { PackBasicModal } from '../PackBasicModal/PackBasicModal'
 
 type EditPackModalPropsType = {
   packName: string
-  saveItem: (inputValue: string, privateCheckbox: boolean) => void
+  packCover?: string
+  saveItem: (inputValue: string, packCoverState: string, privateCheckbox: boolean) => void
 }
 
-export const PackEditModal: React.FC<EditPackModalPropsType> = ({ packName, saveItem }) => {
+export const PackEditModal: React.FC<EditPackModalPropsType> = ({
+  packName,
+  packCover,
+  saveItem,
+}) => {
   return (
-    <PackBasicModal headerTitle={'Edit Pack'} saveItem={saveItem} packName={packName}>
+    <PackBasicModal
+      headerTitle={'Edit Pack'}
+      saveItem={saveItem}
+      packName={packName}
+      packCover={packCover}
+    >
       <IconButton>
         <BorderColorOutlined />
       </IconButton>
