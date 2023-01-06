@@ -24,11 +24,11 @@ import { Profile } from '../features/Profile/Profile'
 import { Registration } from '../features/Registration/Registration'
 
 import { initializeAppTC } from './app-reducer'
-import { selectInitializeApp } from './appSelectors'
+import { selectAppInitialize } from './appSelectors'
 
 export const App = () => {
   const dispatch = useAppDispatch()
-  const isInitialized = useAppSelector(selectInitializeApp)
+  const isInitialized = useAppSelector(selectAppInitialize)
 
   // инициализация приложения
   useEffect(() => {

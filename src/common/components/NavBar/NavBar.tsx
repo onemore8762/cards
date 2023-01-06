@@ -15,9 +15,12 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { selectAppStatus } from '../../../app/appSelectors'
 import icon from '../../../assets/icons/newspaper.svg'
-import avatar from '../../../assets/images/avatar.jpg'
+import DefaultProfileAvatar from '../../../assets/images/avatar.jpg'
 import { logoutTC } from '../../../features/Login/login-reducer'
+import { selectIsLoggedIn } from '../../../features/Login/loginSelectors'
+import { selectUserAvatar, selectUserName } from '../../../features/Profile/profileSelectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { PATH } from '../../path/path'
@@ -27,9 +30,12 @@ import s from './NavBar.module.css'
 export const NavBar = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
-  const userName = useAppSelector(state => state.profile.name)
-  const status = useAppSelector(state => state.app.status)
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const userName = useAppSelector(selectUserName)
+  const userAvatar = useAppSelector(selectUserAvatar)
+  const status = useAppSelector(selectAppStatus)
+
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const [settings, setSettings] = useState([
     {
@@ -87,9 +93,12 @@ export const NavBar = () => {
 
                 {/*Аватарка с меню*/}
                 <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title="Open settings">
+                  <Tooltip title="Open menu">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar src={avatar} alt="User Avatar" />
+                      <Avatar
+                        src={userAvatar ? userAvatar : DefaultProfileAvatar}
+                        alt="User Avatar"
+                      />
                     </IconButton>
                   </Tooltip>
                   <Menu

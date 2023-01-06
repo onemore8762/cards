@@ -56,7 +56,8 @@ export const initializeAppTC = (): AppThunkType => dispatch => {
     .authMe()
     .then(res => {
       dispatch(loginAC(true))
-      dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name))
+      // @ts-ignore
+      dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name, res.data.avatar))
     })
     .catch(e => {
       handleServerNetworkError(e, dispatch)

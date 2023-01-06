@@ -1,8 +1,8 @@
 import { instance } from '../../common/api/cards-api'
 
 export const profileApi = {
-  updateUserData(name: string /*, avatar: string*/) {
-    return instance.put<UpdateDataResponseType>('auth/me', { name })
+  updateUserData(name: string, avatar: string) {
+    return instance.put<UpdateDataResponseType>('auth/me', { name, avatar })
   },
 }
 

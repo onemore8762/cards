@@ -139,7 +139,7 @@ export type CardInitialStateType = {
   packUserId: string
   cardsTotalCount: number
   sortCards: '0updated' | '1updated'
-  packDeckCover: string
+  packDeckCover: any // надо исправить!
 }
 export type UpdateCardsType = Partial<CardInitialStateType>
 

@@ -59,7 +59,7 @@ export type ResponseGetCardsType = {
   packUserId: string
   packName: string
   packPrivate: boolean
-  packDeckCover?: any
+  packDeckCover?: string
   packCreated: string
   packUpdated: string
   page: number

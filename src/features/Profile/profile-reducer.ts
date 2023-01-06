@@ -8,7 +8,7 @@ const initialState: ProfileInitialStateType = {
   _id: null,
   email: null,
   name: null,
-  // avatar: null,
+  avatar: null,
   publicCardPacksCount: 0, // количество колод
 
   // created: null,
@@ -24,16 +24,17 @@ export const profileReducer = (
   action: ProfileActionType
 ): ProfileInitialStateType => {
   switch (action.type) {
-    case 'PROFILE/UPDATE_USER_DATA': {
-      return { ...state, name: action.name }
-    }
     case 'PROFILE/SET_USER_DATA': {
       return {
         ...state,
         _id: action._id,
         email: action.email,
         name: action.name,
+        avatar: action.avatar,
       }
+    }
+    case 'PROFILE/UPDATE_USER_DATA': {
+      return { ...state, name: action.name, avatar: action.avatar }
     }
     default:
       return state
@@ -41,21 +42,25 @@ export const profileReducer = (
 }
 
 // actions
-export const setUserDataAC = (_id: string | null, email: string | null, name: string | null) =>
-  ({ type: 'PROFILE/SET_USER_DATA', _id, email, name } as const)
+export const setUserDataAC = (
+  _id: string | null,
+  email: string | null,
+  name: string | null,
+  avatar: string | null
+) => ({ type: 'PROFILE/SET_USER_DATA', _id, email, name, avatar } as const)
 
-export const updateUserDataAC = (name: string | null) =>
-  ({ type: 'PROFILE/UPDATE_USER_DATA', name } as const)
+export const updateUserDataAC = (name: string | null, avatar: string | null) =>
+  ({ type: 'PROFILE/UPDATE_USER_DATA', name, avatar } as const)
 
 // thunks
 export const updateUserDataTC =
-  (name: string): AppThunkType =>
+  (name: string, avatar: string): AppThunkType =>
   dispatch => {
     dispatch(appSetStatusAC('loading'))
     profileApi
-      .updateUserData(name)
+      .updateUserData(name, avatar)
       .then(() => {
-        dispatch(updateUserDataAC(name))
+        dispatch(updateUserDataAC(name, avatar))
         dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
@@ -68,7 +73,7 @@ export type ProfileInitialStateType = {
   _id: string | null
   email: string | null
   name: string | null
-  // avatar?: string | null
+  avatar: any // string | null
   publicCardPacksCount: number // количество колод
 
   // created: string | null

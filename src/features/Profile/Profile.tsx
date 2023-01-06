@@ -1,14 +1,15 @@
-import React, { useCallback } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
+import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useNavigate } from 'react-router-dom'
 
-import avatar from '../../assets/images/avatar.jpg'
+import DefaultUserAvatar from '../../assets/images/avatar.jpg'
 import { BackToPacksListButton } from '../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
@@ -18,7 +19,7 @@ import { logoutTC } from '../Login/login-reducer'
 
 import { updateUserDataTC } from './profile-reducer'
 import s from './Profile.module.css'
-import { selectUserEmail, selectUserName } from './profileSelectors'
+import { selectUserAvatar, selectUserEmail, selectUserName } from './profileSelectors'
 
 export const Profile = () => {
   const navigate = useNavigate()
@@ -26,8 +27,12 @@ export const Profile = () => {
 
   const userName = useAppSelector(selectUserName)
   const userEmail = useAppSelector(selectUserEmail)
+  const userAvatar = useAppSelector(selectUserAvatar)
 
-  const changeTaskTitleHandler = useCallback((newInputValue: string) => {
+  const [userAvatarState, SetUserAvatarState] = useState(DefaultUserAvatar)
+
+  const changeUserNameHandler = useCallback((newInputValue: string) => {
+    // @ts-ignore
     dispatch(updateUserDataTC(newInputValue))
   }, [])
 
@@ -36,9 +41,33 @@ export const Profile = () => {
     navigate(PATH.LOGIN.LOGIN)
   }, [])
 
-  const loadPhotoHandler = () => {
-    alert('load photo')
-    // dispatch(loadPhotoAC())
+  const loadPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    // alert('load photo')
+
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      // console.log('file: ', file)
+
+      if (file.size < 4000000) {
+        convertFileToBase64(file, (file64: string) => {
+          SetUserAvatarState(file64)
+          // console.log('file64: ', file64)
+        })
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
+  }
+  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    const reader = new FileReader()
+
+    reader.onloadend = () => {
+      const file64 = reader.result as string
+
+      callBack(file64)
+    }
+    reader.readAsDataURL(file)
   }
 
   // если нет PrivateRoutes
@@ -58,17 +87,25 @@ export const Profile = () => {
 
             <div className={s.avatar}>
               <div className={s.avatarImage}>
-                <img src={avatar} alt="avatar" />
+                <img src={userAvatar ? userAvatar : DefaultUserAvatar} alt="avatar" />
               </div>
-              <div className={s.loadAvatar} onClick={loadPhotoHandler}>
+              {/*<div className={s.loadAvatar} onChange={loadPhotoHandler}>
                 <AddAPhoto className={s.loadAvatar_icon} />
+              </div>*/}
+              <div className={s.loadAvatar}>
+                <label>
+                  <input type="file" onChange={loadPhotoHandler} style={{ display: 'none' }} />
+                  <IconButton component="span">
+                    <AddAPhoto className={s.loadAvatar_icon} />
+                  </IconButton>
+                </label>
               </div>
             </div>
 
             <div className={s.userName}>
               <EditableSpan
                 title={userName ? userName : ''}
-                onChangeInput={changeTaskTitleHandler}
+                onChangeInput={changeUserNameHandler}
               />
             </div>
 
