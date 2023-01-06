@@ -34,7 +34,10 @@ export const profileReducer = (
       }
     }
     case 'PROFILE/UPDATE_USER_DATA': {
-      return { ...state, name: action.name, avatar: action.avatar }
+      return { ...state, name: action.name }
+    }
+    case 'PROFILE/UPDATE_USER_PHOTO': {
+      return { ...state, name: action.avatar }
     }
     default:
       return state
@@ -49,18 +52,36 @@ export const setUserDataAC = (
   avatar: string | null
 ) => ({ type: 'PROFILE/SET_USER_DATA', _id, email, name, avatar } as const)
 
-export const updateUserDataAC = (name: string | null, avatar: string | null) =>
-  ({ type: 'PROFILE/UPDATE_USER_DATA', name, avatar } as const)
+export const updateUserDataAC = (name: string | null) =>
+  ({ type: 'PROFILE/UPDATE_USER_DATA', name } as const)
+
+export const updateUserPhotoAC = (avatar: string | null) =>
+  ({ type: 'PROFILE/UPDATE_USER_PHOTO', avatar } as const)
 
 // thunks
 export const updateUserDataTC =
-  (name: string, avatar: string): AppThunkType =>
+  (name: string): AppThunkType =>
   dispatch => {
     dispatch(appSetStatusAC('loading'))
     profileApi
-      .updateUserData(name, avatar)
+      .updateUserData(name)
       .then(() => {
-        dispatch(updateUserDataAC(name, avatar))
+        dispatch(updateUserDataAC(name))
+        dispatch(appSetStatusAC('succeeded'))
+      })
+      .catch(e => {
+        handleServerNetworkError(e, dispatch)
+      })
+  }
+
+export const updateUserPhotoTC =
+  (avatar: string): AppThunkType =>
+  dispatch => {
+    dispatch(appSetStatusAC('loading'))
+    profileApi
+      .updateUserPhoto(avatar)
+      .then(() => {
+        dispatch(updateUserPhotoAC(avatar))
         dispatch(appSetStatusAC('succeeded'))
       })
       .catch(e => {
@@ -73,7 +94,7 @@ export type ProfileInitialStateType = {
   _id: string | null
   email: string | null
   name: string | null
-  avatar: any // string | null
+  avatar: string | null
   publicCardPacksCount: number // количество колод
 
   // created: string | null
@@ -88,3 +109,4 @@ export type ProfileInitialStateType = {
 export type ProfileActionType =
   | ReturnType<typeof setUserDataAC>
   | ReturnType<typeof updateUserDataAC>
+  | ReturnType<typeof updateUserPhotoAC>

@@ -56,7 +56,6 @@ export const initializeAppTC = (): AppThunkType => dispatch => {
     .authMe()
     .then(res => {
       dispatch(loginAC(true))
-      // @ts-ignore
       dispatch(setUserDataAC(res.data._id, res.data.email, res.data.name, res.data.avatar))
     })
     .catch(e => {

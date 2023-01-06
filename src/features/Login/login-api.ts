@@ -10,9 +10,6 @@ export const loginApi = {
   authMe() {
     return instance.post<LoginResponseType>('auth/me')
   },
-  // updateUserData(name: string /*, avatar: string*/) {
-  //   return instance.put<UpdateDataResponseType>('auth/me', { name })
-  // },
 }
 
 // types
@@ -26,7 +23,7 @@ export type LoginResponseType = {
   _id: string
   email: string
   name: string
-  avatar?: string
+  avatar: string
   publicCardPacksCount: number // количество колод
 
   created: Date
@@ -42,11 +39,3 @@ export type LogoutResponseType = {
   info: string
   error: string
 }
-
-// export type UpdateDataResponseType = {
-//   updatedUser: {
-//     name: string
-//     avatar?: string
-//   }
-//   error?: string
-// }

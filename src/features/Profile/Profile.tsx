@@ -3,6 +3,7 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
 import { IconButton } from '@mui/material'
+import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -29,12 +30,17 @@ export const Profile = () => {
   const userEmail = useAppSelector(selectUserEmail)
   const userAvatar = useAppSelector(selectUserAvatar)
 
-  const [userAvatarState, SetUserAvatarState] = useState(DefaultUserAvatar)
+  const [userAvatarState, SetUserAvatarState] = useState(userAvatar)
 
   const changeUserNameHandler = useCallback((newInputValue: string) => {
-    // @ts-ignore
     dispatch(updateUserDataTC(newInputValue))
   }, [])
+
+  // const changeUserAvatarHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files?.length) {
+  //     props.updatePhoto(event.target.files[0]);
+  //   }
+  // }
 
   const logoutHandler = useCallback(() => {
     dispatch(logoutTC())
@@ -73,6 +79,7 @@ export const Profile = () => {
   //   return <Navigate to={PATH.LOGIN.LOGIN} />
   // }
 
+  // @ts-ignore
   return (
     <Grid container display="flex" flexDirection={'column'}>
       <div className={s.backBtnBlock}>
@@ -85,11 +92,12 @@ export const Profile = () => {
 
             <div className={s.avatar}>
               <div className={s.avatarImage}>
-                <img src={userAvatar ? userAvatar : userAvatarState} alt="avatar" />
+                <img src={userAvatar !== null ? userAvatar : userAvatarState} alt="avatar" />
+                {/*<Avatar
+                  src={userAvatar /*? userAvatar : DefaultProfileAvatar*!/
+                  alt="User Avatar"
+                />*/}
               </div>
-              {/*<div className={s.loadAvatar} onChange={loadPhotoHandler}>
-                <AddAPhoto className={s.loadAvatar_icon} />
-              </div>*/}
               <div className={s.loadAvatar}>
                 <label>
                   <input type="file" onChange={loadPhotoHandler} style={{ display: 'none' }} />

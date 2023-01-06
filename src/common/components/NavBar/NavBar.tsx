@@ -68,6 +68,8 @@ export const NavBar = () => {
     setAnchorElUser(null)
   }
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div className={s.appBar}>
       <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
@@ -96,7 +98,8 @@ export const NavBar = () => {
                   <Tooltip title="Open menu">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
-                        src={userAvatar ? userAvatar : DefaultProfileAvatar}
+                        // @ts-ignore
+                        src={userAvatar !== null ? userAvatar : DefaultProfileAvatar}
                         alt="User Avatar"
                       />
                     </IconButton>
