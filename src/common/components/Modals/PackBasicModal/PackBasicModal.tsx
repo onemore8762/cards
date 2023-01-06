@@ -70,8 +70,8 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
 
       if (file.size < 4000000) {
         convertFileToBase64(file, (file64: string) => {
+          // console.log(file64)
           setPackCoverState(file64)
-          // console.log('file64: ', file64)
         })
       } else {
         console.error('Error: ', 'Файл слишком большого размера')
@@ -135,6 +135,19 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     }
   }, [inputValue])
 
+  // функция, чтобы при загрузке обложки она отображалась сразу
+  const showFileAfterUploading = () => {
+    if (packCover) {
+      if (packCoverState === DefaultPackCover) {
+        return packCover
+      } else {
+        return packCoverState
+      }
+    } else {
+      return packCoverState
+    }
+  }
+
   return (
     <>
       {clonedChildren}
@@ -162,7 +175,8 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                   />
                 </div>
                 <div className={s.packCoverImage}>
-                  <img
+                  <img src={showFileAfterUploading()} alt="PackCover" onError={errorHandler} />
+                  {/*<img
                     src={
                       // eslint-disable-next-line no-nested-ternary
                       packCover
@@ -173,7 +187,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                     }
                     alt="PackCover"
                     onError={errorHandler}
-                  />
+                  />*/}
                 </div>
                 <div>
                   <Button variant="contained" component="label" style={{ width: '100%' }}>

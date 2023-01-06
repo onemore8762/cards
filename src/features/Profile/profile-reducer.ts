@@ -37,7 +37,7 @@ export const profileReducer = (
       return { ...state, name: action.name }
     }
     case 'PROFILE/UPDATE_USER_PHOTO': {
-      return { ...state, name: action.avatar }
+      return { ...state, avatar: action.avatar }
     }
     default:
       return state

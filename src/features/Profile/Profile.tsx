@@ -3,7 +3,6 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import AddAPhoto from '@mui/icons-material/AddAPhoto'
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined'
 import { IconButton } from '@mui/material'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -18,7 +17,7 @@ import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
 import { logoutTC } from '../Login/login-reducer'
 
-import { updateUserDataTC } from './profile-reducer'
+import { updateUserDataTC, updateUserPhotoTC } from './profile-reducer'
 import s from './Profile.module.css'
 import { selectUserAvatar, selectUserEmail, selectUserName } from './profileSelectors'
 
@@ -30,17 +29,11 @@ export const Profile = () => {
   const userEmail = useAppSelector(selectUserEmail)
   const userAvatar = useAppSelector(selectUserAvatar)
 
-  const [userAvatarState, SetUserAvatarState] = useState(userAvatar)
+  const [userAvatarState, SetUserAvatarState] = useState(DefaultUserAvatar)
 
   const changeUserNameHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
   }, [])
-
-  // const changeUserAvatarHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files?.length) {
-  //     props.updatePhoto(event.target.files[0]);
-  //   }
-  // }
 
   const logoutHandler = useCallback(() => {
     dispatch(logoutTC())
@@ -56,6 +49,7 @@ export const Profile = () => {
       if (file.size < 4000000) {
         convertFileToBase64(file, (file64: string) => {
           SetUserAvatarState(file64)
+          dispatch(updateUserPhotoTC(file64))
           // console.log('file64: ', file64)
         })
       } else {
@@ -79,7 +73,6 @@ export const Profile = () => {
   //   return <Navigate to={PATH.LOGIN.LOGIN} />
   // }
 
-  // @ts-ignore
   return (
     <Grid container display="flex" flexDirection={'column'}>
       <div className={s.backBtnBlock}>
@@ -93,10 +86,6 @@ export const Profile = () => {
             <div className={s.avatar}>
               <div className={s.avatarImage}>
                 <img src={userAvatar !== null ? userAvatar : userAvatarState} alt="avatar" />
-                {/*<Avatar
-                  src={userAvatar /*? userAvatar : DefaultProfileAvatar*!/
-                  alt="User Avatar"
-                />*/}
               </div>
               <div className={s.loadAvatar}>
                 <label>

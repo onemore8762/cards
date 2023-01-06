@@ -22,9 +22,6 @@
 .avatar {
   height: 120px;
 }
-.avatar:hover {
-  cursor: pointer;
-}
 .avatarImage {
 
 }
@@ -34,7 +31,7 @@
   padding: 3px;
 
   object-fit: cover;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   border-radius: 50%;
 }
 .loadAvatar {
