@@ -42,8 +42,6 @@ export const Profile = () => {
   }, [])
 
   const loadPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    // alert('load photo')
-
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
@@ -87,7 +85,7 @@ export const Profile = () => {
 
             <div className={s.avatar}>
               <div className={s.avatarImage}>
-                <img src={userAvatar ? userAvatar : DefaultUserAvatar} alt="avatar" />
+                <img src={userAvatar ? userAvatar : userAvatarState} alt="avatar" />
               </div>
               {/*<div className={s.loadAvatar} onChange={loadPhotoHandler}>
                 <AddAPhoto className={s.loadAvatar_icon} />
