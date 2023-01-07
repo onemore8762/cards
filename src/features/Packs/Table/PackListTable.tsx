@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import DefaultPackCover from '../../../assets/images/card-file-box.svg'
+import DefaultPackCover from '../../../assets/images/DefaultPackCover-01.svg'
 import { DeleteBasicModal } from '../../../common/components/Modals/DeleteBasicModal/DeleteBasicModal'
 import { PackEditModal } from '../../../common/components/Modals/PackEditModal/PackEditModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'

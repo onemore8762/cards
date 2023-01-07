@@ -5,7 +5,6 @@ import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useSearchParams } from 'react-router-dom'
 
-import DefaultPackCover from '../../../assets/images/card-file-box.svg'
 import { FilterShow } from '../../../common/components/FilterShow/FilterShow'
 import { PackBasicModal } from '../../../common/components/Modals/PackBasicModal/PackBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'

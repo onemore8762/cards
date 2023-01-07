@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
+import DefaultQuestionImage from '../../../../assets/images/DefaultQuestionImage.jpg'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -49,23 +50,25 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setErrorAnswer('')
   }
 
-  // text field flow
-  const [questionType, setQuestionType] = useState<string>('')
-  const [questionInputValue, setQuestionInputValue] = useState<string>('')
-  const [answerInputValue, setAnswerInputValue] = useState<string>('')
-  // const [error, setError] = useState<string | null>(null)
-  const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
-  const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
-
-  const INPUT_MAX_LENGTH = 40
-  const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
-  const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
-
   // button for props
   const clonedChildren = cloneElement(children, {
     onClick: handleOpen,
   })
 
+  // local state
+  const [questionType, setQuestionType] = useState<string>('text')
+  const [questionInputValue, setQuestionInputValue] = useState<string>('')
+  const [answerInputValue, setAnswerInputValue] = useState<string>('')
+  // const [error, setError] = useState<string | null>(null)
+  const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
+  const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
+  const [questionImage, setQuestionImage] = useState(DefaultQuestionImage)
+
+  const INPUT_MAX_LENGTH = 40
+  const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
+  const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
+
+  // onChange functions
   const onChangeQuestionHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setQuestionInputValue(event.currentTarget.value)
   }
@@ -77,6 +80,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setQuestionType(event.target.value as string)
   }
 
+  // save function
   const saveBtnHandler = () => {
     const trimQuestionValue = questionInputValue.trim()
     const trimAnswerValue = answerInputValue.trim()
@@ -91,6 +95,34 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
       setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
     }
+  }
+
+  // upload file
+  const uploadQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      // console.log('file: ', file)
+
+      if (file.size < 4000000) {
+        convertFileToBase64(file, (file64: string) => {
+          // console.log(file64)
+          setQuestionImage(file64)
+        })
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
+  }
+  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    const reader = new FileReader()
+
+    reader.onloadend = () => {
+      const file64 = reader.result as string
+
+      callBack(file64)
+    }
+    reader.readAsDataURL(file)
   }
 
   // render
@@ -139,25 +171,47 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                         label="Choose a Question Format"
                         onChange={changeSelectHandler}
                       >
-                        <MenuItem value={'text'}>Text</MenuItem>
+                        <MenuItem value={'text'} selected>
+                          Text
+                        </MenuItem>
                         <MenuItem value={'image'}>Image</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
                 </div>
                 <div className={s.newCardModal_textField}>
-                  <div>
-                    <TextField
-                      value={questionInputValue}
-                      error={!!errorQuestion}
-                      onChange={onChangeQuestionHandler}
-                      helperText={errorQuestion}
-                      id="standard-basic"
-                      label="Question"
-                      variant="standard"
-                      sx={{ width: 360, height: 50 }}
-                    />
-                  </div>
+                  {questionType === 'image' ? (
+                    <>
+                      <div className={s.packCoverImage}>
+                        <img src={questionImage} alt="Question Image" />
+                      </div>
+                      <div>
+                        <Button variant="contained" component="label" style={{ width: '100%' }}>
+                          Upload Image for Question
+                          <input
+                            hidden
+                            accept="image/*"
+                            type="file"
+                            onChange={uploadQuestionHandler}
+                          />
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      <TextField
+                        value={questionInputValue}
+                        error={!!errorQuestion}
+                        onChange={onChangeQuestionHandler}
+                        helperText={errorQuestion}
+                        id="standard-basic"
+                        label="Question"
+                        variant="standard"
+                        sx={{ width: 360, height: 50 }}
+                      />
+                    </div>
+                  )}
+
                   <div>
                     <TextField
                       value={answerInputValue}

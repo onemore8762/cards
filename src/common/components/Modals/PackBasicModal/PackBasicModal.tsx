@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 
-import DefaultPackCover from '../../../../assets/images/card-file-box.svg'
+import DefaultPackCover from '../../../../assets/images/DefaultPackCover-01.svg'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -50,7 +50,12 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setError('')
   }
 
-  // text field flow
+  // button for props
+  const clonedChildren = cloneElement(children, {
+    onClick: handleOpen,
+  })
+
+  // local state
   const [inputValue, setInputValue] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [privateCheckbox, setPrivateCheckbox] = useState<boolean>(false)
@@ -61,7 +66,31 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
-  // convert file
+  // onChange functions
+  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.currentTarget.value)
+  }
+
+  const changePrivateHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let newPrivateValue = event.currentTarget.checked
+
+    setPrivateCheckbox(newPrivateValue)
+  }
+
+  // save function
+  const saveBtnHandler = () => {
+    const trimValue = inputValue.trim()
+
+    if (trimValue) {
+      saveItem(trimValue, packCoverState, privateCheckbox)
+      setInputValue('')
+      handleClose()
+    } else {
+      setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    }
+  }
+
+  // upload file
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
@@ -88,52 +117,10 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     }
     reader.readAsDataURL(file)
   }
-
   const errorHandler = () => {
     setIsPackCoverBroken(true)
     alert('Кривая картинка')
   }
-
-  // handlers
-  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.currentTarget.value)
-  }
-
-  const saveBtnHandler = () => {
-    const trimValue = inputValue.trim()
-
-    if (trimValue) {
-      saveItem(trimValue, packCoverState, privateCheckbox)
-      setInputValue('')
-      handleClose()
-    } else {
-      setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    }
-  }
-
-  const changePrivateHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let newPrivateValue = event.currentTarget.checked
-
-    setPrivateCheckbox(newPrivateValue)
-  }
-
-  // button for props
-  const clonedChildren = cloneElement(children, {
-    onClick: handleOpen,
-  })
-
-  // render
-  useEffect(() => {
-    if (packName) {
-      setInputValue(packName)
-    }
-  }, [packName])
-
-  useEffect(() => {
-    if (inputValue && inputValue.length > INPUT_MAX_LENGTH) {
-      setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-    }
-  }, [inputValue])
 
   // функция, чтобы при загрузке обложки она отображалась сразу
   const showFileAfterUploading = () => {
@@ -147,6 +134,19 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
       return packCoverState
     }
   }
+
+  // render
+  useEffect(() => {
+    if (packName) {
+      setInputValue(packName)
+    }
+  }, [packName])
+
+  useEffect(() => {
+    if (inputValue && inputValue.length > INPUT_MAX_LENGTH) {
+      setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+  }, [inputValue])
 
   return (
     <>

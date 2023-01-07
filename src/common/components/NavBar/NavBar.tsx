@@ -17,7 +17,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { selectAppStatus } from '../../../app/appSelectors'
 import icon from '../../../assets/icons/newspaper.svg'
-import DefaultProfileAvatar from '../../../assets/images/avatar.jpg'
+import DefaultProfileAvatar from '../../../assets/images/DefaultProfileAvatar.jpg'
 import { logoutTC } from '../../../features/Login/login-reducer'
 import { selectIsLoggedIn } from '../../../features/Login/loginSelectors'
 import { selectUserAvatar, selectUserName } from '../../../features/Profile/profileSelectors'

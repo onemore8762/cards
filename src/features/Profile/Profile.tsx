@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useNavigate } from 'react-router-dom'
 
-import DefaultUserAvatar from '../../assets/images/avatar.jpg'
+import DefaultUserAvatar from '../../assets/images/DefaultProfileAvatar.jpg'
 import { BackToPacksListButton } from '../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
