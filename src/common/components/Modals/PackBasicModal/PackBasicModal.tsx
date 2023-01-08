@@ -8,6 +8,7 @@ import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 
 import DefaultPackCover from '../../../../assets/images/DefaultPackCover-01.svg'
+import { convertFileToBase64 } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -107,16 +108,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
       }
     }
   }
-  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader()
 
-    reader.onloadend = () => {
-      const file64 = reader.result as string
-
-      callBack(file64)
-    }
-    reader.readAsDataURL(file)
-  }
   const errorHandler = () => {
     setIsPackCoverBroken(true)
     alert('Кривая картинка')

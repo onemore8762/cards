@@ -12,6 +12,7 @@ import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 import DefaultQuestionImage from '../../../../assets/images/DefaultQuestionImage.jpg'
+import { convertFileToBase64 } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -31,7 +32,8 @@ type AddCardModalPropsType = {
   headerTitle: string
   questionDomainValue?: string
   answerDomainValue?: string
-  saveItem: (questionInputValue: string, answerInputValue: string /*questionType: string*/) => void
+  questionImg?: string
+  saveItem: (questionInputValue: string, answerInputValue: string, questionImg: string) => void
 }
 
 export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
@@ -40,6 +42,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   saveItem,
   questionDomainValue,
   answerDomainValue,
+  questionImg,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
@@ -75,8 +78,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const onChangeAnswerHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setAnswerInputValue(event.currentTarget.value)
   }
-
-  const changeSelectHandler = (event: SelectChangeEvent) => {
+  const onChangeSelectHandler = (event: SelectChangeEvent) => {
     setQuestionType(event.target.value as string)
   }
 
@@ -85,11 +87,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     const trimQuestionValue = questionInputValue.trim()
     const trimAnswerValue = answerInputValue.trim()
 
-    if (trimQuestionValue && trimAnswerValue /*&& questionType*/) {
-      saveItem(trimQuestionValue, trimAnswerValue /*, questionType*/)
+    if (trimQuestionValue && trimAnswerValue) {
+      saveItem(trimQuestionValue, trimAnswerValue, questionImg!)
       setQuestionInputValue('')
       setAnswerInputValue('')
-      // setQuestionType('')
       handleClose()
     } else {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
@@ -114,16 +115,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       }
     }
   }
-  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader()
 
-    reader.onloadend = () => {
-      const file64 = reader.result as string
-
-      callBack(file64)
-    }
-    reader.readAsDataURL(file)
-  }
+  // const errorHandler = () => {
+  //   setIsPackCoverBroken(true)
+  //   alert('Кривая картинка')
+  // }
 
   // render
   useEffect(() => {
@@ -169,7 +165,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                         id="demo-simple-select"
                         value={questionType}
                         label="Choose a Question Format"
-                        onChange={changeSelectHandler}
+                        onChange={onChangeSelectHandler}
                       >
                         <MenuItem value={'text'} selected>
                           Text

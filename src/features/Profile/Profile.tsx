@@ -15,6 +15,7 @@ import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
+import { convertFileToBase64 } from '../../common/utils/uploadFile'
 import { logoutTC } from '../Login/login-reducer'
 
 import { updateUserDataTC, updateUserPhotoTC } from './profile-reducer'
@@ -56,16 +57,6 @@ export const Profile = () => {
         console.error('Error: ', 'Файл слишком большого размера')
       }
     }
-  }
-  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader()
-
-    reader.onloadend = () => {
-      const file64 = reader.result as string
-
-      callBack(file64)
-    }
-    reader.readAsDataURL(file)
   }
 
   // если нет PrivateRoutes

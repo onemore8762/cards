@@ -72,17 +72,18 @@ export const Card = () => {
     searchParams.delete('cardQuestion')
   }
 
-  // pack flow
+  // card functions
   const addCardHandler = (
     questionInputValue: string,
-    answerInputValue: string
-    // questionType: string
+    answerInputValue: string,
+    questionImg: string
   ) => {
     dispatch(
       addCardTC({
         cardsPack_id: cardPackId,
         question: questionInputValue,
         answer: answerInputValue,
+        questionImg: questionImg,
       })
     )
   }
@@ -188,9 +189,9 @@ export const Card = () => {
                 headerTitle={'Add New Card'}
                 saveItem={(
                   questionInputValue: string,
-                  answerInputValue: string
-                  // questionType: string
-                ) => addCardHandler(questionInputValue, answerInputValue /*, questionType*/)}
+                  answerInputValue: string,
+                  questionImg: string
+                ) => addCardHandler(questionInputValue, answerInputValue, questionImg)}
               >
                 <Button
                   disabled={isLoading}
