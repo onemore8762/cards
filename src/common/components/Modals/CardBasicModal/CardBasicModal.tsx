@@ -33,7 +33,7 @@ type AddCardModalPropsType = {
   questionDomainValue?: string
   answerDomainValue?: string
   questionImg?: string
-  saveItem: (questionInputValue: string, answerInputValue: string, questionImg: string) => void
+  saveItem: (questionInputValue: string, answerInputValue: string) => void
 }
 
 export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
@@ -42,7 +42,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   saveItem,
   questionDomainValue,
   answerDomainValue,
-  questionImg,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
@@ -88,7 +87,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     const trimAnswerValue = answerInputValue.trim()
 
     if (trimQuestionValue && trimAnswerValue) {
-      saveItem(trimQuestionValue, trimAnswerValue, questionImg!)
+      saveItem(trimQuestionValue, trimAnswerValue)
       setQuestionInputValue('')
       setAnswerInputValue('')
       handleClose()

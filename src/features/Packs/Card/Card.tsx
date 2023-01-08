@@ -73,17 +73,12 @@ export const Card = () => {
   }
 
   // card functions
-  const addCardHandler = (
-    questionInputValue: string,
-    answerInputValue: string,
-    questionImg: string
-  ) => {
+  const addCardHandler = (questionInputValue: string, answerInputValue: string) => {
     dispatch(
       addCardTC({
         cardsPack_id: cardPackId,
         question: questionInputValue,
         answer: answerInputValue,
-        questionImg: questionImg,
       })
     )
   }
@@ -187,11 +182,9 @@ export const Card = () => {
             {userId === createdId ? (
               <CardBasicModal
                 headerTitle={'Add New Card'}
-                saveItem={(
-                  questionInputValue: string,
-                  answerInputValue: string,
-                  questionImg: string
-                ) => addCardHandler(questionInputValue, answerInputValue, questionImg)}
+                saveItem={(questionInputValue: string, answerInputValue: string) =>
+                  addCardHandler(questionInputValue, answerInputValue)
+                }
               >
                 <Button
                   disabled={isLoading}
