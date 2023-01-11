@@ -4,6 +4,7 @@ import { Grid, Skeleton } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
+import DefaultPackCover from '../../../assets/images/DefaultPackCover-01.svg'
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
 import { CardBasicModal } from '../../../common/components/Modals/CardBasicModal/CardBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'

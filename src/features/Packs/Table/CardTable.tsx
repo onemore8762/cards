@@ -41,11 +41,31 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
     idCard: string,
     questionInputValue: string,
     answerInputValue: string
+    // questionImageDomainValue: string
   ) => {
-    dispatch(updateCardTC({ _id: idCard, question: questionInputValue, answer: answerInputValue }))
+    dispatch(
+      updateCardTC({
+        _id: idCard,
+        question: questionInputValue,
+        answer: answerInputValue,
+        // questionImg: questionImageDomainValue,
+      })
+    )
   }
   const deleteCardHandler = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
+  }
+
+  const questionField = (questionImg: string, question: string) => {
+    if (questionImg) {
+      return questionImg
+    } else {
+      if (question && question.length >= 30) {
+        return question.slice(0, 29) + '...'
+      } else {
+        return question
+      }
+    }
   }
 
   return (
@@ -78,7 +98,14 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                 <SkeletonComponent isLoading={isLoading}>
-                  {row.question.length >= 30 ? row.question.slice(0, 29) + '...' : row.question}
+                  {row.questionImg ? (
+                    <div className={style.questionImage}>
+                      <img src={row.questionImg} alt="card image question" />
+                    </div>
+                  ) : (
+                    row.question
+                  )}
+                  {/*{row.question.length >= 30 ? row.question.slice(0, 29) + '...' : row.question}*/}
                 </SkeletonComponent>{' '}
               </TableCell>
               <TableCell sx={{ maxWidth: '250px' }}>
@@ -103,10 +130,19 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                         <CardEditModal
                           questionDomainValue={row.question}
                           answerDomainValue={row.answer}
+                          // questionImageDomainValue={row.questionImg}
                           saveItem={(
                             questionInputValue: string,
-                            answerInputValue: string /*questionType: string*/
-                          ) => updateCardHandler(row._id, questionInputValue, answerInputValue)}
+                            answerInputValue: string
+                            // questionImageDomainValue: string
+                          ) =>
+                            updateCardHandler(
+                              row._id,
+                              questionInputValue,
+                              answerInputValue
+                              // questionImageDomainValue
+                            )
+                          }
                         />
                         <DeleteCardModal
                           packName={row.question}

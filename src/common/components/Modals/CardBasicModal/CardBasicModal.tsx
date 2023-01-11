@@ -32,8 +32,12 @@ type AddCardModalPropsType = {
   headerTitle: string
   questionDomainValue?: string
   answerDomainValue?: string
-  questionImg?: string
-  saveItem: (questionInputValue: string, answerInputValue: string) => void
+  // questionImageDomainValue?: string
+  saveItem: (
+    questionInputValue: string,
+    answerInputValue: string
+    // questionImageDomainValue?: string
+  ) => void
 }
 
 export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
@@ -42,6 +46,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   saveItem,
   questionDomainValue,
   answerDomainValue,
+  // questionImageDomainValue,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
@@ -66,7 +71,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
   const [questionImage, setQuestionImage] = useState(DefaultQuestionImage)
 
-  const INPUT_MAX_LENGTH = 40
+  const INPUT_MAX_LENGTH = 50000
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
@@ -86,10 +91,15 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     const trimQuestionValue = questionInputValue.trim()
     const trimAnswerValue = answerInputValue.trim()
 
+    if (questionType === 'image') {
+      setQuestionInputValue(questionImage)
+    }
+
     if (trimQuestionValue && trimAnswerValue) {
       saveItem(trimQuestionValue, trimAnswerValue)
       setQuestionInputValue('')
       setAnswerInputValue('')
+      setQuestionType('text')
       handleClose()
     } else {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
