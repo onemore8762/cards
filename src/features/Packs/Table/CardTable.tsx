@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 
+import { QuestionItemPropsType } from '../../../common/components/Modals/CardBasicModal/CardBasicModal'
 import { CardEditModal } from '../../../common/components/Modals/CardEditModal/CardEditModal'
 import { DeleteCardModal } from '../../../common/components/Modals/DeleteCardModal/DeleteCardModal'
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
@@ -37,20 +38,13 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
   const sortTableHandler = () => {
     dispatch(sortCardsAC())
   }
-  const updateCardHandler = (
-    idCard: string,
-    questionInputValue: string,
-    answerInputValue: string
-    // questionImageDomainValue: string
-  ) => {
-    dispatch(
-      updateCardTC({
-        _id: idCard,
-        question: questionInputValue,
-        answer: answerInputValue,
-        // questionImg: questionImageDomainValue,
-      })
-    )
+  const updateCardHandler = (item: {
+    _id: string
+    question?: string
+    answer: string
+    questionImg?: string
+  }) => {
+    dispatch(updateCardTC(item))
   }
   const deleteCardHandler = (idCard: string) => {
     dispatch(deleteCardTC(idCard))
@@ -131,17 +125,8 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                           questionDomainValue={row.question}
                           answerDomainValue={row.answer}
                           // questionImageDomainValue={row.questionImg}
-                          saveItem={(
-                            questionInputValue: string,
-                            answerInputValue: string
-                            // questionImageDomainValue: string
-                          ) =>
-                            updateCardHandler(
-                              row._id,
-                              questionInputValue,
-                              answerInputValue
-                              // questionImageDomainValue
-                            )
+                          saveItem={(item: QuestionItemPropsType) =>
+                            updateCardHandler({ ...item, _id: row._id })
                           }
                         />
                         <DeleteCardModal

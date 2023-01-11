@@ -6,7 +6,10 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import DefaultPackCover from '../../../assets/images/DefaultPackCover-01.svg'
 import { BackToPacksListButton } from '../../../common/components/BackToPacksListButton/BackToPacksListButton'
-import { CardBasicModal } from '../../../common/components/Modals/CardBasicModal/CardBasicModal'
+import {
+  CardBasicModal,
+  QuestionItemPropsType,
+} from '../../../common/components/Modals/CardBasicModal/CardBasicModal'
 import { PageTitle } from '../../../common/components/PageTitle/PageTitle'
 import { PaginationBlock } from '../../../common/components/Pagination/PaginationBlock'
 import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
@@ -183,9 +186,12 @@ export const Card = () => {
             {userId === createdId ? (
               <CardBasicModal
                 headerTitle={'Add New Card'}
-                saveItem={(questionInputValue: string, answerInputValue: string) =>
-                  addCardHandler(questionInputValue, answerInputValue)
+                saveItem={(item: QuestionItemPropsType) =>
+                  addCardHandler(item.question!, item.answer)
                 }
+                /*saveItem={(questionInputValue: string, answerInputValue: string) =>
+                  addCardHandler(questionInputValue, answerInputValue)
+                }*/
               >
                 <Button
                   disabled={isLoading}
