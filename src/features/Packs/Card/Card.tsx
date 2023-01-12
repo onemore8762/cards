@@ -77,15 +77,6 @@ export const Card = () => {
   }
 
   // card functions
-  /*const addCardHandler = (questionInputValue: string, answerInputValue: string) => {
-    dispatch(
-      addCardTC({
-        cardsPack_id: cardPackId,
-        question: questionInputValue,
-        answer: answerInputValue,
-      })
-    )
-  }*/
   const addCardHandler = (item: {
     cardsPack_id: string
     question?: string
@@ -197,9 +188,6 @@ export const Card = () => {
                 saveItem={(item: QuestionItemPropsType) =>
                   addCardHandler({ ...item, cardsPack_id: cardPackId })
                 }
-                /*saveItem={(questionInputValue: string, answerInputValue: string) =>
-                  addCardHandler(questionInputValue, answerInputValue)
-                }*/
               >
                 <Button
                   disabled={isLoading}

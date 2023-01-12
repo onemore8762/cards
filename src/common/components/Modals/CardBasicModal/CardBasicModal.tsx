@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
+import DefaultPackCover from '../../../../assets/images/DefaultPackCover-01.svg'
 import DefaultQuestionImage from '../../../../assets/images/DefaultQuestionImage.jpg'
 import { convertFileToBase64 } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
@@ -67,11 +68,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   // local state
   const [questionType, setQuestionType] = useState<string>('text')
   const [questionInputValue, setQuestionInputValue] = useState<string | undefined>('')
+  const [questionImage, setQuestionImage] = useState<string | undefined>(DefaultQuestionImage)
   const [answerInputValue, setAnswerInputValue] = useState<string>('')
   // const [error, setError] = useState<string | null>(null)
   const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
-  const [questionImage, setQuestionImage] = useState<string | undefined>(DefaultQuestionImage)
 
   const INPUT_MAX_LENGTH = 50000
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
@@ -92,25 +93,25 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const saveBtnHandler = () => {
     const trimQuestionValue = questionInputValue?.trim()
     const trimAnswerValue = answerInputValue.trim()
-    // const trimQuestionImageValue = questionImage?.trim()
 
-    if (questionType === 'image') {
-      setQuestionInputValue(undefined)
-    }
     if (questionType === 'text') {
       setQuestionImage(undefined)
+      saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
+    } else {
+      setQuestionInputValue(undefined)
+      saveItem({ answer: trimAnswerValue, question: 'Image Question', questionImg: questionImage })
     }
 
-    if (trimQuestionValue && trimAnswerValue) {
-      saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: questionImage })
-      setQuestionInputValue('')
-      setAnswerInputValue('')
-      // setQuestionType('text')
-      handleClose()
-    } else {
-      setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-      setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    }
+    // if (trimQuestionValue && trimAnswerValue) {
+    // saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: questionImage })
+    setQuestionInputValue('')
+    setAnswerInputValue('')
+    setQuestionType('text')
+    handleClose()
+    // } else {
+    //   setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    //   setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    // }
   }
 
   // upload file
@@ -136,15 +137,28 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   //   alert('Кривая картинка')
   // }
 
+  // функция, чтобы при загрузке фотографии она отображалась сразу
+  const showFileAfterUploading = () => {
+    if (questionImageDomainValue) {
+      if (questionImage === DefaultQuestionImage) {
+        return questionImageDomainValue
+      } else {
+        return questionImage
+      }
+    } else {
+      return questionImage
+    }
+  }
+
   // render
-  useEffect(() => {
-    if (questionInputValue!.length > INPUT_MAX_LENGTH) {
-      setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-    }
-    if (answerInputValue.length > INPUT_MAX_LENGTH) {
-      setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-    }
-  }, [questionInputValue, answerInputValue])
+  // useEffect(() => {
+  //   if (questionInputValue!.length > INPUT_MAX_LENGTH) {
+  //     setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+  //   }
+  //   if (answerInputValue.length > INPUT_MAX_LENGTH) {
+  //     setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+  //   }
+  // }, [questionInputValue, answerInputValue])
 
   useEffect(() => {
     if (questionDomainValue) {
@@ -200,7 +214,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                   {questionType === 'image' ? (
                     <>
                       <div className={s.packCoverImage}>
-                        <img src={questionImage} alt="Question Image" />
+                        <img src={showFileAfterUploading()} alt="Question Image" />
                       </div>
                       <div>
                         <Button variant="contained" component="label" style={{ width: '100%' }}>
@@ -269,10 +283,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                         borderRadius: '30px',
                       }}
                       onClick={saveBtnHandler}
-                      disabled={
-                        questionInputValue!.length > INPUT_MAX_LENGTH ||
-                        answerInputValue.length > INPUT_MAX_LENGTH
-                      }
+                      // disabled={
+                      //   questionInputValue!.length > INPUT_MAX_LENGTH ||
+                      //   answerInputValue.length > INPUT_MAX_LENGTH
+                      // }
                     >
                       Save
                     </Button>
