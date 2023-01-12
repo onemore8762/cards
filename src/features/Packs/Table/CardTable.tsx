@@ -70,7 +70,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
             <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Question
             </TableCell>
-            <TableCell style={{ width: '10%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
               Answer
             </TableCell>
             <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
@@ -90,7 +90,11 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
         <TableBody>
           {cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
+              <TableCell
+                component="th"
+                scope="row"
+                sx={{ maxWidth: '250px', wordBreak: 'break-word' }}
+              >
                 <SkeletonComponent isLoading={isLoading}>
                   {row.questionImg ? (
                     <div className={style.questionImage}>
@@ -99,12 +103,13 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                   ) : (
                     row.question
                   )}
-                  {/*{row.question.length >= 30 ? row.question.slice(0, 29) + '...' : row.question}*/}
+                  {/*{row.question.length >= 50 ? row.question.slice(0, 49) + '...' : row.question}*/}
                 </SkeletonComponent>{' '}
               </TableCell>
-              <TableCell sx={{ maxWidth: '250px' }}>
+              <TableCell sx={{ maxWidth: '250px', wordBreak: 'break-word' }}>
                 <SkeletonComponent isLoading={isLoading}>
-                  {row.answer.length >= 30 ? row.answer.slice(0, 29) + '...' : row.answer}
+                  {row.answer}
+                  {/*{row.answer.length >= 50 ? row.answer.slice(0, 49) + '...' : row.answer}*/}
                 </SkeletonComponent>
               </TableCell>
               <TableCell>

@@ -19,6 +19,9 @@
 .modalContent {
     padding: 10px 20px;
 }
+.modalContent_text {
+    word-break: break-word;
+}
 
 
 .packModal_main > div {

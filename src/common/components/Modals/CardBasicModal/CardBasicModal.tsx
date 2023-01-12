@@ -73,8 +73,8 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
 
-  const INPUT_MAX_LENGTH = 50000
-  const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
+  const INPUT_MAX_LENGTH = 100
+  const MESSAGE_INPUT_VALUE_REQUIRED = `Text length must be 1-${INPUT_MAX_LENGTH} symbols`
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
   // onChange functions
@@ -162,6 +162,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   }
 
   // render
+  // обработка ошибок
   useEffect(() => {
     if (questionInputValue!.length > INPUT_MAX_LENGTH) {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
@@ -171,6 +172,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     }
   }, [questionInputValue, answerInputValue])
 
+  // обработка приходящих данных с сервера
   useEffect(() => {
     if (questionDomainValue) {
       setQuestionInputValue(questionDomainValue)

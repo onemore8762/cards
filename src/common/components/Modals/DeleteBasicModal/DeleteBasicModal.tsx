@@ -66,7 +66,7 @@ export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
               </div>
             </div>
             <div className={s.modalContent}>
-              <div>
+              <div className={s.modalContent_text}>
                 <p>
                   Do you really want to remove <b>{packName}</b>?
                 </p>
