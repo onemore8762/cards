@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
-import DefaultPackCover from '../../../../assets/images/DefaultPackCover-01.svg'
 import DefaultQuestionImage from '../../../../assets/images/DefaultQuestionImage.jpg'
 import { convertFileToBase64 } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
@@ -107,6 +106,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setQuestionInputValue('')
     setAnswerInputValue('')
     setQuestionType('text')
+    setQuestionImage(DefaultQuestionImage)
     handleClose()
     // } else {
     //   setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
