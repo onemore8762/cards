@@ -171,6 +171,9 @@ export const Card = () => {
                 deletePackHandler={deletePackHandler}
                 goToLearnHandler={goToLearnHandler}
               />
+              <div className={s.deckCover}>
+                <img src={deckCover} alt="deckCover" />
+              </div>
             </Grid>
           ) : (
             <>
@@ -183,9 +186,9 @@ export const Card = () => {
               )}
             </>
           )}
-          <div className={s.deckCover}>
-            <img src={deckCover} alt="deckCover" />
-          </div>
+          {/*<div className={s.deckCover}>*/}
+          {/*  <img src={deckCover} alt="deckCover" />*/}
+          {/*</div>*/}
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
               <CardBasicModal

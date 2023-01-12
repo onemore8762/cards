@@ -15,7 +15,7 @@ import { EditableSpan } from '../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
-import { convertFileToBase64, uploadHandler } from '../../common/utils/uploadFile'
+import { uploadHandler } from '../../common/utils/uploadFile'
 import { logoutTC } from '../Login/login-reducer'
 
 import { updateUserDataTC, updateUserPhotoTC } from './profile-reducer'
@@ -41,27 +41,11 @@ export const Profile = () => {
     navigate(PATH.LOGIN.LOGIN)
   }, [])
 
-  const loadPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      // console.log('file: ', file)
-
-      if (file.size < 4000000) {
-        convertFileToBase64(file, (file64: string) => {
-          setUserAvatarState(file64)
-          dispatch(updateUserPhotoTC(file64))
-          // console.log('file64: ', file64)
-        })
-      } else {
-        console.error('Error: ', 'Файл слишком большого размера')
-      }
-    }
+  const loadPhotoHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    uploadHandler(event, setUserAvatarState, file64 => {
+      dispatch(updateUserPhotoTC(file64))
+    })
   }
-
-  // const loadPhotoHandler = (event: ChangeEvent<HTMLInputElement>) => {
-  //   uploadHandler(event, setUserAvatarState, dispatch(updateUserPhotoTC(file64)))
-  // }
 
   // если нет PrivateRoutes
   // if (!isLoggedIn) {
@@ -84,12 +68,7 @@ export const Profile = () => {
               </div>
               <div className={s.loadAvatar}>
                 <label>
-                  <input
-                    type="file"
-                    style={{ display: 'none' }}
-                    // onChange={loadPhotoHandler}
-                    onChange={loadPhotoHandler}
-                  />
+                  <input type="file" style={{ display: 'none' }} onChange={loadPhotoHandler} />
                   <IconButton component="span">
                     <AddAPhoto className={s.loadAvatar_icon} />
                   </IconButton>

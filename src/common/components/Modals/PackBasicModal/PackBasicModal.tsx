@@ -136,7 +136,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                   <img
                     src={showFileAfterUploading(packCover, packCoverState, DefaultPackCover)}
                     alt="PackCover"
-                    // onError={() => imageErrorHandler(setIsImageFileBroken)}
+                    onError={() => imageErrorHandler(setIsImageFileBroken)}
                   />
                 </div>
                 <div>

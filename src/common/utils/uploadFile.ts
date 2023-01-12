@@ -3,8 +3,8 @@ import { ChangeEvent } from 'react'
 // загрузка файла
 export const uploadHandler = (
   e: ChangeEvent<HTMLInputElement>,
-  setFunction: (file64: string) => void
-  // extraFunction?: (file64: string)
+  setFunction: (file64: string) => void,
+  extraFunction?: (file64: string) => void
 ) => {
   if (e.target.files && e.target.files.length) {
     const file = e.target.files[0]
@@ -15,9 +15,9 @@ export const uploadHandler = (
       convertFileToBase64(file, (file64: string) => {
         // console.log(file64)
         setFunction(file64)
-        // if (extraFunction) {
-        //   extraFunction(extraTC(file64))
-        // }
+        if (extraFunction) {
+          extraFunction(file64)
+        }
       })
     } else {
       // console.error('Error: ', 'Файл слишком большого размера')

@@ -196,7 +196,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                             DefaultQuestionImage
                           )}
                           alt="Question Image"
-                          // onError={() => imageErrorHandler(setIsImageFileBroken)}
+                          onError={() => imageErrorHandler(setIsImageFileBroken)}
                         />
                       </div>
                       <div>
