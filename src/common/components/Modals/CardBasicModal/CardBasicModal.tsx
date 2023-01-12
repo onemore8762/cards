@@ -73,7 +73,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
 
-  const INPUT_MAX_LENGTH = 100
+  const INPUT_MAX_LENGTH = 10
   const MESSAGE_INPUT_VALUE_REQUIRED = `Text length must be 1-${INPUT_MAX_LENGTH} symbols`
   const MESSAGE_INPUT_VALUE_LENGTH = `Text length must be maximum ${INPUT_MAX_LENGTH} symbols`
 
@@ -106,6 +106,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
         setQuestionImage(undefined)
         saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
       } else {
+        // setErrorQuestion(null)
         setQuestionInputValue(undefined)
         saveItem({
           answer: trimAnswerValue,
@@ -164,11 +165,18 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   // render
   // обработка ошибок
   useEffect(() => {
-    if (questionInputValue!.length > INPUT_MAX_LENGTH) {
+    // if (questionType === 'image') {
+    //   setErrorQuestion(null)
+    // }
+    if (questionInputValue && questionInputValue!.length > INPUT_MAX_LENGTH) {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    } else {
+      setErrorQuestion(null)
     }
-    if (answerInputValue.length > INPUT_MAX_LENGTH) {
+    if (answerInputValue && answerInputValue.length > INPUT_MAX_LENGTH) {
       setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    } else {
+      setErrorAnswer(null)
     }
   }, [questionInputValue, answerInputValue])
 
