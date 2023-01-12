@@ -93,25 +93,36 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     const trimQuestionValue = questionInputValue?.trim()
     const trimAnswerValue = answerInputValue.trim()
 
-    if (questionType === 'text') {
-      setQuestionImage(undefined)
-      saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
-    } else {
-      setQuestionInputValue(undefined)
-      saveItem({ answer: trimAnswerValue, question: 'Image Question', questionImg: questionImage })
-    }
-
-    // if (trimQuestionValue && trimAnswerValue) {
-    // saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: questionImage })
-    setQuestionInputValue('')
-    setAnswerInputValue('')
-    setQuestionType('text')
-    setQuestionImage(DefaultQuestionImage)
-    handleClose()
+    // if (questionType === 'text') {
+    //   setQuestionImage(undefined)
+    //   saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
     // } else {
-    //   setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    //   setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    //   setQuestionInputValue(undefined)
+    //   saveItem({ answer: trimAnswerValue, question: 'Image Question', questionImg: questionImage })
     // }
+
+    if (trimQuestionValue && trimAnswerValue) {
+      if (questionType === 'text') {
+        setQuestionImage(undefined)
+        saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
+      } else {
+        setQuestionInputValue(undefined)
+        saveItem({
+          answer: trimAnswerValue,
+          question: 'Image Question',
+          questionImg: questionImage,
+        })
+      }
+
+      setQuestionInputValue('')
+      setAnswerInputValue('')
+      setQuestionType('text')
+      setQuestionImage(DefaultQuestionImage)
+      handleClose()
+    } else {
+      setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+      setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    }
   }
 
   // upload file
@@ -151,14 +162,14 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   }
 
   // render
-  // useEffect(() => {
-  //   if (questionInputValue!.length > INPUT_MAX_LENGTH) {
-  //     setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-  //   }
-  //   if (answerInputValue.length > INPUT_MAX_LENGTH) {
-  //     setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-  //   }
-  // }, [questionInputValue, answerInputValue])
+  useEffect(() => {
+    if (questionInputValue!.length > INPUT_MAX_LENGTH) {
+      setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+    if (answerInputValue.length > INPUT_MAX_LENGTH) {
+      setErrorAnswer(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    }
+  }, [questionInputValue, answerInputValue])
 
   useEffect(() => {
     if (questionDomainValue) {
@@ -283,10 +294,10 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                         borderRadius: '30px',
                       }}
                       onClick={saveBtnHandler}
-                      // disabled={
-                      //   questionInputValue!.length > INPUT_MAX_LENGTH ||
-                      //   answerInputValue.length > INPUT_MAX_LENGTH
-                      // }
+                      disabled={
+                        questionInputValue!.length > INPUT_MAX_LENGTH ||
+                        answerInputValue.length > INPUT_MAX_LENGTH
+                      }
                     >
                       Save
                     </Button>
