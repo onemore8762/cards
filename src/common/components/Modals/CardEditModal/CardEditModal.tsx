@@ -8,13 +8,15 @@ import { CardBasicModal, QuestionItemPropsType } from '../CardBasicModal/CardBas
 type CardEditModalPropsType = {
   questionDomainValue: string
   answerDomainValue: string
+  questionImageDomainValue: string
   saveItem: (item: QuestionItemPropsType) => void
 }
 
 export const CardEditModal: React.FC<CardEditModalPropsType> = ({
-  saveItem,
   questionDomainValue,
   answerDomainValue,
+  questionImageDomainValue,
+  saveItem,
 }) => {
   return (
     <CardBasicModal
@@ -22,6 +24,7 @@ export const CardEditModal: React.FC<CardEditModalPropsType> = ({
       saveItem={saveItem}
       questionDomainValue={questionDomainValue}
       answerDomainValue={answerDomainValue}
+      questionImageDomainValue={questionImageDomainValue}
     >
       <IconButton>
         <BorderColorOutlined />

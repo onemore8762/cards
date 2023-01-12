@@ -77,7 +77,7 @@ export const Card = () => {
   }
 
   // card functions
-  const addCardHandler = (questionInputValue: string, answerInputValue: string) => {
+  /*const addCardHandler = (questionInputValue: string, answerInputValue: string) => {
     dispatch(
       addCardTC({
         cardsPack_id: cardPackId,
@@ -85,6 +85,14 @@ export const Card = () => {
         answer: answerInputValue,
       })
     )
+  }*/
+  const addCardHandler = (item: {
+    cardsPack_id: string
+    question?: string
+    answer: string
+    questionImg?: string
+  }) => {
+    dispatch(addCardTC(item))
   }
   const deletePackHandler = (packs_id: string) => {
     dispatch(deletePacksTC(packs_id))
@@ -187,7 +195,7 @@ export const Card = () => {
               <CardBasicModal
                 headerTitle={'Add New Card'}
                 saveItem={(item: QuestionItemPropsType) =>
-                  addCardHandler(item.question!, item.answer)
+                  addCardHandler({ ...item, cardsPack_id: cardPackId })
                 }
                 /*saveItem={(questionInputValue: string, answerInputValue: string) =>
                   addCardHandler(questionInputValue, answerInputValue)

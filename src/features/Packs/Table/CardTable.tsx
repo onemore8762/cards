@@ -50,17 +50,17 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
     dispatch(deleteCardTC(idCard))
   }
 
-  const questionField = (questionImg: string, question: string) => {
-    if (questionImg) {
-      return questionImg
-    } else {
-      if (question && question.length >= 30) {
-        return question.slice(0, 29) + '...'
-      } else {
-        return question
-      }
-    }
-  }
+  // const questionField = (questionImg: string, question: string) => {
+  //   if (questionImg) {
+  //     return questionImg
+  //   } else {
+  //     if (question && question.length >= 30) {
+  //       return question.slice(0, 29) + '...'
+  //     } else {
+  //       return question
+  //     }
+  //   }
+  // }
 
   return (
     <TableContainer component={Paper} sx={{ maxHeight: '450px' }}>
@@ -124,7 +124,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                         <CardEditModal
                           questionDomainValue={row.question}
                           answerDomainValue={row.answer}
-                          // questionImageDomainValue={row.questionImg}
+                          questionImageDomainValue={row.questionImg}
                           saveItem={(item: QuestionItemPropsType) =>
                             updateCardHandler({ ...item, _id: row._id })
                           }

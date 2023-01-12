@@ -38,6 +38,7 @@ type AddCardModalPropsType = {
   headerTitle: string
   questionDomainValue?: string
   answerDomainValue?: string
+  questionImageDomainValue?: string
   saveItem: (item: QuestionItemPropsType) => void
 }
 
@@ -47,6 +48,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   saveItem,
   questionDomainValue,
   answerDomainValue,
+  questionImageDomainValue,
 }) => {
   // menu
   const [open, setOpen] = useState(false)
@@ -90,6 +92,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const saveBtnHandler = () => {
     const trimQuestionValue = questionInputValue?.trim()
     const trimAnswerValue = answerInputValue.trim()
+    // const trimQuestionImageValue = questionImage?.trim()
 
     if (questionType === 'image') {
       setQuestionInputValue(undefined)
@@ -102,7 +105,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
       saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: questionImage })
       setQuestionInputValue('')
       setAnswerInputValue('')
-      setQuestionType('text')
+      // setQuestionType('text')
       handleClose()
     } else {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
@@ -144,11 +147,17 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   }, [questionInputValue, answerInputValue])
 
   useEffect(() => {
-    if (questionDomainValue && answerDomainValue) {
+    if (questionDomainValue) {
       setQuestionInputValue(questionDomainValue)
-      setAnswerInputValue(answerDomainValue)
     }
-  }, [questionDomainValue, answerDomainValue])
+    if (answerDomainValue) {
+      setAnswerInputValue(answerDomainValue!)
+    }
+    if (questionImageDomainValue) {
+      setQuestionImage(questionImageDomainValue)
+      setQuestionType('image')
+    }
+  }, [questionDomainValue, answerDomainValue, questionImageDomainValue])
 
   return (
     <>
