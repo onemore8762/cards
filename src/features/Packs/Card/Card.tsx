@@ -31,6 +31,7 @@ import {
   selectCardQuestion,
   selectCardsIsLoading,
   selectCardsList,
+  selectCardsPackCover,
   selectCardsPackName,
   selectCardsPage,
   selectCardsPageCount,
@@ -47,6 +48,7 @@ export const Card = () => {
   const userId = useAppSelector(selectProfileUserId)
   const createdId = useAppSelector(selectPackUserId)
   const packName = useAppSelector(selectCardsPackName)
+  const deckCover = useAppSelector(selectCardsPackCover)
   const cardPackId = useAppSelector(selectCardPackId)
   const cardList = useAppSelector(selectCardsList)
   const isLoading = useAppSelector(selectCardsIsLoading)
@@ -150,7 +152,7 @@ export const Card = () => {
   }, [])
 
   return (
-    <Grid container justifyContent={'center'} /*s2={{ position: 'relative' }}*/>
+    <Grid container justifyContent={'center'}>
       <BackToPacksListButton route={PATH.PROFILE.PACKLIST} title={'Back to Packs List'} />
       <div className={s2.packList}>
         <div className={s2.header_row}>
@@ -181,6 +183,9 @@ export const Card = () => {
               )}
             </>
           )}
+          <div className={s.deckCover}>
+            <img src={deckCover} alt="deckCover" />
+          </div>
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
               <CardBasicModal

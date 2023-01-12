@@ -45,3 +45,8 @@
 .mainTable {
     margin-bottom: 30px;
 }
+
+.addNewPackBtn {
+    display: flex;
+    align-items: center;
+}

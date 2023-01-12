@@ -5,3 +5,17 @@
 .mainTable {
     margin-bottom: 30px;
 }
+
+.deckCover {
+    display: flex;
+    align-items: center;
+
+    margin-right: 800px;
+    margin-left: 30px;
+}
+.deckCover img {
+    width: 100px;
+    height: auto;
+
+    border-radius: 5px;
+}

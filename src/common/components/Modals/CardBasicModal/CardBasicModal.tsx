@@ -1,4 +1,4 @@
-import React, { ChangeEvent, cloneElement, KeyboardEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, cloneElement, useEffect, useState } from 'react'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import { TextField } from '@mui/material'
@@ -12,7 +12,7 @@ import Modal from '@mui/material/Modal'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 import DefaultQuestionImage from '../../../../assets/images/DefaultQuestionImage.jpg'
-import { convertFileToBase64 } from '../../../utils/uploadFile'
+import { imageErrorHandler, showFileAfterUploading, uploadHandler } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -69,9 +69,9 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   const [questionInputValue, setQuestionInputValue] = useState<string | undefined>('')
   const [questionImage, setQuestionImage] = useState<string | undefined>(DefaultQuestionImage)
   const [answerInputValue, setAnswerInputValue] = useState<string>('')
-  // const [error, setError] = useState<string | null>(null)
   const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
   const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
+  const [isImageFileBroken, setIsImageFileBroken] = useState<boolean>(false)
 
   const INPUT_MAX_LENGTH = 100
   const MESSAGE_INPUT_VALUE_REQUIRED = `Text length must be 1-${INPUT_MAX_LENGTH} symbols`
@@ -88,7 +88,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setQuestionType(event.target.value as string)
   }
 
-  // save function
+  // сохранение карточки
   const saveBtnHandler = () => {
     const trimQuestionValue = questionInputValue?.trim()
     const trimAnswerValue = answerInputValue.trim()
@@ -118,42 +118,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     } else {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
       setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    }
-  }
-
-  // upload file
-  const uploadQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      // console.log('file: ', file)
-
-      if (file.size < 4000000) {
-        convertFileToBase64(file, (file64: string) => {
-          // console.log(file64)
-          setQuestionImage(file64)
-        })
-      } else {
-        console.error('Error: ', 'Файл слишком большого размера')
-      }
-    }
-  }
-
-  // const errorHandler = () => {
-  //   setIsPackCoverBroken(true)
-  //   alert('Кривая картинка')
-  // }
-
-  // функция, чтобы при загрузке фотографии она отображалась сразу
-  const showFileAfterUploading = () => {
-    if (questionImageDomainValue) {
-      if (questionImage === DefaultQuestionImage) {
-        return questionImageDomainValue
-      } else {
-        return questionImage
-      }
-    } else {
-      return questionImage
     }
   }
 
@@ -201,8 +165,6 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
             <div className={s.modalContent}>
               <div className={s.packModal_main}>
                 <div className={s.newCardModal_textField_select}>
-                  {/*<SelectInput />*/}
-
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth size="small">
                       <InputLabel id="demo-simple-select-label">
@@ -227,7 +189,15 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                   {questionType === 'image' ? (
                     <>
                       <div className={s.packCoverImage}>
-                        <img src={showFileAfterUploading()} alt="Question Image" />
+                        <img
+                          src={showFileAfterUploading(
+                            questionImageDomainValue,
+                            questionImage,
+                            DefaultQuestionImage
+                          )}
+                          alt="Question Image"
+                          // onError={() => imageErrorHandler(setIsImageFileBroken)}
+                        />
                       </div>
                       <div>
                         <Button variant="contained" component="label" style={{ width: '100%' }}>
@@ -236,8 +206,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
                             hidden
                             accept="image/*"
                             type="file"
-                            onChange={uploadQuestionHandler}
-                            // onChange={e => uploadQuestionHandler(e, () => {})}
+                            onChange={event => uploadHandler(event, setQuestionImage)}
                           />
                         </Button>
                       </div>

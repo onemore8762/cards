@@ -8,7 +8,7 @@ import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 
 import DefaultPackCover from '../../../../assets/images/DefaultPackCover-01.svg'
-import { convertFileToBase64 } from '../../../utils/uploadFile'
+import { imageErrorHandler, showFileAfterUploading, uploadHandler } from '../../../utils/uploadFile'
 import s from '../BasicModal.module.css'
 
 const style = {
@@ -61,7 +61,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   const [error, setError] = useState<string | null>(null)
   const [privateCheckbox, setPrivateCheckbox] = useState<boolean>(false)
   const [packCoverState, setPackCoverState] = useState(DefaultPackCover)
-  const [isPackCoverBroken, setIsPackCoverBroken] = useState<boolean>(false)
+  const [isImageFileBroken, setIsImageFileBroken] = useState<boolean>(false)
 
   const INPUT_MAX_LENGTH = 40
   const MESSAGE_INPUT_VALUE_REQUIRED = 'Text length must be minimum 1 symbol'
@@ -78,7 +78,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setPrivateCheckbox(newPrivateValue)
   }
 
-  // save function
+  // сохранение колоды
   const saveBtnHandler = () => {
     const trimValue = inputValue.trim()
 
@@ -91,54 +91,20 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     }
   }
 
-  // upload file
-  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      // console.log('file: ', file)
-
-      if (file.size < 4000000) {
-        convertFileToBase64(file, (file64: string) => {
-          // console.log(file64)
-          setPackCoverState(file64)
-        })
-      } else {
-        console.error('Error: ', 'Файл слишком большого размера')
-      }
-    }
-  }
-
-  const errorHandler = () => {
-    setIsPackCoverBroken(true)
-    alert('Кривая картинка')
-  }
-
-  // функция, чтобы при загрузке обложки она отображалась сразу
-  const showFileAfterUploading = () => {
-    if (packCover) {
-      if (packCoverState === DefaultPackCover) {
-        return packCover
-      } else {
-        return packCoverState
-      }
-    } else {
-      return packCoverState
-    }
-  }
-
   // render
-  useEffect(() => {
-    if (packName) {
-      setInputValue(packName)
-    }
-  }, [packName])
-
+  // обработка ошибок
   useEffect(() => {
     if (inputValue && inputValue.length > INPUT_MAX_LENGTH) {
       setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
     }
   }, [inputValue])
+
+  // обработка приходящих данных с сервера
+  useEffect(() => {
+    if (packName) {
+      setInputValue(packName)
+    }
+  }, [packName])
 
   return (
     <>
@@ -167,24 +133,21 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
                   />
                 </div>
                 <div className={s.packCoverImage}>
-                  <img src={showFileAfterUploading()} alt="PackCover" onError={errorHandler} />
-                  {/*<img
-                    src={
-                      // eslint-disable-next-line no-nested-ternary
-                      packCover
-                        ? packCoverState === DefaultPackCover
-                          ? packCover
-                          : packCoverState
-                        : packCoverState
-                    }
+                  <img
+                    src={showFileAfterUploading(packCover, packCoverState, DefaultPackCover)}
                     alt="PackCover"
-                    onError={errorHandler}
-                  />*/}
+                    // onError={() => imageErrorHandler(setIsImageFileBroken)}
+                  />
                 </div>
                 <div>
                   <Button variant="contained" component="label" style={{ width: '100%' }}>
                     Upload pack cover
-                    <input hidden accept="image/*" type="file" onChange={uploadHandler} />
+                    <input
+                      hidden
+                      accept="image/*"
+                      type="file"
+                      onChange={event => uploadHandler(event, setPackCoverState)}
+                    />
                   </Button>
                 </div>
                 <div className={s.packModal_checkbox}>
