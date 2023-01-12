@@ -94,27 +94,31 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     const trimAnswerValue = answerInputValue.trim()
 
     // if (trimQuestionValue && trimAnswerValue) {
-    if (questionType === 'text') {
-      setQuestionImage(undefined)
-      saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
-    } else {
-      setQuestionInputValue(undefined)
-      saveItem({
-        answer: trimAnswerValue,
-        question: 'Image Question',
-        questionImg: questionImage,
-      })
-    }
+    if (
+      (questionType === 'text' && trimQuestionValue && trimAnswerValue) ||
+      (questionType === 'image' && trimAnswerValue)
+    ) {
+      if (questionType === 'text') {
+        setQuestionImage(undefined)
+        saveItem({ answer: trimAnswerValue, question: trimQuestionValue, questionImg: undefined })
+      } else {
+        setQuestionInputValue(undefined)
+        saveItem({
+          answer: trimAnswerValue,
+          question: 'Image Question',
+          questionImg: questionImage,
+        })
+      }
 
-    setQuestionInputValue('')
-    setAnswerInputValue('')
-    setQuestionType('text')
-    setQuestionImage(DefaultQuestionImage)
-    handleClose()
-    // } else {
-    //   setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    //   setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
-    // }
+      setQuestionInputValue('')
+      setAnswerInputValue('')
+      setQuestionType('text')
+      setQuestionImage(DefaultQuestionImage)
+      handleClose()
+    } else {
+      setErrorQuestion(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+      setErrorAnswer(`${MESSAGE_INPUT_VALUE_REQUIRED}`)
+    }
   }
 
   // upload file
