@@ -34,6 +34,13 @@ export const Login_FormLabelOneStyle = {
 export const CreateNewPassword_FormGroupStyle = {
   marginBottom: '34px',
   marginTop: '65px',
+  textAlign: 'center',
+}
+
+export const CreateNewPassword_DescriptionStyle = {
+  marginTop: '30px',
+  opacity: '50%',
+  lineHeight: '25px',
 }
 
 export const Login_FormLabelOneSpanStyle = {
@@ -86,6 +93,7 @@ export const Recovery_FormLabelThreeStyle = {
   alignItems: 'center',
   mt: 0,
   textAlign: 'center',
+  lineHeight: '25px',
 }
 
 export const Login_FormLabelThreeTextStyle = {

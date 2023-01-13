@@ -8,13 +8,15 @@ import { Eye } from '../../../common/components/Eye/Eye'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import {
+  CreateNewPassword_DescriptionStyle,
   CreateNewPassword_FormGroupStyle,
   CreateNewPassword_LoginCardStyle,
+  Login_FormLabelOneSpanStyle,
   Login_FormLabelOneStyle,
   Login_MainButtonStyle,
+  Registration_FormikSubmitStyle,
 } from '../../../common/styles/LoginFormStyles'
 
-import s from './CreateNewPassword.module.css'
 import { setNewPassword } from './new-password-reducer'
 import { selectNewPassword, selectPasswordError } from './newPasswordSelectors'
 
@@ -50,9 +52,9 @@ export const CreateNewPassword = () => {
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
         <Card sx={CreateNewPassword_LoginCardStyle}>
-          <form onSubmit={formik.handleSubmit} className={s.form}>
+          <form onSubmit={formik.handleSubmit} style={Registration_FormikSubmitStyle}>
             <FormLabel sx={Login_FormLabelOneStyle}>
-              <span className={s.header}>Create New Password</span>
+              <span style={Login_FormLabelOneSpanStyle}>Create New Password</span>
             </FormLabel>
             <FormGroup sx={CreateNewPassword_FormGroupStyle}>
               <TextField
@@ -73,9 +75,9 @@ export const CreateNewPassword = () => {
                   ),
                 }}
               />
-              <p className={s.description}>
+              <div style={CreateNewPassword_DescriptionStyle}>
                 Create new password and we will send you further instructions to email
-              </p>
+              </div>
             </FormGroup>
 
             <Button variant="contained" sx={Login_MainButtonStyle} type="submit">
