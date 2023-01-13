@@ -27,7 +27,6 @@ export const SearchInput: React.FC<Props> = ({
   return (
     <div>
       <TextField
-        // sx={{ width: 415 }}
         sx={sx}
         id="outlined-basic"
         variant="outlined"

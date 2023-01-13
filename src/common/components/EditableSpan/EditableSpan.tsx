@@ -52,14 +52,11 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
       autoFocus
       value={title}
       onChange={onChangeInputHandler}
-      // onBlur={onClickNotEditSpanHandler}
       onKeyDown={enterChangeTitleHandler}
     />
   ) : (
     <div>
-      <span /*onDoubleClick={onClickEditSpanHandler}*/ style={{ fontSize: '20px' }}>
-        {props.title}
-      </span>
+      <span style={{ fontSize: '20px' }}>{props.title}</span>
       <BorderColorOutlined
         sx={{ paddingLeft: '10px' }}
         fontSize={'small'}

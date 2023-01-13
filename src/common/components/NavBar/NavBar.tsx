@@ -26,6 +26,7 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { PATH } from '../../path/path'
 
 import s from './NavBar.module.css'
+import { NavBar_AppBarStyle, NavBar_ToolbarStyle } from './NavBarStyles'
 
 export const NavBar = () => {
   const dispatch = useAppDispatch()
@@ -70,13 +71,10 @@ export const NavBar = () => {
 
   return (
     <div className={s.appBar}>
-      <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
+      <AppBar position="static" style={NavBar_AppBarStyle}>
         <Container maxWidth="xl">
-          <Toolbar
-            disableGutters
-            sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 120px' }}
-          >
-            {/*Логотип*/}
+          <Toolbar disableGutters sx={NavBar_ToolbarStyle}>
+            {/*logo*/}
             <Link to="/" style={{ textDecoration: 'none' }}>
               <div className={s.navbarLogo}>
                 <div className={s.navbarLogo_icon}>
@@ -88,10 +86,10 @@ export const NavBar = () => {
 
             {isLoggedIn ? (
               <div className={s.navbarUser}>
-                {/*Имя пользователя*/}
+                {/*username*/}
                 <div className={s.navbarUsername}>{userName}</div>
 
-                {/*Аватарка с меню*/}
+                {/*avatar with menu*/}
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open menu">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

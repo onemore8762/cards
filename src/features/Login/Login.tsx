@@ -22,6 +22,18 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
 import { PATH } from '../../common/path/path'
+import {
+  Login_FormikSubmitStyle,
+  Login_FormLabelOneSpanStyle,
+  Login_FormLabelOneStyle,
+  Login_LoginCardStyle,
+  Login_FormLabelTwoStyle,
+  Login_FormLabelTwoNavLinkStyle,
+  Login_FormLabelThreeStyle,
+  Login_FormLabelThreeTextStyle,
+  Login_FormLabelThreeNavLinkStyle,
+  Login_MainButtonStyle,
+} from '../../common/styles/LoginFormStyles'
 
 import { loginTC } from './login-reducer'
 
@@ -41,7 +53,7 @@ export const Login = () => {
   })
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
-  const authError = useAppSelector(state => state.login.error)
+  // const authError = useAppSelector(state => state.login.error)
 
   const formik = useFormik({
     initialValues: {
@@ -66,7 +78,6 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
-      //alert(JSON.stringify(values))
       dispatch(loginTC(values))
     },
   })
@@ -89,13 +100,11 @@ export const Login = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '528px' }} style={{ marginTop: '100px' }}>
-          <form onSubmit={formik.handleSubmit} style={{ padding: '10px 20px 0 20px' }}>
+        <Card sx={Login_LoginCardStyle}>
+          <form onSubmit={formik.handleSubmit} style={Login_FormikSubmitStyle}>
             <FormGroup sx={{ p: 2 }}>
-              <FormLabel
-                sx={{ display: 'flex', justifyContent: 'center', color: '#000', fontSize: '26px' }}
-              >
-                <span style={{ color: '#000', fontSize: '26px', fontWeight: '600' }}>Sign In</span>
+              <FormLabel sx={Login_FormLabelOneStyle}>
+                <span style={Login_FormLabelOneSpanStyle}>Sign In</span>
               </FormLabel>
               <TextField
                 label="Email"
@@ -103,7 +112,6 @@ export const Login = () => {
                 variant="standard"
                 helperText={formik.touched.email && formik.errors.email && formik.errors.email}
                 {...formik.getFieldProps('email')}
-                // onBlur={formik.handleBlur}
               />
               {/*{formik.touched.email && authError && <div style={{ color: 'red' }}>{authError}</div>}*/}
               <FormControl variant="standard" margin="normal">
@@ -143,11 +151,8 @@ export const Login = () => {
                   />
                 }
               />
-              <FormLabel sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, mb: 5 }}>
-                <NavLink
-                  to={PATH.LOGIN.RECOVERY_PASSWORD}
-                  style={{ color: '#000000', textDecoration: 'none' }}
-                >
+              <FormLabel sx={Login_FormLabelTwoStyle}>
+                <NavLink to={PATH.LOGIN.RECOVERY_PASSWORD} style={Login_FormLabelTwoNavLinkStyle}>
                   Forgot Password?
                 </NavLink>
               </FormLabel>
@@ -155,22 +160,13 @@ export const Login = () => {
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
-                sx={{ borderRadius: '30px' }}
+                sx={Login_MainButtonStyle}
               >
                 Login
               </Button>
-              <FormLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  mt: 2,
-                  mb: 5,
-                }}
-              >
-                <p style={{ fontWeight: '600', opacity: '50%' }}>Already have an account?</p>
-                <NavLink to={'/Registration'} style={{ color: '#366EFF', fontWeight: '600' }}>
+              <FormLabel sx={Login_FormLabelThreeStyle}>
+                <p style={Login_FormLabelThreeTextStyle}>Already have an account?</p>
+                <NavLink to={'/Registration'} style={Login_FormLabelThreeNavLinkStyle}>
                   Sign Up
                 </NavLink>
               </FormLabel>

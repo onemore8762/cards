@@ -8,6 +8,8 @@ import { selectPackListIsMy } from '../../../features/Packs/PackList/packListSel
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
+import { FilterShow_ButtonStyle } from './FilterShowStyles'
+
 type FilterShowPropsType = {
   disabled: boolean
 }
@@ -28,7 +30,6 @@ export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
       setSearchParams(searchParams)
     }
   }
-  const styleButtons = { width: '98px', height: '36px', color: 'black' }
 
   return (
     <ToggleButtonGroup
@@ -38,10 +39,15 @@ export const FilterShow: React.FC<FilterShowPropsType> = ({ disabled }) => {
       exclusive
       aria-label="Platform"
     >
-      <ToggleButton sx={styleButtons} onClick={handleChange} value={true} selected={isMy}>
+      <ToggleButton sx={FilterShow_ButtonStyle} onClick={handleChange} value={true} selected={isMy}>
         My
       </ToggleButton>
-      <ToggleButton sx={styleButtons} onClick={handleChange} value={false} selected={!isMy}>
+      <ToggleButton
+        sx={FilterShow_ButtonStyle}
+        onClick={handleChange}
+        value={false}
+        selected={!isMy}
+      >
         All
       </ToggleButton>
     </ToggleButtonGroup>

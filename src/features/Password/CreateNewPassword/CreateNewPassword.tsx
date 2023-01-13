@@ -7,6 +7,12 @@ import { Navigate, useParams } from 'react-router-dom'
 import { Eye } from '../../../common/components/Eye/Eye'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import {
+  CreateNewPassword_FormGroupStyle,
+  CreateNewPassword_LoginCardStyle,
+  Login_FormLabelOneStyle,
+  Login_MainButtonStyle,
+} from '../../../common/styles/LoginFormStyles'
 
 import s from './CreateNewPassword.module.css'
 import { setNewPassword } from './new-password-reducer'
@@ -43,12 +49,12 @@ export const CreateNewPassword = () => {
   return (
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '372px' }} style={{ marginTop: '100px' }}>
+        <Card sx={CreateNewPassword_LoginCardStyle}>
           <form onSubmit={formik.handleSubmit} className={s.form}>
-            <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
-              <span className={s.header}>Create new password</span>
+            <FormLabel sx={Login_FormLabelOneStyle}>
+              <span className={s.header}>Create New Password</span>
             </FormLabel>
-            <FormGroup sx={{ marginBottom: '34px', marginTop: '65px' }}>
+            <FormGroup sx={CreateNewPassword_FormGroupStyle}>
               <TextField
                 fullWidth
                 id="password"
@@ -72,8 +78,8 @@ export const CreateNewPassword = () => {
               </p>
             </FormGroup>
 
-            <Button variant="contained" sx={{ borderRadius: '30px', width: '347px' }} type="submit">
-              Create new password
+            <Button variant="contained" sx={Login_MainButtonStyle} type="submit">
+              Create New Password
             </Button>
           </form>
         </Card>

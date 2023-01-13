@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 
-// загрузка файла
+// upload file
 export const uploadHandler = (
   e: ChangeEvent<HTMLInputElement>,
   setFunction: (file64: string) => void,
@@ -26,7 +26,7 @@ export const uploadHandler = (
   }
 }
 
-// конвертация файла в base64
+// convert file to base64
 export const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
   const reader = new FileReader()
 
@@ -38,14 +38,14 @@ export const convertFileToBase64 = (file: File, callBack: (value: string) => voi
   reader.readAsDataURL(file)
 }
 
-// функция обработки ошибки файла
+// error handler
 export const imageErrorHandler = (callback: (isBroken: boolean) => void) => {
   callback(true)
   console.log('Image file is damaged')
   // alert('Файл с изображением повреждён')
 }
 
-// функция, чтобы при загрузке изображения оно отображалась сразу
+// function for local state while uploading file
 // domainValue - значение с сервера (если оно есть)
 // currentValue - текущее значение (при выборе)
 // defaultValue - стандартное значение (из файла)

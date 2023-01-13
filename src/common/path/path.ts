@@ -13,7 +13,6 @@ export const PATH = {
   },
   LEARN: {
     QUESTION: '/question/:packId',
-    ANSWER: '/answer',
   },
   COMMON: {
     ERROR404: '/error404',

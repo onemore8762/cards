@@ -22,7 +22,7 @@ test('app status should be changed', () => {
   expect(endTasksState.status).toBe('loading')
 })
 
-test('app error message should be set', () => {
+test('app error message should be set to the state', () => {
   const endTasksState = appReducer(startState, appSetErrorAC('Some Error'))
 
   expect(endTasksState.error).toBe('Some Error')

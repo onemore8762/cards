@@ -30,12 +30,12 @@ export const App = () => {
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(selectAppInitialize)
 
-  // инициализация приложения
+  // initialize app
   useEffect(() => {
     dispatch(initializeAppTC())
   }, [])
 
-  // лоадер, если приложение не инициализировано
+  // app loader
   if (!isInitialized) {
     return (
       <div className={s.circularApp}>
@@ -56,7 +56,6 @@ export const App = () => {
             <Route path={PATH.PROFILE.PACKLIST} element={<PackList />} />
             <Route path={PATH.PROFILE.CARD} element={<Card />} />
             <Route path={PATH.LEARN.QUESTION} element={<CardQuestion />} />
-            {/*<Route path={PATH.LEARN.ANSWER} element={<CardAnswer />} />*/}
           </Route>
           <Route path={PATH.LOGIN.LOGIN} element={<Login />} />
           <Route path={PATH.LOGIN.REGISTRATION} element={<Registration />} />

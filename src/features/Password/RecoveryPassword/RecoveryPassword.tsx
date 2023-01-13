@@ -8,6 +8,17 @@ import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
+import {
+  Login_FormLabelOneSpanStyle,
+  Login_FormLabelOneStyle,
+  Login_FormLabelThreeNavLinkStyle,
+  Login_FormLabelThreeStyle,
+  Login_FormLabelThreeTextStyle,
+  Recovery_FormLabelThreeStyle,
+  Recovery_FormLabelThreeTextStyle,
+  Recovery_LoginCardStyle,
+  Recovery_MainButtonStyle,
+} from '../../../common/styles/LoginFormStyles'
 
 import { recoveryTC } from './recovery-reducer'
 import { selectRecoveryPassError, selectRecoveryPassword } from './recoveryPasswordSelectors'
@@ -19,7 +30,6 @@ type FormikErrorType = {
 }
 
 export const RecoveryPassword = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const success = useAppSelector(selectRecoveryPassword)
   const error = useAppSelector(selectRecoveryPassError)
@@ -39,16 +49,9 @@ export const RecoveryPassword = () => {
       return errors
     },
     onSubmit: values => {
-      //alert(JSON.stringify(values))
       dispatch(recoveryTC(values.email))
     },
   })
-
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate(PATH.LOGIN.CHECK_EMAIL)
-  //   }
-  // }, [])
 
   if (success) {
     return <Navigate to={PATH.LOGIN.CHECK_EMAIL} />
@@ -57,19 +60,11 @@ export const RecoveryPassword = () => {
   return (
     <Grid container justifyContent={'center'}>
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: 413, height: 456 }} style={{ marginTop: '100px' }}>
+        <Card sx={Recovery_LoginCardStyle}>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup sx={{ p: 3 }}>
-              <FormLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color: '#000',
-                }}
-              >
-                <span style={{ fontSize: '26px', fontWeight: '600', lineHeight: '32px' }}>
-                  Forgot your password?
-                </span>
+              <FormLabel sx={Login_FormLabelOneStyle}>
+                <span style={Login_FormLabelOneSpanStyle}>Forgot Your Password?</span>
               </FormLabel>
               <TextField
                 label="Email"
@@ -83,46 +78,20 @@ export const RecoveryPassword = () => {
                 <div style={{ color: 'red' }}>{formik.errors.email}</div>
               )}
               {error && <div style={{ color: 'red' }}>{error}</div>}
-              <FormLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  mt: 0,
-                }}
-              >
+              <FormLabel sx={Recovery_FormLabelThreeStyle}>
                 <p>Enter your email address and we will send you further instructions </p>
               </FormLabel>
               <Button
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
-                sx={{ borderRadius: '30px', mt: 4 }}
+                sx={Recovery_MainButtonStyle}
               >
                 Send Instructions
               </Button>
-              <FormLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  mt: 2,
-                  mb: 5,
-                }}
-              >
-                <p style={{ marginTop: '31px' }}>Did you remember your password?</p>
-                <NavLink
-                  to={'/login'}
-                  style={{
-                    color: '#366EFF',
-                    fontWeight: '600',
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                    marginTop: '11px',
-                  }}
-                >
+              <FormLabel sx={Login_FormLabelThreeStyle}>
+                <p style={Recovery_FormLabelThreeTextStyle}>Did you remember your password?</p>
+                <NavLink to={'/login'} style={Login_FormLabelThreeNavLinkStyle}>
                   Try logging in
                 </NavLink>
               </FormLabel>

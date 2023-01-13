@@ -7,6 +7,16 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { Eye } from '../../common/components/Eye/Eye'
 import { useAppDispatch } from '../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../common/hooks/useAppSelector'
+import {
+  Login_FormLabelOneSpanStyle,
+  Login_FormLabelOneStyle,
+  Login_FormLabelThreeNavLinkStyle,
+  Login_FormLabelThreeStyle,
+  Login_FormLabelThreeTextStyle,
+  Login_LoginCardStyle,
+  Login_MainButtonStyle,
+  Registration_FormikSubmitStyle,
+} from '../../common/styles/LoginFormStyles'
 
 import { registrationUser, setErrors } from './registration-reducer'
 import { selectRegistrationErrors, selectRegistrationIsLoggedIn } from './registrationSelectors'
@@ -75,10 +85,10 @@ export const Registration = () => {
   return (
     <Grid container justifyContent="center">
       <Grid display="flex" justifyContent="center" alignItems="center">
-        <Card sx={{ width: '413px', height: '528px' }} style={{ marginTop: '100px' }}>
-          <form onSubmit={formik.handleSubmit} style={{ padding: '33px 35px 0' }}>
-            <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
-              <span style={{ color: '#000', fontSize: '26px', fontWeight: '600' }}>Sign Up</span>
+        <Card sx={Login_LoginCardStyle}>
+          <form onSubmit={formik.handleSubmit} style={Registration_FormikSubmitStyle}>
+            <FormLabel sx={Login_FormLabelOneStyle}>
+              <span style={Login_FormLabelOneSpanStyle}>Sign Up</span>
             </FormLabel>
             <FormGroup sx={{ marginBottom: '68px' }}>
               <TextField
@@ -153,20 +163,12 @@ export const Registration = () => {
                 }}
               />
             </FormGroup>
-            <Button variant="contained" sx={{ borderRadius: '30px', width: '347px' }} type="submit">
+            <Button variant="contained" sx={Login_MainButtonStyle} type="submit">
               Sign Up
             </Button>
-            <FormLabel
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                alignItems: 'center',
-                mt: 2,
-              }}
-            >
-              <p style={{ fontWeight: '600', opacity: '50%' }}>Already have an account?</p>
-              <NavLink to={'/Login'} style={{ color: '#366EFF', fontWeight: '600' }}>
+            <FormLabel sx={Login_FormLabelThreeStyle}>
+              <p style={Login_FormLabelThreeTextStyle}>Already have an account?</p>
+              <NavLink to={'/Login'} style={Login_FormLabelThreeNavLinkStyle}>
                 Sign In
               </NavLink>
             </FormLabel>
