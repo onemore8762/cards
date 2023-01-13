@@ -177,7 +177,12 @@ export const Card = () => {
             </Grid>
           ) : (
             <>
-              {initialize && <PageTitle title={packName} />}
+              <div className={s.deckCover_notMy}>
+                {initialize && <PageTitle title={packName} />}
+                <div className={s.deckCover}>
+                  <img src={deckCover ? deckCover : DefaultPackCover} alt="deckCover" />
+                </div>
+              </div>
               {!initialize && (
                 <Skeleton
                   animation="wave"
@@ -186,9 +191,6 @@ export const Card = () => {
               )}
             </>
           )}
-          {/*<div className={s.deckCover}>*/}
-          {/*  <img src={deckCover} alt="deckCover" />*/}
-          {/*</div>*/}
           <div className={s2.addNewPackBtn}>
             {userId === createdId ? (
               <CardBasicModal

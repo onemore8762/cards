@@ -88,12 +88,11 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     setQuestionType(event.target.value as string)
   }
 
-  // сохранение карточки
+  // save card
   const saveBtnHandler = () => {
     const trimQuestionValue = questionInputValue?.trim()
     const trimAnswerValue = answerInputValue.trim()
 
-    // if (trimQuestionValue && trimAnswerValue) {
     if (
       (questionType === 'text' && trimQuestionValue && trimAnswerValue) ||
       (questionType === 'image' && trimAnswerValue)
@@ -122,7 +121,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
   }
 
   // render
-  // обработка ошибок
+  // errors flow
   useEffect(() => {
     if (questionInputValue && questionInputValue!.length > INPUT_MAX_LENGTH) {
       setErrorQuestion(`${MESSAGE_INPUT_VALUE_LENGTH}`)
@@ -136,7 +135,7 @@ export const CardBasicModal: React.FC<AddCardModalPropsType> = ({
     }
   }, [questionInputValue, answerInputValue])
 
-  // обработка приходящих данных с сервера
+  // data from server
   useEffect(() => {
     if (questionDomainValue) {
       setQuestionInputValue(questionDomainValue)

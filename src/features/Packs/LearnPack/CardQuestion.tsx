@@ -43,7 +43,14 @@ export const CardQuestion = () => {
         <Card sx={{ width: 440, minHeight: 200 }}>
           <div className={s.cardQuestion_main}>
             <div className={s.cardQuestion_question}>
-              <b>Question:</b> {randomCard.question}
+              <div className={s.cardQuestion_question_title}>Question:</div>
+              {randomCard.questionImg ? (
+                <div>
+                  <img src={randomCard.questionImg} alt="Image Question" />
+                </div>
+              ) : (
+                randomCard.question
+              )}
             </div>
             <div className={s.cardQuestion_attempt}>
               Number of attempts for this question: {randomCard.shots}
@@ -65,7 +72,8 @@ export const CardQuestion = () => {
                   <Grid display="flex" justifyContent="center" alignItems="center">
                     <div className={s.cardQuestion_main}>
                       <div className={style.cardAnswer_answer}>
-                        <b>Answer:</b> {randomCard.answer}
+                        <div className={s.cardQuestion_question_title}>Answer:</div>
+                        {randomCard.answer}
                       </div>
                       <div className={style.cardAnswer_rateYourself}>
                         <RadioGroupSelect />

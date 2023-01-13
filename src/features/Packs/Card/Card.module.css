@@ -6,9 +6,12 @@
     margin-bottom: 30px;
 }
 
-.deckCover {
+.deckCover_notMy {
     display: flex;
     align-items: center;
+}
+.deckCover {
+    composes: deckCover_notMy;
 
     margin-left: 30px;
 }

@@ -43,15 +43,16 @@ export const DeleteBasicModal: React.FC<DeletePackModalPropsType> = ({
   }
   const handleClose = () => setOpen(false)
 
-  // func flow
+  // button for props
+  const clonedChildren = cloneElement(children, {
+    onClick: handleOpen,
+  })
+
+  // functions
   const deleteBtnHandler = () => {
     deleteItem()
     handleClose()
   }
-
-  const clonedChildren = cloneElement(children, {
-    onClick: handleOpen,
-  })
 
   return (
     <>

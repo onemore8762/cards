@@ -80,6 +80,15 @@ export const PackListTable = () => {
     navigate(`/question/${packId}`)
   }
 
+  // limit of name length
+  const limitOfPackNameLengthInTable = (rowName: string) => {
+    if (rowName.length >= 30) {
+      return rowName.slice(0, 29) + '...'
+    } else {
+      return rowName
+    }
+  }
+
   return (
     <TableContainer component={Paper} sx={{ maxHeight: '495px' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
@@ -126,7 +135,8 @@ export const PackListTable = () => {
                 <TableCell component="th" scope="row" sx={{ maxWidth: '250px' }}>
                   <SkeletonComponent isLoading={isLoading}>
                     <Button onClick={() => goCardHandler(row._id)} sx={{ color: 'black' }}>
-                      {row.name.length >= 30 ? row.name.slice(0, 29) + '...' : row.name}
+                      {/*{row.name.length >= 30 ? row.name.slice(0, 29) + '...' : row.name}*/}
+                      {limitOfPackNameLengthInTable(row.name)}
                     </Button>
                   </SkeletonComponent>
                 </TableCell>

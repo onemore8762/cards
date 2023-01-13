@@ -78,7 +78,7 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
     setPrivateCheckbox(newPrivateValue)
   }
 
-  // сохранение колоды
+  // save pack
   const saveBtnHandler = () => {
     const trimValue = inputValue.trim()
 
@@ -92,14 +92,16 @@ export const PackBasicModal: React.FC<AddPackModalPropsType> = ({
   }
 
   // render
-  // обработка ошибок
+  // errors flow
   useEffect(() => {
     if (inputValue && inputValue.length > INPUT_MAX_LENGTH) {
       setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+    } else {
+      setError(null)
     }
   }, [inputValue])
 
-  // обработка приходящих данных с сервера
+  // data from server
   useEffect(() => {
     if (packName) {
       setInputValue(packName)

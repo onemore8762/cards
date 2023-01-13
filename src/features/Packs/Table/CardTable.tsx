@@ -50,6 +50,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
     dispatch(deleteCardTC(idCard))
   }
 
+  // image in table and limit of name length
   // const questionField = (questionImg: string, question: string) => {
   //   if (questionImg) {
   //     return questionImg
