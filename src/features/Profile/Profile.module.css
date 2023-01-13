@@ -31,7 +31,6 @@
   padding: 3px;
 
   object-fit: cover;
-  /*border: 1px solid black;*/
   border-radius: 50%;
 }
 .loadAvatar {
@@ -66,8 +65,4 @@
   font-size: 14px;
 
   opacity: 0.5;
-}
-
-.logoutButton {
-
 }

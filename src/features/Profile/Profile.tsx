@@ -32,6 +32,15 @@ export const Profile = () => {
 
   const [userAvatarState, setUserAvatarState] = useState(DefaultUserAvatar)
 
+  // styles
+  const Profile_ButtonStyle = {
+    width: '127px',
+    borderRadius: '30px',
+    color: 'black',
+    backgroundColor: 'white',
+  }
+
+  // functions
   const changeUserNameHandler = useCallback((newInputValue: string) => {
     dispatch(updateUserDataTC(newInputValue))
   }, [])
@@ -90,13 +99,7 @@ export const Profile = () => {
                 type={'submit'}
                 variant={'contained'}
                 color={'error'}
-                // className={s.logoutButton}
-                sx={{
-                  width: '127px',
-                  borderRadius: '30px',
-                  color: 'black',
-                  backgroundColor: 'white',
-                }}
+                sx={Profile_ButtonStyle}
                 onClick={logoutHandler}
               >
                 Log Out

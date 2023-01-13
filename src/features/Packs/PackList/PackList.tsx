@@ -14,6 +14,7 @@ import { SearchInput } from '../../../common/components/SearchInput/SearchInput'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
+import { Card_ButtonStyle } from '../../../common/styles/CardStyles'
 import { PackListTable } from '../Table/PackListTable'
 
 import { addPacksTC, getPacksTC, setUpdatePackAC } from './packList-reducer'
@@ -149,10 +150,7 @@ export const PackList = () => {
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
-                sx={{
-                  width: '175px',
-                  borderRadius: '30px',
-                }}
+                sx={Card_ButtonStyle}
               >
                 Add New Pack
               </Button>

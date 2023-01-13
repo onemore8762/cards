@@ -21,12 +21,12 @@ import { setNewPassword } from './new-password-reducer'
 import { selectNewPassword, selectPasswordError } from './newPasswordSelectors'
 
 export const CreateNewPassword = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-
   const dispatch = useAppDispatch()
+  const params = useParams()
   const onSuccess = useAppSelector(selectNewPassword)
   const error = useAppSelector(selectPasswordError)
-  const params = useParams()
+
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const formik = useFormik({
     initialValues: {
@@ -76,7 +76,7 @@ export const CreateNewPassword = () => {
                 }}
               />
               <div style={CreateNewPassword_DescriptionStyle}>
-                Create new password and we will send you further instructions to email
+                Create new password and we will send you further instructions to e-mail
               </div>
             </FormGroup>
 

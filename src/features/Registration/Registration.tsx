@@ -15,6 +15,7 @@ import {
   Login_FormLabelThreeTextStyle,
   Login_LoginCardStyle,
   Login_MainButtonStyle,
+  Registration_FormGroupStyle,
   Registration_FormikSubmitStyle,
 } from '../../common/styles/LoginFormStyles'
 
@@ -90,7 +91,7 @@ export const Registration = () => {
             <FormLabel sx={Login_FormLabelOneStyle}>
               <span style={Login_FormLabelOneSpanStyle}>Sign Up</span>
             </FormLabel>
-            <FormGroup sx={{ marginBottom: '68px' }}>
+            <FormGroup sx={Registration_FormGroupStyle}>
               <TextField
                 fullWidth
                 id="email"
@@ -98,7 +99,7 @@ export const Registration = () => {
                   (formik.touched.email && formik.errors.email) ||
                   (!errors.isEmailValid && 'Email is not valid') ||
                   (errors.isEmailValid && errors.isPassValid && errors.error) ||
-                  'Email'
+                  'E-Mail'
                 }
                 error={
                   !errors.isEmailValid ||

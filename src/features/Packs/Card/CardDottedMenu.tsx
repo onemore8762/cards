@@ -43,6 +43,12 @@ export const CardDottedMenu: React.FC<CardDottedMenuPropsType> = ({
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
+  const MoreVertIconStyle = {
+    border: '1px solid black',
+    borderRadius: '50px',
+    color: 'black',
+  }
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
@@ -53,7 +59,7 @@ export const CardDottedMenu: React.FC<CardDottedMenuPropsType> = ({
   return (
     <>
       <IconButton onClick={handleOpenUserMenu}>
-        <MoreVertIcon sx={{ border: '1px solid black', borderRadius: '50px', color: 'black' }} />
+        <MoreVertIcon sx={MoreVertIconStyle} />
       </IconButton>
       <Menu
         sx={{ mt: '45px' }}

@@ -16,6 +16,7 @@ import { DeleteCardModal } from '../../../common/components/Modals/DeleteCardMod
 import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { Table_CellStyle } from '../../../common/styles/CardStyles'
 import s from '../../../common/styles/CommonStyles.module.css'
 import { createStyle } from '../../../common/utils/createStyle'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
@@ -25,12 +26,12 @@ import { selectPackUserId, selectSortCard } from '../Card/cardSelectors'
 
 import style from './CardTable.module.css'
 
-type packTablePropsType = {
+type PackTablePropsType = {
   cardsList: Array<Cards>
   isLoading: boolean
 }
 
-export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }) => {
+export const CardTable: React.FC<PackTablePropsType> = ({ cardsList, isLoading }) => {
   const dispatch = useAppDispatch()
   const sort = useAppSelector(selectSortCard)
   const userId = useAppSelector(selectProfileUserId)
@@ -86,11 +87,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
         <TableBody>
           {cardsList.map(row => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell
-                component="th"
-                scope="row"
-                sx={{ maxWidth: '250px', wordBreak: 'break-word' }}
-              >
+              <TableCell component="th" scope="row" sx={Table_CellStyle}>
                 <SkeletonComponent isLoading={isLoading}>
                   {row.questionImg ? (
                     <div className={style.questionImage}>
@@ -102,7 +99,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                   {/*{row.question.length >= 50 ? row.question.slice(0, 49) + '...' : row.question}*/}
                 </SkeletonComponent>{' '}
               </TableCell>
-              <TableCell sx={{ maxWidth: '250px', wordBreak: 'break-word' }}>
+              <TableCell sx={Table_CellStyle}>
                 <SkeletonComponent isLoading={isLoading}>
                   {row.answer}
                   {/*{row.answer.length >= 50 ? row.answer.slice(0, 49) + '...' : row.answer}*/}

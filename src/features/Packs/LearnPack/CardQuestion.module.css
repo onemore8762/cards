@@ -15,6 +15,12 @@
 
     font-weight: bold;
 }
+.cardQuestion_question_question {
+    padding: 0 20px;
+
+    text-align: center;
+    word-break: break-word;
+}
 
 .cardQuestion_attempt {
     margin-bottom: 10px;
@@ -23,4 +29,16 @@
 }
 .cardQuestion_button {
     margin-bottom: 25px;
+}
+
+.cardAnswer_answer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+
+    text-align: center;
+    word-break: break-word;
+}
+.cardAnswer_rateYourself {
+
 }

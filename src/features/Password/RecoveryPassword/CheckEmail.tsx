@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import checkEmail from '../../../assets/images/checkEmail.svg'
 import {
   CheckEmail_FormLabelThreeTextStyle,
+  CheckEmail_ImageStyle,
   CheckEmail_MainButtonStyle,
   CreateNewPassword_LoginCardStyle,
   Login_FormLabelOneSpanStyle,
@@ -16,6 +17,7 @@ import {
 
 export const CheckEmail = () => {
   const navigate = useNavigate()
+
   const buttonHandler = () => {
     return navigate('/login')
   }
@@ -29,16 +31,10 @@ export const CheckEmail = () => {
               <span style={Login_FormLabelOneSpanStyle}>Check E-Mail</span>
             </FormLabel>
             <FormLabel sx={Login_FormLabelThreeStyle}>
-              <img
-                src={checkEmail}
-                alt="checkEmail"
-                style={{
-                  marginTop: '10px',
-                }}
-              />
-              <p style={CheckEmail_FormLabelThreeTextStyle}>
-                We’ve sent an Email with instructions to example@mail.com
-              </p>
+              <img src={checkEmail} alt="checkEmail" style={CheckEmail_ImageStyle} />
+              <div style={CheckEmail_FormLabelThreeTextStyle}>
+                We’ve sent an E-Mail with instructions to example@gmail.com
+              </div>
             </FormLabel>
             <Button
               variant={'contained'}

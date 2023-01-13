@@ -67,10 +67,10 @@ export const RecoveryPassword = () => {
                 <span style={Login_FormLabelOneSpanStyle}>Forgot Your Password?</span>
               </FormLabel>
               <TextField
-                label="Email"
+                label="E-Mail"
                 margin="normal"
                 variant="standard"
-                sx={{ mt: 6 }}
+                sx={{ mt: 4 }}
                 {...formik.getFieldProps('email')}
                 onBlur={formik.handleBlur}
               />
@@ -79,7 +79,7 @@ export const RecoveryPassword = () => {
               )}
               {error && <div style={{ color: 'red' }}>{error}</div>}
               <FormLabel sx={Recovery_FormLabelThreeStyle}>
-                <p>Enter your email address and we will send you further instructions </p>
+                <div>Enter your e-mail address and we will send you further instructions </div>
               </FormLabel>
               <Button
                 type={'submit'}
@@ -90,7 +90,7 @@ export const RecoveryPassword = () => {
                 Send Instructions
               </Button>
               <FormLabel sx={Login_FormLabelThreeStyle}>
-                <p style={Recovery_FormLabelThreeTextStyle}>Did you remember your password?</p>
+                <div style={Recovery_FormLabelThreeTextStyle}>Did you remember your password?</div>
                 <NavLink to={'/login'} style={Login_FormLabelThreeNavLinkStyle}>
                   Try logging in
                 </NavLink>

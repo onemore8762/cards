@@ -6,7 +6,7 @@ export const Login_LoginCardStyle = {
 }
 export const Recovery_LoginCardStyle = {
   width: '413px',
-  height: '456px',
+  height: '410px',
   marginTop: '80px',
   boxShadow: '5px 5px 10px gray',
 }
@@ -18,10 +18,14 @@ export const CreateNewPassword_LoginCardStyle = {
 }
 
 export const Login_FormikSubmitStyle = {
-  padding: '10px 20px 0 20px',
+  padding: '15px 20px 0 20px',
 }
 export const Registration_FormikSubmitStyle = {
-  padding: '33px 35px 0',
+  padding: '30px 35px 0',
+}
+
+export const Registration_FormGroupStyle = {
+  marginBottom: '68px',
 }
 
 export const Login_FormLabelOneStyle = {
@@ -39,7 +43,7 @@ export const CreateNewPassword_FormGroupStyle = {
 
 export const CreateNewPassword_DescriptionStyle = {
   marginTop: '30px',
-  opacity: '50%',
+  opacity: '70%',
   lineHeight: '25px',
 }
 
@@ -91,7 +95,8 @@ export const Recovery_FormLabelThreeStyle = {
   justifyContent: 'center',
   flexDirection: 'column',
   alignItems: 'center',
-  mt: 0,
+  mt: 2,
+  mb: 2,
   textAlign: 'center',
   lineHeight: '25px',
 }
@@ -107,15 +112,18 @@ export const Recovery_FormLabelThreeTextStyle = {
 }
 
 export const CheckEmail_FormLabelThreeTextStyle = {
-  fontWeight: '600',
-  opacity: '50%',
+  // opacity: '50%',
   marginTop: '35px',
   fontSize: '16px',
-  // font-family: "Roboto","Helvetica","Arial",sans-serif;
+  lineHeight: '25px',
 }
 
 export const Login_FormLabelThreeNavLinkStyle = {
   color: '#366EFF',
   fontWeight: '600',
+  marginTop: '10px',
+}
+
+export const CheckEmail_ImageStyle = {
   marginTop: '10px',
 }

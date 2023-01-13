@@ -8,5 +8,3 @@ export const learnPackApi = {
     })
   },
 }
-
-// types

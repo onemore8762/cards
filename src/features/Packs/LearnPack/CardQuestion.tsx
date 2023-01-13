@@ -11,8 +11,8 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { PATH } from '../../../common/path/path'
 
-import style from './CardAnswer.module.css'
 import s from './CardQuestion.module.css'
+import { CardQuestion_ButtonStyle, CardQuestion_CardStyle } from './CardQuestionStyles'
 import { getRandomCardTC, updateGradeTC } from './learnPack-reducer'
 import { selectLearnGrade, selectLearnPackName, selectLearnRandomCard } from './learnPackSelectors'
 
@@ -40,7 +40,7 @@ export const CardQuestion = () => {
         <Typography component="legend" variant="h5" sx={{ mt: 5, mb: 2 }}>
           {packName}
         </Typography>
-        <Card sx={{ width: 440, minHeight: 200 }}>
+        <Card sx={CardQuestion_CardStyle}>
           <div className={s.cardQuestion_main}>
             <div className={s.cardQuestion_question}>
               <div className={s.cardQuestion_question_title}>Question:</div>
@@ -49,7 +49,7 @@ export const CardQuestion = () => {
                   <img src={randomCard.questionImg} alt="Image Question" />
                 </div>
               ) : (
-                randomCard.question
+                <div className={s.cardQuestion_question_question}>{randomCard.question}</div>
               )}
             </div>
             <div className={s.cardQuestion_attempt}>
@@ -61,8 +61,7 @@ export const CardQuestion = () => {
                   variant={'contained'}
                   color={'primary'}
                   onClick={() => setIsClickButton(true)}
-                  sx={{ borderRadius: '30px', mt: 3 }}
-                  style={{ width: 335 }}
+                  sx={CardQuestion_ButtonStyle}
                 >
                   Show Answer
                 </Button>
@@ -71,11 +70,11 @@ export const CardQuestion = () => {
                 <Grid container justifyContent={'center'}>
                   <Grid display="flex" justifyContent="center" alignItems="center">
                     <div className={s.cardQuestion_main}>
-                      <div className={style.cardAnswer_answer}>
+                      <div className={s.cardAnswer_answer}>
                         <div className={s.cardQuestion_question_title}>Answer:</div>
                         {randomCard.answer}
                       </div>
-                      <div className={style.cardAnswer_rateYourself}>
+                      <div className={s.cardAnswer_rateYourself}>
                         <RadioGroupSelect />
                       </div>
                       <div className={s.cardQuestion_button}>
@@ -83,8 +82,7 @@ export const CardQuestion = () => {
                           variant={'contained'}
                           color={'primary'}
                           onClick={setAnswerHandler}
-                          sx={{ borderRadius: '30px', mt: 3 }}
-                          style={{ width: 335 }}
+                          sx={CardQuestion_ButtonStyle}
                         >
                           Next
                         </Button>
@@ -92,11 +90,6 @@ export const CardQuestion = () => {
                     </div>
                   </Grid>
                 </Grid>
-                /*<CardAnswer
-                  packId={packId}
-                  setIsClickButton={setIsClickButton}
-                  setAnswerHandler={setAnswerHandler}
-                />*/
               )}
             </div>
           </div>

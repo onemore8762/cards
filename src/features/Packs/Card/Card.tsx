@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { useDebounce } from '../../../common/hooks/useDebounce'
 import { PATH } from '../../../common/path/path'
+import { Card_ButtonStyle, Card_SkeletonStyle } from '../../../common/styles/CardStyles'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, updatePacksTC } from '../PackList/packList-reducer'
 import s2 from '../PackList/PackList.module.css'
@@ -159,12 +160,7 @@ export const Card = () => {
           {userId === createdId ? (
             <Grid display="flex" alignItems="center">
               {initialize && <PageTitle title={packName} />}
-              {!initialize && (
-                <Skeleton
-                  animation="wave"
-                  sx={{ width: '200px', margin: '0', height: '40px' }}
-                ></Skeleton>
-              )}
+              {!initialize && <Skeleton animation="wave" sx={Card_SkeletonStyle}></Skeleton>}
 
               <CardDottedMenu
                 updatePackHandler={updatePackHandler}
@@ -183,12 +179,7 @@ export const Card = () => {
                   <img src={deckCover ? deckCover : DefaultPackCover} alt="deckCover" />
                 </div>
               </div>
-              {!initialize && (
-                <Skeleton
-                  animation="wave"
-                  sx={{ width: '200px', margin: '0', height: '40px' }}
-                ></Skeleton>
-              )}
+              {!initialize && <Skeleton animation="wave" sx={Card_SkeletonStyle}></Skeleton>}
             </>
           )}
           <div className={s2.addNewPackBtn}>
@@ -204,10 +195,7 @@ export const Card = () => {
                   type={'submit'}
                   variant={'contained'}
                   color={'primary'}
-                  sx={{
-                    width: '175px',
-                    borderRadius: '30px',
-                  }}
+                  sx={Card_ButtonStyle}
                 >
                   Add New Card
                 </Button>
@@ -217,10 +205,7 @@ export const Card = () => {
                 type={'submit'}
                 variant={'contained'}
                 color={'primary'}
-                sx={{
-                  width: '175px',
-                  borderRadius: '30px',
-                }}
+                sx={Card_ButtonStyle}
                 onClick={goToLearnHandler}
               >
                 Learn Pack
