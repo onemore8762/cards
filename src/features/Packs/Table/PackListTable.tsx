@@ -20,6 +20,7 @@ import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import s2 from '../../../common/styles/CommonStyles.module.css'
+import { createStyle } from '../../../common/utils/createStyle'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { deletePacksTC, setUpdatePackAC, updatePacksTC } from '../PackList/packList-reducer'
 import {
@@ -94,16 +95,10 @@ export const PackListTable = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Cover
-            </TableCell>
-            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Name
-            </TableCell>
-            <TableCell style={{ width: '5%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Cards
-            </TableCell>
-            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={createStyle(15)}>Cover</TableCell>
+            <TableCell style={createStyle(30)}>Name</TableCell>
+            <TableCell style={createStyle(5)}>Cards</TableCell>
+            <TableCell style={createStyle(15)}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -113,12 +108,8 @@ export const PackListTable = () => {
                 Last Updated
               </TableSortLabel>
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Created by
-            </TableCell>
-            <TableCell style={{ width: '15%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Actions
-            </TableCell>
+            <TableCell style={createStyle(20)}>Created by</TableCell>
+            <TableCell style={createStyle(15)}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{ minHeight: '300px' }}>

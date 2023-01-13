@@ -17,6 +17,7 @@ import { SkeletonComponent } from '../../../common/components/Skeleton/Skeleton'
 import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import s from '../../../common/styles/CommonStyles.module.css'
+import { createStyle } from '../../../common/utils/createStyle'
 import { selectProfileUserId } from '../../Profile/profileSelectors'
 import { Cards } from '../Card/card-api'
 import { deleteCardTC, sortCardsAC, updateCardTC } from '../Card/card-reducer'
@@ -68,13 +69,9 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
       <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow sx={{ bgcolor: '#EFEFEF' }}>
-            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Question
-            </TableCell>
-            <TableCell style={{ width: '30%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Answer
-            </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
+            <TableCell style={createStyle(30)}>Question</TableCell>
+            <TableCell style={createStyle(30)}>Answer</TableCell>
+            <TableCell style={createStyle(20)}>
               <TableSortLabel
                 active
                 direction={sort === '0updated' ? 'desc' : 'asc'}
@@ -83,9 +80,7 @@ export const CardTable: React.FC<packTablePropsType> = ({ cardsList, isLoading }
                 Last Updated
               </TableSortLabel>
             </TableCell>
-            <TableCell style={{ width: '20%', fontWeight: 'bold', background: '#EFEFEF' }}>
-              Grade
-            </TableCell>
+            <TableCell style={createStyle(20)}>Grade</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -1,8 +1,10 @@
 .pageTitle {
+  max-width: 300px;
   /*position: absolute;*/
   /*top: 100px;*/
   /*left: 210px;*/
 
   font-size: 22px;
   font-weight: 600;
+  word-break: break-word;
 }
