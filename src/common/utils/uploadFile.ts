@@ -9,11 +9,8 @@ export const uploadHandler = (
   if (e.target.files && e.target.files.length) {
     const file = e.target.files[0]
 
-    // console.log('file: ', file)
-
     if (file.size < 4000000) {
       convertFileToBase64(file, (file64: string) => {
-        // console.log(file64)
         setFunction(file64)
         if (extraFunction) {
           extraFunction(file64)
