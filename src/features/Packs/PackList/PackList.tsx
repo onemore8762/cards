@@ -49,6 +49,64 @@ export const PackList = () => {
   const debouncedSearchPack = useDebounce<string>(searchPackName, 500)
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // search
+  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setUpdatePackAC({ packName: e.currentTarget.value, isLoading: true }))
+    if (e.currentTarget.value !== '') {
+      searchParams.set('packName', e.currentTarget.value)
+    } else {
+      searchParams.delete('packName')
+    }
+  }
+  const clearSearchInputValueHandler = () => {
+    dispatch(setUpdatePackAC({ packName: '' }))
+    searchParams.delete('packName')
+  }
+
+  // filter
+  const filterDefault = () => {
+    searchParams.delete('isMy')
+    searchParams.delete('min')
+    searchParams.delete('max')
+    searchParams.delete('page')
+    searchParams.delete('pageCount')
+    setSearchParams(searchParams)
+    dispatch(
+      setUpdatePackAC({
+        min: null,
+        max: null,
+        isMy: false,
+        page: 1,
+        pageCount: 4,
+        sortPacks: '0updated',
+      })
+    )
+  }
+
+  // pack functions
+  const addNewPackHandler = (
+    inputValue: string,
+    packCoverState: string,
+    privateCheckbox: boolean
+  ) => {
+    dispatch(
+      addPacksTC({
+        cardsPack: { name: inputValue, deckCover: packCoverState, private: privateCheckbox },
+      })
+    )
+  }
+
+  // pagination
+  const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setUpdatePackAC({ pageCount: +event.target.value, page: 1 }))
+    searchParams.set('pageCount', event.target.value)
+  }
+  const changePageHandler = (event: ChangeEvent<unknown>, value: number) => {
+    dispatch(setUpdatePackAC({ page: value }))
+    searchParams.set('page', `${value}`)
+  }
+
+  // render
   useEffect(() => {
     if (initialize) {
       dispatch(getPacksTC())
@@ -81,62 +139,7 @@ export const PackList = () => {
     }
   }, [])
 
-  const filterDefault = () => {
-    searchParams.delete('isMy')
-    searchParams.delete('min')
-    searchParams.delete('max')
-    searchParams.delete('page')
-    searchParams.delete('pageCount')
-    setSearchParams(searchParams)
-    dispatch(
-      setUpdatePackAC({
-        min: null,
-        max: null,
-        isMy: false,
-        page: 1,
-        pageCount: 4,
-        sortPacks: '0updated',
-      })
-    )
-  }
-
   if (!initialize) return <PackListSkeleton />
-
-  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUpdatePackAC({ packName: e.currentTarget.value, isLoading: true }))
-    if (e.currentTarget.value !== '') {
-      searchParams.set('packName', e.currentTarget.value)
-    } else {
-      searchParams.delete('packName')
-    }
-  }
-
-  const clearSearchInputValueHandler = () => {
-    dispatch(setUpdatePackAC({ packName: '' }))
-    searchParams.delete('packName')
-  }
-
-  const changePaginationHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setUpdatePackAC({ pageCount: +event.target.value, page: 1 }))
-    searchParams.set('pageCount', event.target.value)
-  }
-
-  const changePageHandler = (event: ChangeEvent<unknown>, value: number) => {
-    dispatch(setUpdatePackAC({ page: value }))
-    searchParams.set('page', `${value}`)
-  }
-
-  const addNewPackHandler = (
-    inputValue: string,
-    packCoverState: string,
-    privateCheckbox: boolean
-  ) => {
-    dispatch(
-      addPacksTC({
-        cardsPack: { name: inputValue, deckCover: packCoverState, private: privateCheckbox },
-      })
-    )
-  }
 
   return (
     <div className={s.packList}>
